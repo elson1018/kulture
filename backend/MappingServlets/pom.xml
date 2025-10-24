@@ -12,8 +12,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <!-- 1. I've updated the Java version to 17 to match your environment -->
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
         <junit.version>5.10.2</junit.version>
     </properties>
 
@@ -44,6 +45,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+            </plugin>
+            
+            <!-- 2. I've added the Tomcat plugin so you can run the server -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <!-- You can change the port here if 8081 is in use -->
+                    <port>8082</port>
+                    <!-- This sets the app URL to /MappingServlets -->
+                    <path>/${project.build.finalName}</path>
+                </configuration>
             </plugin>
         </plugins>
     </build>
