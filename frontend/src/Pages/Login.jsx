@@ -8,7 +8,9 @@ import './Login.css'
 const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
-
+    const handleLoginForm = async (event) =>{
+        
+    }
     const togglePasswordVisibility = () => {
         setShowPassword(prev => !prev);
     }
@@ -17,7 +19,7 @@ const Login = () => {
         <div className='login-container'>
             <h2 className='form-title'>Log In Now</h2>
 
-            <form action="#" className="login-form">
+            <form action="#" className="login-form">{/* this form here will be handled by our back end*/}
                 <div className="input-wrapper">
                     <img src={email_icon} alt="Email" className='email-icon'/>
                     <input type="email" placeholder="Email Address" className="input-field" required/>
@@ -28,7 +30,9 @@ const Login = () => {
                     <input type={showPassword ? "text" : "password"} placeholder="Password" className="input-field" required/>
                     <img src={showPassword ? eye_opened_icon : eye_closed_icon} alt="Toggle Password Visibility" className='password-toggle-icon' onClick={togglePasswordVisibility}/>
                 </div>
-                <a href="#" className="forgot-password">Forgot Password?</a>
+                
+                <a href="#" className="forgot-password">Forgot Password?</a>{/* Okay this part we probably wont add ahahh
+                */}
 
                 <button className="login-button">Log In</button>
             </form>
