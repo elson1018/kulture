@@ -6,7 +6,11 @@
     box-shadow: 0 1px 3px -2px black;
 }
 
-.navbar-logo img,
+.navbar-logo img {
+    width: 45px;
+    height: 45px;
+}
+
 .searchbar img,
 .cart img,
 .user img,
@@ -75,6 +79,10 @@
     flex-grow: 1;
     padding: 0;
     margin-right: 10px;
+}
+
+.searchbar img {
+    cursor: pointer;
 }
 
 .cart {

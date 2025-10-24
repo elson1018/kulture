@@ -14,6 +14,8 @@ const Navbar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const [menu, setMenu] = useState("FOOD");
+
     return ( 
         <>
             <div className='navbar'>
@@ -22,10 +24,10 @@ const Navbar = () => {
                     <p>Kulture</p>
                 </div>
                 <ul className="navbar-menu">
-                    <li>FOOD</li>
-                    <li>INSTRUMENTS</li>
-                    <li>SOUVENIORS</li>
-                    <li>DANCES</li>
+                    <li onClick={() => {setMenu("FOOD")}}>FOOD {menu === "FOOD" ? <hr /> : null}</li>
+                    <li onClick={() => {setMenu("INSTRUMENTS")}}>INSTRUMENTS {menu === "INSTRUMENTS" ? <hr /> : null}</li>
+                    <li onClick={() => {setMenu("SOUVENIORS")}}>SOUVENIORS {menu === "SOUVENIORS" ? <hr /> : null}</li>
+                    <li onClick={() => {setMenu("DANCES")}}>DANCES {menu === "DANCES" ? <hr /> : null}</li>
                 </ul>
                 <div className="searchbar">
                     <input type='search' placeholder='Search'/>
