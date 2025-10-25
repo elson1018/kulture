@@ -3,6 +3,7 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar />
       <Login />
       <Signup />
+      <Footer />
     </>
   )
 }

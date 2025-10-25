@@ -3,7 +3,7 @@
     import padlock_icon from '../../src/assets/padlock.png'
     import eye_closed_icon from '../../src/assets/eye_closed.png'
     import eye_opened_icon from '../../src/assets/eye_opened.png'
-    import './Login.css'
+    import '../CSS/Login.css'
 
     const Login = () => {
 

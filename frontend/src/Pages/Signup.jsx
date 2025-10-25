@@ -4,7 +4,7 @@ import email_icon from '../../src/assets/email.png';
 import padlock_icon from '../../src/assets/padlock.png';
 import eye_closed_icon from '../../src/assets/eye_closed.png';
 import eye_opened_icon from '../../src/assets/eye_opened.png';
-import './Signup.css'
+import '../CSS/Signup.css'
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);

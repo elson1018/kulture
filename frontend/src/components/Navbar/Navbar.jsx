@@ -26,7 +26,7 @@ const Navbar = () => {
                 <ul className="navbar-menu">
                     <li onClick={() => {setMenu("FOOD")}}>FOOD {menu === "FOOD" ? <hr /> : null}</li>
                     <li onClick={() => {setMenu("INSTRUMENTS")}}>INSTRUMENTS {menu === "INSTRUMENTS" ? <hr /> : null}</li>
-                    <li onClick={() => {setMenu("SOUVENIORS")}}>SOUVENIORS {menu === "SOUVENIORS" ? <hr /> : null}</li>
+                    <li onClick={() => {setMenu("SOUVENIRS")}}>SOUVENIRS {menu === "SOUVENIRS" ? <hr /> : null}</li>
                     <li onClick={() => {setMenu("DANCES")}}>DANCES {menu === "DANCES" ? <hr /> : null}</li>
                 </ul>
                 <div className="searchbar">
