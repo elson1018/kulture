@@ -6,13 +6,21 @@ import eye_closed_icon from '../../src/assets/eye_closed.png';
 import eye_opened_icon from '../../src/assets/eye_opened.png';
 import '../CSS/Signup.css'
 
-const Signup = () => {
+const Signup = ({onFormSwitch}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(prev => !prev);
     };
+
+    const handleLoginClick = (e) => {
+        e.preventDefault();
+
+        if(onFormSwitch) {
+            onFormSwitch('login')
+        }
+    }
 
     return (
         <div className='signup-container'>
@@ -42,7 +50,7 @@ const Signup = () => {
                 <button className="signup-button" disabled={!agreedToTerms}>Sign Up</button>
             </form>
 
-            <p className="login-text">Already have an account? <a href="#">Log In here</a></p>
+            <p className="login-text">Already have an account? <a href="#" onClick={handleLoginClick}>Log In here</a></p>
         </div>
     )
 }

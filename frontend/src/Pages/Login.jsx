@@ -5,7 +5,7 @@
     import eye_opened_icon from '../../src/assets/eye_opened.png'
     import '../CSS/Login.css'
 
-    const Login = () => {
+    const Login = ({onFormSwitch}) => {
 
         const [showPassword, setShowPassword] = useState(false);
         const [loginMessage, setLoginMessage] = useState('');   
@@ -56,6 +56,14 @@
             setShowPassword(prev => !prev);
         }
 
+        const handleSignupClick = (e) => {
+            e.preventDefault(); 
+
+            if (onFormSwitch) {
+                onFormSwitch('signup');
+            }
+        };
+
         return (
             
             <div className='login-container'>
@@ -79,7 +87,7 @@
                     <button type="submit" className="login-button">Log In</button>
                 </form>
 
-                <p className="signup-text">Don't have an account? <a href="#">Sign up here</a></p>
+                <p className="signup-text">Don't have an account? <a href="#" onClick={handleSignupClick}>Sign up here</a></p>
 
             </div>
         )
