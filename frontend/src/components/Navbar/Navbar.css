@@ -14,9 +14,10 @@
 .searchbar img,
 .cart img,
 .user img,
-.sidebar img {
+.auth-area img {
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 .navbar-logo {
@@ -89,6 +90,7 @@
     display: flex;
     align-items: center;
     gap: 45px;
+    cursor: pointer;
 }
 
 .cart-count {
@@ -103,6 +105,27 @@
     font-size: 14px;
     background: #4A3C34;
     color: white;
+}
+
+.auth-area {
+    display: flex;
+    align-items: center;
+}
+
+.login-signup-button {
+    background-color: #D9944E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-signup-button:hover {
+    background-color: #C7813C;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .user {

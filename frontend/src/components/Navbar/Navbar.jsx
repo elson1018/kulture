@@ -5,29 +5,42 @@ import cart_icon from '../../assets/cart_icon.png'
 import user_icon from '../../assets/user_icon.png'
 import './Navbar.css'
 
-const Navbar = () => {
+const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const [activeCategory, setActiveCategory] = useState("FOOD");
 
     // This is the function to toggle the SidebarOpen state
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    const [menu, setMenu] = useState("FOOD");
+    const handleMenuClick = (categoryName, pageName) => {
+        setActiveCategory(categoryName);
+        if (onNavClick) {
+            onNavClick(pageName);
+        }
+    };
+
+    const handleAuthClick = () => {
+        if (onAuthClick) {
+            onAuthClick();
+        }
+    };
 
     return ( 
         <>
             <div className='navbar'>
-                <div className='navbar-logo'>
+                <div className='navbar-logo' onClick={() => onNavClick('home')}>
                     <img src={logo} alt="Logo" />
                     <p>Kulture</p>
                 </div>
                 <ul className="navbar-menu">
-                    <li onClick={() => {setMenu("FOOD")}}>FOOD {menu === "FOOD" ? <hr /> : null}</li>
-                    <li onClick={() => {setMenu("INSTRUMENTS")}}>INSTRUMENTS {menu === "INSTRUMENTS" ? <hr /> : null}</li>
-                    <li onClick={() => {setMenu("SOUVENIRS")}}>SOUVENIRS {menu === "SOUVENIRS" ? <hr /> : null}</li>
-                    <li onClick={() => {setMenu("DANCES")}}>DANCES {menu === "DANCES" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("FOOD", "shop")}>FOOD {activeCategory === "FOOD" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("INSTRUMENTS", "shop")}>INSTRUMENTS {activeCategory === "INSTRUMENTS" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("SOUVENIRS", "shop")}>SOUVENIRS {activeCategory === "SOUVENIRS" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("DANCES", "shop")}>DANCES {activeCategory === "DANCES" ? <hr /> : null}</li>
                 </ul>
                 <div className="searchbar">
                     <input type='search' placeholder='Search'/>
@@ -37,8 +50,16 @@ const Navbar = () => {
                     <img src={cart_icon} alt="Cart Icon" />
                     <div className="cart-count">0</div>
                 </div>
-                <div className="user" onClick={toggleSidebar}>
-                    <img src={user_icon} alt="User Icon" />
+                <div className="auth-area">
+                    {isLoggedIn ? (
+                        <div className="user" onClick={toggleSidebar}>
+                            <img src={user_icon} alt="User Icon" />
+                        </div>
+                    ) : (
+                        <div className="auth-buttons">
+                            <button className="login-signup-button" onClick={handleAuthClick}>Login/Signup</button>
+                        </div>
+                    )}
                 </div>
             </div>
 
