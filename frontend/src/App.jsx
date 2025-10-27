@@ -6,6 +6,7 @@ import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import Footer from './components/Footer/Footer'
 import Team from './Pages/Team'
+import Contact from './Pages/Contact'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
     <>
       <Navbar onAuthClick={() => {handlePageSwitch('login')}} onNavClick={handlePageSwitch} isLoggedIn={isLoggedIn}/>
       <div className='main-content'>{renderContent()}</div>
+      <Contact />
       <Footer />
     </>
   )
