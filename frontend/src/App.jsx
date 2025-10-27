@@ -19,25 +19,25 @@ function App() {
   }
 
   const renderContent = () => {
-      if (activePage === 'login') {
-        return <Login onFormSwitch={handlePageSwitch} />;
-      }
-      if (activePage === 'signup') {
-        return <Signup onFormSwitch={handlePageSwitch} />;
-      }
-      if (activePage === 'team') {
-        return <Team/>;
-      }
-      else {
-        return <Home />;
-      }
+    if (activePage === 'login') {
+      return <Login onFormSwitch={handlePageSwitch} />;
+    }
+    if (activePage === 'signup') {
+      return <Signup onFormSwitch={handlePageSwitch} />;
+    }
+    if (activePage === 'team') {
+      return <Team/>;
+    }
+    if (activePage === 'contact') {
+      return <Contact />
+    }
+    return <Home />;
   };
 
   return (
     <>
       <Navbar onAuthClick={() => {handlePageSwitch('login')}} onNavClick={handlePageSwitch} isLoggedIn={isLoggedIn}/>
       <div className='main-content'>{renderContent()}</div>
-      <Contact />
       <Footer />
     </>
   )

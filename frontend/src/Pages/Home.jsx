@@ -28,7 +28,7 @@ const Home = () => {
       </section>
 
       <section className="trending-products">
-        <h1>Trending in the MarketPlace</h1>
+        <h1>Trending in the Market Place</h1>
         <div className="trending-grid">
           {/*Placeholder for category */}
         </div>
