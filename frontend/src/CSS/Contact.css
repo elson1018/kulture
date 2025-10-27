@@ -17,7 +17,7 @@
   margin-bottom: 10px;
 }
 
-.contact-heade p{
+.contact-header p{
   font-size: 18px;
   color:#9E5E4E;
 }
@@ -100,16 +100,4 @@
 
 .info-details strong{
   color:#9E5E4E;
-}
-
-.map-placeholder{
-  width:100%;
-  height: 250px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
 }

@@ -1,0 +1,121 @@
+.home-page {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #F5F5E9;
+    color: #4A3C34;
+    padding-bottom: 60px;
+}
+
+.featured-categories h1,
+.trending-products h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #9E5E4E;
+    font-size: 37px;
+    font-weight: 700;
+}
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 550px; 
+    margin-bottom: 60px; 
+    overflow: hidden;
+}
+
+.hero-section .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+}
+
+.hero-section h1 {
+    color: #D9944E;
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.hero-section p {
+    color: #9E5E4E;
+    font-size: 20px;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.hero-section button {
+    padding: 14px 35px;
+    margin: 0 15px;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.primary-button {
+    background-color: #D9944E; 
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: #C7813C;
+}
+
+.secondary-button {
+    background-color: #9E5E4E;
+    color: white;
+}
+
+.secondary-button:hover {
+    background-color: #725c50;
+}
+
+.promotion {
+    background-color: #D9944E;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 60px;
+    border-top: 5px solid #C7813C;
+    border-bottom: 5px solid #C7813C;
+}
+
+.promotion p {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.promotion h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.promotion button {
+    background-color: white; 
+    color: #4A3C34;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.promotion button:hover {
+    background-color: #F0F0F0;
+}
+
+.featured-categories {
+    margin-bottom: 80px;
+}
+
+.trending-products {
+    margin-bottom: 40px;
+}
