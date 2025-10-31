@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import Home from './Pages/Home'
@@ -7,40 +8,55 @@ import Signup from './Pages/Signup'
 import Footer from './components/Footer/Footer'
 import Team from './Pages/Team'
 import Contact from './Pages/Contact'
+import Shop from './Pages/Shop'
 
-function App() {
+const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
+  const navigate = useNavigate();
 
-  const [activePage, setActivePage] = useState('home');
+  const handleNavClick = (path) => {
+    navigate(path);
+  };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleAuthClick = () => {
+    navigate('/login');
+  };
 
-  const handlePageSwitch = (pageName) => {
-    setActivePage(pageName);
-  }
-
-  const renderContent = () => {
-    if (activePage === 'login') {
-      return <Login onFormSwitch={handlePageSwitch} />;
+  const handleAuthFormSwitch = (formType) => {
+    if (formType === 'signup') {
+      navigate('/signup');
+    } else {
+      navigate('/login');
     }
-    if (activePage === 'signup') {
-      return <Signup onFormSwitch={handlePageSwitch} />;
-    }
-    if (activePage === 'team') {
-      return <Team/>;
-    }
-    if (activePage === 'contact') {
-      return <Contact />
-    }
-    return <Home />;
   };
 
   return (
     <>
-      <Navbar onAuthClick={() => {handlePageSwitch('login')}} onNavClick={handlePageSwitch} isLoggedIn={isLoggedIn}/>
-      <div className='main-content'>{renderContent()}</div>
+      <Navbar onAuthClick={handleAuthClick} onNavClick={handleNavClick} isLoggedIn={isLoggedIn}/>
+      <div className='main-content'>
+          <Routes>
+            <Route path="/" element={<Home />} /> 
+            <Route path="/login" element={<Login onFormSwitch={handleAuthFormSwitch} setIsLoggedIn={setIsLoggedIn}/>} />
+            <Route path="/signup" element={<Signup onFormSwitch={handleAuthFormSwitch} setIsLoggedIn={setIsLoggedIn}/>} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/shop" element={<Shop />}/>
+          </Routes>
+      </div> 
       <Footer />
+    </>
+  );
+}
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  return (
+    <>
+      <BrowserRouter>
+        <AppContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+      </BrowserRouter>
     </>
   )
 }
 
-export default App
+export default App;

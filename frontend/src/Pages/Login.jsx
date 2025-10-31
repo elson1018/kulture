@@ -1,11 +1,11 @@
     import React, { useState } from 'react'
-    import email_icon from '../../src/assets/email.png'
-    import padlock_icon from '../../src/assets/padlock.png'
-    import eye_closed_icon from '../../src/assets/eye_closed.png'
-    import eye_opened_icon from '../../src/assets/eye_opened.png'
+    import email_icon from '../assets/email.png'
+    import padlock_icon from '../assets/padlock.png'
+    import eye_closed_icon from '../assets/eye_closed.png'
+    import eye_opened_icon from '../assets/eye_opened.png'
     import '../CSS/Login.css'
 
-    const Login = ({onFormSwitch}) => {
+    const Login = ({onFormSwitch, setIsLoggedIn}) => {
 
         const [showPassword, setShowPassword] = useState(false);
         const [loginMessage, setLoginMessage] = useState('');   
@@ -87,7 +87,7 @@
                     <button type="submit" className="login-button">Log In</button>
                 </form>
 
-                <p className="signup-text">Don't have an account? <a href="#" onClick={handleSignupClick}>Sign up here</a></p>
+                <p className="signup-text">Don't have an account? <a href="/signup" onClick={handleSignupClick}>Sign up here</a></p>
 
             </div>
         )

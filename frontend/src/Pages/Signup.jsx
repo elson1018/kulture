@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import user_icon from '../../src/assets/user_icon.png'; 
-import email_icon from '../../src/assets/email.png';
-import padlock_icon from '../../src/assets/padlock.png';
-import eye_closed_icon from '../../src/assets/eye_closed.png';
-import eye_opened_icon from '../../src/assets/eye_opened.png';
+import user_icon from '../assets/user_icon.png'; 
+import email_icon from '../assets/email.png';
+import padlock_icon from '../assets/padlock.png';
+import eye_closed_icon from '../assets/eye_closed.png';
+import eye_opened_icon from '../assets/eye_opened.png';
 import '../CSS/Signup.css'
 
-const Signup = ({onFormSwitch}) => {
+const Signup = ({onFormSwitch, setIsLoggedIn}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -50,7 +50,7 @@ const Signup = ({onFormSwitch}) => {
                 <button className="signup-button" disabled={!agreedToTerms}>Sign Up</button>
             </form>
 
-            <p className="login-text">Already have an account? <a href="#" onClick={handleLoginClick}>Log In here</a></p>
+            <p className="login-text">Already have an account? <a href="/login" onClick={handleLoginClick}>Log In here</a></p>
         </div>
     )
 }
