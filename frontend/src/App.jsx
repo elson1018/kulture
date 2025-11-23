@@ -9,12 +9,21 @@ import Footer from './components/Footer/Footer'
 import Team from './Pages/Team'
 import Contact from './Pages/Contact'
 import Shop from './Pages/Shop'
+import Souvenirs from './Pages/Souvenirs';
+import ProductDetail from './Pages/ProductDetail';
+import Food from './Pages/Food';
+import Instruments from './Pages/Instruments';
+import Tutorial from './Pages/Tutorial';
 
 const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
   const navigate = useNavigate();
 
   const handleNavClick = (path) => {
-    navigate(path);
+    if (path === 'home') {
+      navigate('/');
+    } else {
+      navigate(path);
+    }
   };
 
   const handleAuthClick = () => {
@@ -40,6 +49,11 @@ const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/shop" element={<Shop />}/>
+            <Route path="/shop/food" element={<Food />} />
+            <Route path="/shop/souvenirs" element={<Souvenirs />} />
+            <Route path="/shop/instruments" element={<Instruments />} />
+            <Route path="/shop/tutorial" element={<Tutorial />} />
+            <Route path="/product/:id" element={<ProductDetail />}/>
           </Routes>
       </div> 
       <Footer />
