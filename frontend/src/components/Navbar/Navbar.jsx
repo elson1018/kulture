@@ -37,10 +37,10 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <p>Kulture</p>
                 </div>
                 <ul className="navbar-menu">
-                    <li onClick={() => handleMenuClick("FOOD", "shop")}>FOOD {activeCategory === "FOOD" ? <hr /> : null}</li>
-                    <li onClick={() => handleMenuClick("INSTRUMENTS", "shop")}>INSTRUMENTS {activeCategory === "INSTRUMENTS" ? <hr /> : null}</li>
-                    <li onClick={() => handleMenuClick("SOUVENIRS", "shop")}>SOUVENIRS {activeCategory === "SOUVENIRS" ? <hr /> : null}</li>
-                    <li onClick={() => handleMenuClick("DANCES", "shop")}>DANCES {activeCategory === "DANCES" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("FOOD", "/shop/food")}>FOOD {activeCategory === "FOOD" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("SOUVENIRS", "/shop/souvenirs")}>SOUVENIRS {activeCategory === "SOUVENIRS" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("INSTRUMENTS", "/shop/instruments")}>INSTRUMENTS {activeCategory === "INSTRUMENTS" ? <hr /> : null}</li>
+                    <li onClick={() => handleMenuClick("TUTORIAL", "/shop/tutorial")}>TUTORIAL {activeCategory === "TUTORIAL" ? <hr /> : null}</li>
                 </ul>
                 <div className="searchbar">
                     <input type='search' placeholder='Search'/>
