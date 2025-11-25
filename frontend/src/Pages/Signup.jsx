@@ -7,8 +7,22 @@ import eye_opened_icon from '../assets/eye_opened.png';
 import '../CSS/Signup.css'
 
 const Signup = ({onFormSwitch, setIsLoggedIn}) => {
+    const [formData, setFormData] = useState({
+        fname: '',
+        lname: '',
+        username: '',
+        email: '',
+        password: ''
+    });
+
+    const [role, setRole] = useState("user");
+
     const [showPassword, setShowPassword] = useState(false);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const togglePasswordVisibility = () => {
         setShowPassword(prev => !prev);
@@ -22,24 +36,72 @@ const Signup = ({onFormSwitch, setIsLoggedIn}) => {
         }
     }
 
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        
+        const dataToSend = new URLSearchParams();
+        dataToSend.append('fname', formData.fname);
+        dataToSend.append('lname', formData.lname);
+        dataToSend.append('username', formData.username);
+        dataToSend.append('password', formData.password);
+        dataToSend.append('email', formData.email);
+        dataToSend.append('role', role);
+        dataToSend.append('address', "Malaysia");
+
+        try {
+            const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: dataToSend
+            });
+            
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(`Registration successful as a ${role}! Please log in.`);
+                onFormSwitch('login');
+            } else {
+                alert("Registration failed: " + result.message);
+            }
+        } catch (error) {
+            console.error("Signup Error:", error);
+            alert("Failed to connect to server.");
+        }
+    };
+
     return (
         <div className='signup-container'>
             <h2>Create Your <span>Kulture</span> Account</h2>
-            <form action="#" className='signup-form'>
+            <form onSubmit={handleSignup} className='signup-form'>
+                <div className="input-wrapper">
+                    <input name="fname" type="text" placeholder="First Name" className="input-field" onChange={handleChange} required/>
+                </div>
+
+                <div className="input-wrapper">
+                    <input name="lname" type="text" placeholder="Last Name" className="input-field" onChange={handleChange} required/>
+                </div>
+
                 <div className="input-wrapper">
                     <img src={user_icon} alt="User Name" className='email-icon'/> 
-                    <input type="text" placeholder="Full Name" className="input-field" required/>
+                    <input name="username" type="text" placeholder="What would you prefer us to call you?" className="input-field" onChange={handleChange} required/>
                 </div>
 
                 <div className="input-wrapper">
                     <img src={email_icon} alt="Email" className='email-icon'/>
-                    <input type="email" placeholder="Email Address" className="input-field" required/>
+                    <input name="email" type="email" placeholder="Email Address" className="input-field" onChange={handleChange} required/>
                 </div>
 
                 <div className="input-wrapper"> 
                     <img src={padlock_icon} alt="Password" className='padlock-icon'/>
-                    <input type={showPassword ? "text" : "password"} placeholder="Create Password" className="input-field" required/>
+                    <input name="password" type={showPassword ? "text" : "password"} placeholder="Create Password" className="input-field" onChange={handleChange} required/>
                     <img src={showPassword ? eye_opened_icon : eye_closed_icon} alt="Toggle Password Visibility" className='password-toggle-icon' onClick={togglePasswordVisibility}/>
+                </div>
+
+                <div className="input-wrapper" style={{border: 'none', padding: '0', backgroundColor: 'transparent'}}>
+                    <select value={role} onChange={(e) => setRole(e.target.value)} className="input-field">
+                        <option value="user">I am a Customer (Buyer)</option>
+                        <option value="supplier">I am a Supplier (Seller/Artisan)</option>
+                    </select>
                 </div>
 
                 <div className="agreement-wrapper">
