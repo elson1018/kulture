@@ -14,6 +14,7 @@ import ProductDetail from './Pages/ProductDetail';
 import Food from './Pages/Food';
 import Instruments from './Pages/Instruments';
 import Tutorial from './Pages/Tutorial';
+import AddProduct from './Pages/AddProduct';
 
 const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
             <Route path="/shop/instruments" element={<Instruments />} />
             <Route path="/shop/tutorial" element={<Tutorial />} />
             <Route path="/product/:id" element={<ProductDetail />}/>
+            <Route path="/add-product" element={<AddProduct />} />
           </Routes>
       </div> 
       <Footer />
