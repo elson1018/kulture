@@ -37,6 +37,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency> <!-- Elson: I added MongoDB Java Driver here-->
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>
