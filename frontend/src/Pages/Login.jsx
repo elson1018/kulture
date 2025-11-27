@@ -9,6 +9,7 @@
 
         const [showPassword, setShowPassword] = useState(false);
         const [loginMessage, setLoginMessage] = useState('');   
+        
         const handleLoginForm = async (event) =>{
             // Prevent normal form submission so we can use fetch
             event.preventDefault();
