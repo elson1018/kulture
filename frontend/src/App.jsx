@@ -15,6 +15,8 @@ import Food from './Pages/Food';
 import Instruments from './Pages/Instruments';
 import Tutorial from './Pages/Tutorial';
 import AddProduct from './Pages/AddProduct';
+import Checkout from './Pages/Checkout';
+const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
 import HelpCentre from './Pages/HelpCentre';
 import SupplierDashboard from './Pages/SupplierDashboard';
 
