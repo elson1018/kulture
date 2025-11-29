@@ -64,8 +64,10 @@ public class ProductServlet extends HttpServlet {
             String name = req.getParameter("name");
             String category = req.getParameter("category");
             String desc = req.getParameter("description");
+
+            String company = req.getParameter("company"); // I added Company here
+
             String priceStr = req.getParameter("price");
-            
             double price = 0.0;
             if (priceStr != null && !priceStr.isEmpty()) {
                 price = Double.parseDouble(priceStr);
@@ -85,7 +87,7 @@ public class ProductServlet extends HttpServlet {
             MongoDatabase db = MongoDBUtil.getDatabase();
             MongoCollection<Product> collection = db.getCollection("products", Product.class);
 
-            Product newProduct = new Product(name, category, price, desc, images);
+            Product newProduct = new Product(name, category, price, desc, images, company);
 
             collection.insertOne(newProduct);
 

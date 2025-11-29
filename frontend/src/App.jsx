@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import Home from './Pages/Home'
@@ -17,7 +17,28 @@ import Tutorial from './Pages/Tutorial';
 import AddProduct from './Pages/AddProduct';
 import Checkout from './Pages/Checkout';
 const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
+import HelpCentre from './Pages/HelpCentre';
+import SupplierDashboard from './Pages/SupplierDashboard';
+
+const ProtectedRoute = ({ user, allowedRoles, children }) => {
+  // If user is not logged in, the user will redirect to login page
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If user exists but role is not allowed (customer) only admin and supplier can
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/" replace />; // Send them Home
+  }
+
+  // If all checks pass then render the page
+  return children;
+};
+
+const AppContent = ({user, setUser}) => {
   const navigate = useNavigate();
+
+  const isLoggedIn = !!user;
 
   const handleNavClick = (path) => {
     if (path === 'home') {
@@ -45,17 +66,24 @@ const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
       <div className='main-content'>
           <Routes>
             <Route path="/" element={<Home />} /> 
-            <Route path="/login" element={<Login onFormSwitch={handleAuthFormSwitch} setIsLoggedIn={setIsLoggedIn}/>} />
-            <Route path="/signup" element={<Signup onFormSwitch={handleAuthFormSwitch} setIsLoggedIn={setIsLoggedIn}/>} />
+
+            <Route path="/login" element={<Login onFormSwitch={handleAuthFormSwitch} setUser={setUser}/>} />
+            <Route path="/signup" element={<Signup onFormSwitch={handleAuthFormSwitch}/>}/>
+
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/help-centre" element={<HelpCentre />} />
+
             <Route path="/shop" element={<Shop />}/>
             <Route path="/shop/food" element={<Food />} />
             <Route path="/shop/souvenirs" element={<Souvenirs />} />
             <Route path="/shop/instruments" element={<Instruments />} />
             <Route path="/shop/tutorial" element={<Tutorial />} />
             <Route path="/product/:id" element={<ProductDetail />}/>
-            <Route path="/add-product" element={<AddProduct />} />
+
+            <Route path='/supplier' element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><SupplierDashboard  user={user}></SupplierDashboard></ProtectedRoute>}/>
+            <Route path="/add-product" element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><AddProduct /></ProtectedRoute>}/>
+            
           </Routes>
       </div> 
       <Footer />
@@ -64,12 +92,12 @@ const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   return (
     <>
       <BrowserRouter>
-        <AppContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+        <AppContent user={user} setUser={setUser}/>
       </BrowserRouter>
     </>
   )
