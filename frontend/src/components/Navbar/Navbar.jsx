@@ -9,7 +9,10 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const [activeCategory, setActiveCategory] = useState("FOOD");
+    const [activeCategory, setActiveCategory] = useState("");
+
+    // This is the function to hold the search text
+    const [searchTerm, setSearchTerm] = useState("");
 
     // This is the function to toggle the SidebarOpen state
     const toggleSidebar = () => {
@@ -29,6 +32,15 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
         }
     };
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if(searchTerm.trim()) {
+            if (onNavClick) {
+                onNavClick(`/shop?search=${encodeURIComponent(searchTerm)}`); // This is used to convert the string into URI component
+            }
+        }
+    };
+
     return ( 
         <>
             <div className='navbar'>
@@ -42,10 +54,10 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <li onClick={() => handleMenuClick("INSTRUMENTS", "/shop/instruments")}>INSTRUMENTS {activeCategory === "INSTRUMENTS" ? <hr /> : null}</li>
                     <li onClick={() => handleMenuClick("TUTORIAL", "/shop/tutorial")}>TUTORIAL {activeCategory === "TUTORIAL" ? <hr /> : null}</li>
                 </ul>
-                <div className="searchbar">
-                    <input type='search' placeholder='Search'/>
-                    <img src={search_icon} alt="Search Icon" />
-                </div>
+                <form className="searchbar" onSubmit={handleSearch}>
+                    <input type='search' placeholder='Search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                    <button type='submit' className='search-button'><img src={search_icon} alt="Search Icon" /></button>
+                </form>
                 <div className="cart">
                     <img src={cart_icon} alt="Cart Icon" />
                     <div className="cart-count">0</div>

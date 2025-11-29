@@ -1,14 +1,14 @@
     import React, { useState } from 'react'
+    import { useNavigate } from 'react-router-dom'
     import email_icon from '../assets/email.png'
     import padlock_icon from '../assets/padlock.png'
     import eye_closed_icon from '../assets/eye_closed.png'
     import eye_opened_icon from '../assets/eye_opened.png'
     import '../CSS/Login.css'
 
-    const Login = ({onFormSwitch, setIsLoggedIn}) => {
-
-        const [showPassword, setShowPassword] = useState(false);
-        const [loginMessage, setLoginMessage] = useState('');   
+    const Login = ({onFormSwitch, setUser}) => {
+        const navigate = useNavigate();
+        const [showPassword, setShowPassword] = useState(false);   
         
         const handleLoginForm = async (event) =>{
             event.preventDefault();
@@ -16,30 +16,42 @@
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
 
-            const url = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/login';
+            const url = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/auth/login';
+
             try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(data)
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(data)
             });
 
             const result = await response.json();
 
-            if (response.ok && result.success) {
-                setLoginMessage('Login successful!');
-                console.log('Login successful!', result.message);
+            if (response.ok && result.status === 'success') {
                 alert('Login successful!');
-            } else {
-                setLoginMessage('Login failed: ' + result.message);
-                console.error('Login failed:', result.message);
+
+                const userData = {
+                    ...result.user,
+                    role: result.role
+                };
+
+                setUser(userData);
+
+                if (result.role === 'admin') {
+                    navigate('/admin');
+                } else if (result.role === 'supplier') {
+                    navigate('/supplier');
+                } else {
+                    navigate('/');
+                }
+            } 
+            else {
                 alert('Login failed: ' + result.message);
             }
 
         } catch (error) {
-            setLoginMessage('An error occurred. Please try again.');
             console.error('An error occurred during login:', error);
             alert('An error occurred. Please check the console.');
         }

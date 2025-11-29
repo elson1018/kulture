@@ -41,6 +41,7 @@ const AddProduct = () => {
         formData.append('description', product.description);
         formData.append('price', product.price);
         formData.append('images', product.images);
+        formData.append('company', "Name of Company");
 
         try {
             const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products', {
