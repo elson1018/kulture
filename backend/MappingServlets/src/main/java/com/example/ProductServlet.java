@@ -91,9 +91,21 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
           
             images = Arrays.asList(imageParam.split(","));// Split each value in the image string
 
-            Product newProduct = new Product( name , category , price , description , images , rating);
+            if (imagesParam != null && !imagesParam.isEmpty()) {
+                if (imagesParam.startsWith("data:image")) {
+                    images.add(imagesParam);
+                } else {
+                    images = Arrays.asList(imagesParam.split(","));
+                }
+            }
+
+   
+
+             Product newProduct = new Product( name , category , price , description , images , rating);
        
             dao.saveProduct(newProduct);
+
+
 
             resp.setStatus(HttpServletResponse.SC_CREATED);// Signal creation operations
             

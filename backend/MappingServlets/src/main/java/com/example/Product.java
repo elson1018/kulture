@@ -11,16 +11,18 @@ public class Product {
     private String description;
     private List<String> images;
     private double rating;
+    private String company;
 
     public Product() {}
 
-    public Product(String name, String category, double price, String description, List<String> images , double rating) {
+    public Product(String  name, String category, double price, String description, List<String> images , double rating) {
         this.name = name;
         this.category = category;
         this.price = price;
         this.description = description;
         this.images = images;
-        this.rating = 0.0;
+        this.rating = rating;
+        this.company = " ";
     }
 
     public String getId() { return id; }
@@ -43,4 +45,7 @@ public class Product {
     
     public double getRating() { return rating; }
     public void setRating(double rating) { this.rating = rating; }
+
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
 }

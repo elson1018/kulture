@@ -82,8 +82,19 @@
     margin-right: 10px;
 }
 
-.searchbar img {
+.search-button {
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
+    display: flex; /* Centers the icon */
+    align-items: center;
+}
+
+.search-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .cart {
