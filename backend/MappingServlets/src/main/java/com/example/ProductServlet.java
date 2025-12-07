@@ -71,7 +71,7 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
             String description = req.getParameter("description");
             String imageParam = req.getParameter("image");//How does image works here
             String ratingStr =  req.getParameter("rating");
-
+            List<String> images = new ArrayList<>();
 
             if(name == null         || name.isEmpty()        ||   
                priceStr == null     || priceStr.isEmpty()    || 
@@ -84,20 +84,19 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
                 return;
             }
                 //Parsing
-            
-            double price = Double.parseDouble(priceStr);
-            double rating = Double.parseDouble(ratingStr);
-            List<String> images = new ArrayList<>();
-          
-            images = Arrays.asList(imageParam.split(","));// Split each value in the image string
-
-            if (imagesParam != null && !imagesParam.isEmpty()) {
-                if (imagesParam.startsWith("data:image")) {
-                    images.add(imagesParam);
+             if (imageParam != null && !imageParam.isEmpty()) {
+                if (imageParam.startsWith("data:image")) {
+                    images.add(imageParam);
                 } else {
-                    images = Arrays.asList(imagesParam.split(","));
+                    images = Arrays.asList(imageParam.split(","));
                 }
             }
+            double price = Double.parseDouble(priceStr);
+            double rating = Double.parseDouble(ratingStr);
+            
+          
+          
+           
 
    
 
