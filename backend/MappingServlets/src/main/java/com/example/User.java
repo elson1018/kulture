@@ -6,8 +6,8 @@ public class User {
     private ObjectId id;
     private String user_fname; // User First Name
     private String user_lname; // User Last Name
-    private String username;
-    private String password;
+    private String username; // User Name
+    private String password;  //Password of each user
     private String email;
     private String address;
 
@@ -21,7 +21,7 @@ public class User {
         this.email = email;
         this.address = address;
     }
-
+    //Setter and Getter Functions
     public ObjectId getId() { return id; }
     public void setId(ObjectId id) { this.id = id; }
 

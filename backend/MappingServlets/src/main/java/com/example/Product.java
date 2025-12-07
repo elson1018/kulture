@@ -1,10 +1,10 @@
 package com.example;
 
-import org.bson.types.ObjectId;
 import java.util.List;
-
+import org.bson.codecs.pojo.annotations.BsonId;
 public class Product {
-    private ObjectId id;
+    @BsonId
+    private String id;
     private String name;
     private String category;
     private double price;
@@ -15,18 +15,18 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, String category, double price, String description, List<String> images, String company) {
+    public Product(String  name, String category, double price, String description, List<String> images , double rating) {
         this.name = name;
         this.category = category;
         this.price = price;
         this.description = description;
         this.images = images;
-        this.rating = 0.0;
-        this.company = company;
+        this.rating = rating;
+        this.company = " ";
     }
 
-    public ObjectId getId() { return id; }
-    public void setId(ObjectId id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
