@@ -18,7 +18,7 @@ const Souvenirs = () => {
         const data = await response.json();
         const souvenirItems = data.filter(item => item.category === 'Souvenirs');
         
-        setDisplayProducts(data);
+        setDisplayProducts(souvenirItems);
         setLoading(false);
       } catch (error) {
         console.error("Error loading products:", error);

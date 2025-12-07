@@ -16,9 +16,10 @@ import Instruments from './Pages/Instruments';
 import Tutorial from './Pages/Tutorial';
 import AddProduct from './Pages/AddProduct';
 import Checkout from './Pages/Checkout';
-const AppContent = ({ isLoggedIn, setIsLoggedIn}) => {
 import HelpCentre from './Pages/HelpCentre';
 import SupplierDashboard from './Pages/SupplierDashboard';
+
+
 
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
