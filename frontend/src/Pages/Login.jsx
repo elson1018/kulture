@@ -6,10 +6,12 @@
     import eye_opened_icon from '../assets/eye_opened.png'
     import '../CSS/Login.css'
 
+
     const Login = ({onFormSwitch, setUser}) => {
         const navigate = useNavigate();
         const [showPassword, setShowPassword] = useState(false);   
         
+
         const handleLoginForm = async (event) =>{
             event.preventDefault();
 
@@ -66,6 +68,8 @@
             if (onFormSwitch) {
                 onFormSwitch('signup');
             }
+
+            
         };
 
         return (
