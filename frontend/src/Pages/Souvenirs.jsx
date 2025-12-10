@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ProductCard from '../components/Product/ProductCard'
 import '../CSS/Souvenirs.css';
-// import { products } from '../data/productData.js'; 
 
 const Souvenirs = () => {
   const [displayProducts, setDisplayProducts] = useState([]);
@@ -16,6 +16,7 @@ const Souvenirs = () => {
         }
 
         const data = await response.json();
+        // show only souvenirs product
         const souvenirItems = data.filter(item => item.category === 'Souvenirs');
         
         setDisplayProducts(souvenirItems);
@@ -30,7 +31,11 @@ const Souvenirs = () => {
   }, []);
 
   if (loading) {
-    return <div className='shop-page'><h2 style={{textAlign: 'center'}}>Loading Products...</h2></div>;
+    return (
+      <div className='shop-page' style={{paddingTop: '100px'}}>
+        <h2 style={{textAlign: 'center'}}>Loading Products...</h2>
+      </div>
+    );
   }
 
   return (
@@ -41,35 +46,9 @@ const Souvenirs = () => {
       </div>
         
       <div className="product-grid">
-        {displayProducts.map((product) => {
-          const imageList = product.images || product.image || [];
-          const mainImage = imageList.length > 0 ? imageList[0] : "/products/placeholder.jpg";
-
-          return (
-            <div key={product.id} className="product-card">
-              <div className="product-image-container">
-                <img 
-                  src={mainImage} 
-                  alt={product.name}
-                  onError={(e) => {e.target.src = "/products/placeholder.jpg"}} 
-                /> 
-              </div>
-              
-              <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-price">RM {product.price.toFixed(2)}</p>
-                
-                <div className="product-details">
-                  <span className="product-rating">⭐ {product.rating || "New"}</span>
-                  <p className="product-desc">{product.description}</p>
-                </div>
-                <button className="add-to-cart-btn primary-button">
-                  View Product
-                </button>
-              </div>
-            </div>
-          );
-        })}
+        {displayProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );

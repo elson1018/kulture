@@ -61,7 +61,7 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setupCORS(resp); //Check if the necessary headers are correct
         resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");//Why do i need to set the encoding
+        resp.setCharacterEncoding("UTF-8");//Why do i need to set the encoding 
         try{
             ProductDAO dao = new ProductDAO();//Declare a dao instance
 

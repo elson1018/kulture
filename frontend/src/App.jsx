@@ -84,7 +84,7 @@ const AppContent = ({user, setUser}) => {
 
             <Route path='/supplier' element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><SupplierDashboard  user={user}></SupplierDashboard></ProtectedRoute>}/>
             <Route path="/add-product" element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><AddProduct /></ProtectedRoute>}/>
-            
+            <Route path="/checkout" element={<ProtectedRoute user={user}><Checkout /></ProtectedRoute>}/>
           </Routes>
       </div> 
       <Footer />

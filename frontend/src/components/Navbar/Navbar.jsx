@@ -59,7 +59,7 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <button type='submit' className='search-button'><img src={search_icon} alt="Search Icon" /></button>
                 </form>
                 <div className="cart">
-                    <img src={cart_icon} alt="Cart Icon" />
+                    <button onClick={() => {onNavClick("/checkout")}}><img src={cart_icon} alt="Cart Icon" /></button>
                     <div className="cart-count">0</div>
                 </div>
                 <div className="auth-area">

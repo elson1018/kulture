@@ -1,37 +1,118 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { products } from '../data/productData';
-import '../CSS/Shop.css';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ShopContext } from '../Context/ShopContext'; 
+import '../CSS/ProductDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = products.find(p => p.id === parseInt(id));
+  const navigate = useNavigate();
+  const { addToCart } = useContext(ShopContext);
   
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    // this forces the browser to scroll to top when opening a new product
+    window.scrollTo(0, 0);
+
+    fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products')
+      .then(res => res.json())
+      .then(data => {
+        // then look for the product that matches the id
+        const foundProduct = data.find(p => p.id === parseInt(id) || p.id === String(id));
+        setProduct(foundProduct);
+        
+        // set the initial image
+        if (foundProduct) {
+          const initialImg = Array.isArray(foundProduct.image) && foundProduct.image.length > 0 
+             ? foundProduct.image[0] 
+             : (foundProduct.image || "/products/placeholder.jpg");
+          setSelectedImage(initialImg);
+        }
+        
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error loading product", err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return <div className="product-detail-page loading"><h2>Loading Product Details...</h2></div>;
+  }
+
   if (!product) {
     return (
-      <div className="product-detail-page">
-        <div className="product-not-found">
-          <h2>Product not found</h2>
-        </div>
+      <div className="product-detail-page error">
+        <h2>Product not found</h2>
+        <button onClick={() => navigate('/shop')}>Back to Shop</button>
       </div>
     );
   }
 
   return (
     <div className="product-detail-page">
-      <div className="product-detail-container">
-        <div className="product-image-section">
-          <img src={product.image} alt={product.name} />
-        </div>
-        <div className="product-info-section">
-          <h1>{product.name}</h1>
-          <p className="product-category">{product.category}</p>
-          <p className="product-price">RM {product.price.toFixed(2)}</p>
-          <div className="product-rating">
-            <span>Rating: {product.rating} ⭐</span>
+      <div className="detail-container">
+        
+        <div className="detail-images">
+          <div className="main-image-container">
+            <img 
+                src={selectedImage} 
+                alt={product.name} 
+                onError={(e) => {e.target.src = "/products/placeholder.jpg"}}
+            />
           </div>
-          <p className="product-description">{product.description}</p>
-          <button className="add-to-cart-btn">Add to Cart</button>
+          
+          {/*show thumbnails if got multiple images*/}
+          {Array.isArray(product.image) && product.image.length > 1 && (
+            <div className="thumbnail-list">
+              {product.image.map((img, index) => (
+                <img 
+                  key={index} 
+                  src={img} 
+                  alt={`${product.name} ${index}`}
+                  className={selectedImage === img ? 'active-thumb' : ''}
+                  onClick={() => setSelectedImage(img)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="detail-info">
+          <p className="detail-category">{product.category || "General"}</p>
+          <h1>{product.name}</h1>
+          
+          <div className="detail-rating">
+             <span>{product.rating || "New"} ⭐</span>
+             <span className="review-count">(Based on user reviews)</span>
+          </div>
+
+          <h2 className="detail-price">RM {product.price.toFixed(2)}</h2>
+
+          <p className="detail-description">{product.description}</p>
+
+          <div className="action-buttons">
+            <button 
+              className="add-cart-btn" 
+              onClick={() => {
+                addToCart(product.id);
+                alert(`${product.name} added to cart!`);
+              }}
+            >
+              Add to Cart
+            </button>
+            <button className="buy-now-btn" onClick={() => navigate('/checkout')}>
+               Go to Checkout
+            </button>
+          </div>
+          
+          <div className="detail-extras">
+             <p>Authentic Local Product</p>
+             <p>Delivery within 3-5 days</p>
+          </div>
         </div>
       </div>
     </div>
@@ -39,4 +120,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
