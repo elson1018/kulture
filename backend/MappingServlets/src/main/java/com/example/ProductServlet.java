@@ -93,12 +93,6 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
             }
             double price = Double.parseDouble(priceStr);
             double rating = Double.parseDouble(ratingStr);
-            
-          
-          
-           
-
-   
 
              Product newProduct = new Product( name , category , price , description , images , rating);
        
