@@ -10,7 +10,6 @@
     const Login = ({onFormSwitch, setUser}) => {
         const navigate = useNavigate();
         const [showPassword, setShowPassword] = useState(false);   
-        
 
         const handleLoginForm = async (event) =>{
             event.preventDefault();
