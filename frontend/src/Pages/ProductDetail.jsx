@@ -25,10 +25,15 @@ const ProductDetail = () => {
         
         // set the initial image
         if (foundProduct) {
-          const initialImg = Array.isArray(foundProduct.image) && foundProduct.image.length > 0 
-             ? foundProduct.image[0] 
-             : (foundProduct.image || "/products/placeholder.jpg");
-          setSelectedImage(initialImg);
+           const rawImage = Array.isArray(product.images) && product.images.length > 0
+            ? product.images[0]
+            : "/products/placeholder.jpg";
+
+          const imageSrc = rawImage.startsWith("http") 
+            ? rawImage 
+            : `${rawImage}`;
+
+          setSelectedImage(imageSrc);
         }
         
         setLoading(false);

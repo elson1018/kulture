@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ShopContext } from '../Context/ShopContext';
 import '../CSS/Food.css'; // Make sure this imports Food.css, not Souvenirs.css
-
+import ProductCard from '../components/Product/ProductCard';
 const Food = () => {
     const [foodProducts, setFoodProducts] = useState([]);
     const [loading, setLoading] = useState(true);

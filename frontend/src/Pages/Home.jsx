@@ -7,7 +7,7 @@ const Home = () => {
       <section className="hero-section">
         <div className="content">
           <h1>Discover the Soul of Heritage</h1>
-          <p>placeholder for paragraph</p>
+          
           <button className='primary-button'>Explore Now</button>
           <button className='secondary-button'>Start Your Journey</button>
         </div>
