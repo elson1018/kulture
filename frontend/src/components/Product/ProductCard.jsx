@@ -1,19 +1,27 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductCard.css'
-
+const BACKEND_URL = "http://localhost:8082/MappingServlets-1.0-SNAPSHOT";
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const imageSrc = Array.isArray(product.image) && product.image.length > 0 
-    ? product.image[0] 
-    : (typeof product.image === 'string' && product.image ? product.image : "/products/placeholder.jpg");
+
+  const rawImage = Array.isArray(product.images) && product.images.length > 0
+    ? product.images[0]
+    : "/products/placeholder.jpg";
+
+  const imageSrc = rawImage.startsWith("http") 
+    ? rawImage 
+    : `${rawImage}`;
+
 
   const handleViewDetails = () => {
     navigate(`/product/${product.id}`);
   };
+  {console.log("Current Product Image:", imageSrc);}
 
   return (
     <div className="product-card">
+  
       <div className="product-image-container" onClick={handleViewDetails} style={{cursor: 'pointer'}}>
         <img 
           src={imageSrc} 
