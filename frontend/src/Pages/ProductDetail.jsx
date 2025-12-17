@@ -20,29 +20,27 @@ const ProductDetail = () => {
       .then(res => res.json())
       .then(data => {
         // then look for the product that matches the id
-        const foundProduct = data.find(p => p.id === parseInt(id) || p.id === String(id));
+        const foundProduct = data.find(p => String(p.id) === String(id));
+
+        if (foundProduct) {
         setProduct(foundProduct);
         
-        // set the initial image
-        if (foundProduct) {
-           const rawImage = Array.isArray(product.images) && product.images.length > 0
-            ? product.images[0]
-            : "/products/placeholder.jpg";
+        const imagesSource = foundProduct.images || foundProduct.image;
 
-          const imageSrc = rawImage.startsWith("http") 
-            ? rawImage 
-            : `${rawImage}`;
+        const rawImage = Array.isArray(imagesSource) && imagesSource.length > 0
+        ? imagesSource[0]
+        : "/products/placeholder.jpg";
 
-          setSelectedImage(imageSrc);
+          setSelectedImage(rawImage);
         }
-        
+       
         setLoading(false);
       })
       .catch(err => {
         console.error("Error loading product", err);
         setLoading(false);
       });
-  }, [id]);
+  }, []);
 
   if (loading) {
     return <div className="product-detail-page loading"><h2>Loading Product Details...</h2></div>;
