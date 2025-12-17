@@ -19,8 +19,6 @@ import Checkout from './Pages/Checkout';
 import HelpCentre from './Pages/HelpCentre';
 import SupplierDashboard from './Pages/SupplierDashboard';
 
-
-
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
   if (!user) {
