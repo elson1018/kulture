@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   const imageSrc = rawImage.startsWith("http") 
     ? rawImage 
     : `${rawImage}`;
-
+  
 
   const handleViewDetails = () => {
     navigate(`/product/${product.id}`);
