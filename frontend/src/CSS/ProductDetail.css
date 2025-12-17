@@ -120,7 +120,23 @@
     gap: 15px;
     margin-bottom: 30px;
 }
-
+.quantity-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.quantity-wrapper button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.quantity-wrapper span {
+    padding: 0 10px;
+    font-weight: bold;
+}
 .add-cart-btn, .buy-now-btn {
     flex: 1;
     padding: 15px;

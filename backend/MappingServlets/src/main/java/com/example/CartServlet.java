@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@WebServlet("/api/cart")
+@WebServlet("/api/cart/*")
 public class CartServlet extends HttpServlet {
 
     private CartDAO cartDAO;
