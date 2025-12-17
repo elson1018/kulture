@@ -6,15 +6,16 @@ import eye_closed_icon from '../assets/eye_closed.png';
 import eye_opened_icon from '../assets/eye_opened.png';
 import '../CSS/Signup.css';
 
+
 const Signup = ({onFormSwitch}) => {
-    const [role, setRole] = useState("user"); // Default role
+    const [role, setRole] = useState("CUSTOMER"); // Default role
     const [showPassword, setShowPassword] = useState(false);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
 
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
-        companyName: '', // Specific for Supplier
+        companyName: '', 
         username: '',
         email: '',
         password: ''
@@ -38,42 +39,42 @@ const Signup = ({onFormSwitch}) => {
     const handleSignup = async (e) => {
         e.preventDefault();
         
-        const dataToSend = new URLSearchParams();
-        
-        // --- 1. Add Role ---
-        dataToSend.append('role', role);
-        
-        // --- 2. Add Common Fields ---
-        dataToSend.append('username', formData.username);
-        dataToSend.append('password', formData.password);
-        dataToSend.append('email', formData.email);
-        dataToSend.append('address', "Malaysia"); // Placeholder or add input field
+        const dataToSend = {
+            username: formData.username,
+            password: formData.password,
+            email: formData.email,
+            address: "Malaysia", // Placeholder
+            role: role === 'supplier' ? 'SUPPLIER' : 'CUSTOMER'
+        };
 
         // --- 3. Add Role-Specific Fields ---
         if (role === 'supplier') {
             // Supplier needs Company Name
-            dataToSend.append('companyName', formData.companyName);
+            dataToSend.companyName = formData.companyName;
         } else {
-            // User needs First & Last Name
-            dataToSend.append('fname', formData.fname);
-            dataToSend.append('lname', formData.lname);
+         
+            dataToSend.user_fname = formData.fname; // <--- The Translation
+            dataToSend.user_lname = formData.lname;
+
         }
 
         try {
             const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/auth/register', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: dataToSend
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend)
             });
             
             const result = await response.json();
 
-            if (response.ok) {
+            if (result.status === 'success') {
                 alert(`Registration successful as a ${role}! Please log in.`);
                 onFormSwitch('login');
             } else {
                 alert("Registration failed: " + result.message);
             }
+
+
         } catch (error) {
             console.error("Signup Error:", error);
             alert("Failed to connect to server.");

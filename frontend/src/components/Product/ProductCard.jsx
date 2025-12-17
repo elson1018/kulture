@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductCard.css'
 const BACKEND_URL = "http://localhost:8082/MappingServlets-1.0-SNAPSHOT";
+
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 

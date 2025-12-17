@@ -65,7 +65,7 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <button onClick={() => {onNavClick("/checkout")}}><img src={cart_icon} alt="Cart Icon" /></button>
                     <div className="cart-count">0</div>
                 </div>
-                <div className="auth-area">
+              <div className="auth-area">
                     {isLoggedIn ? (
                         <div className="user" onClick={toggleSidebar}>
                             <img src={user_icon} alt="User Icon" />
