@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import logo from '../../assets/xing.png' // will change a new icon later
 import search_icon from '../../assets/search_icon.png'
 import cart_icon from '../../assets/cart_icon.png'
@@ -13,6 +14,8 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
 
     // This is the function to hold the search text
     const [searchTerm, setSearchTerm] = useState("");
+
+    const navigate = useNavigate();
 
     // This is the function to toggle the SidebarOpen state
     const toggleSidebar = () => {
@@ -33,11 +36,11 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
     };
 
     const handleSearch = (e) => {
-        e.preventDefault();
-        if(searchTerm.trim()) {
-            if (onNavClick) {
-                onNavClick(`/shop?search=${encodeURIComponent(searchTerm)}`); // This is used to convert the string into URI component
-            }
+        e.preventDefault(); // Prevents page reload
+        if (searchTerm.trim()) {
+            navigate(`/shop?search=${encodeURIComponent(searchTerm)}`);
+            
+            setSearchTerm(""); // Clear the search bar after searching
         }
     };
 
@@ -55,7 +58,7 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <li onClick={() => handleMenuClick("TUTORIAL", "/shop/tutorial")}>TUTORIAL {activeCategory === "TUTORIAL" ? <hr /> : null}</li>
                 </ul>
                 <form className="searchbar" onSubmit={handleSearch}>
-                    <input type='search' placeholder='Search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                    <input type='text' placeholder='Search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
                     <button type='submit' className='search-button'><img src={search_icon} alt="Search Icon" /></button>
                 </form>
                 <div className="cart">
