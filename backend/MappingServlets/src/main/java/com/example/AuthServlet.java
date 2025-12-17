@@ -8,115 +8,131 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 import static com.mongodb.client.model.Filters.eq;
 
 @WebServlet("/api/auth/*") 
 public class AuthServlet extends HttpServlet {
 
+    private UserDAO userDAO;
+    private Gson gson;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.gson = new Gson();       
+        this.userDAO = new UserDAO(); 
+       
+    }
+    //CORS Setup
+
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
     }
-
+    //Override available doOptions to set the CORS headers for preflight requests
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
         setupCORS(resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
+
+    //Handle different authentication requests
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setupCORS(resp);
         resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+      
+            String path = req.getPathInfo(); 
+
+            if ("/register".equals(path)) {
+                handleRegister(req, resp);
+            } else if ("/login".equals(path)) {
+                handleLogin(req, resp);
+            } else if ("/logout".equals(path)) {
+                handleLogout(req, resp);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Invalid Endpoint")));
+            }
+    }
+    
+
+    private void handleRegister(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    
+        User newUser = gson.fromJson(req.getReader(), User.class);
+
+     
+        if (userDAO.findByEmail(newUser.getEmail()) != null) {
+            sendError(resp, "Email address is already registered.");
+            return;
+        }
+
+        // 3. Set Role (Default to CUSTOMER if missing)
+        if (newUser.getRole() == null || newUser.getRole().isEmpty()) {
+            newUser.setRole("CUSTOMER");
+        }
+
+        // NOTE: If you need 'companyName' for suppliers, ensure it's added to User.java first!
         
-        String path = req.getPathInfo(); 
-        MongoDatabase db = MongoDBUtil.getDatabase();
-        Gson gson = new Gson();
-        // Register
-        if ("/register".equals(path)) {
-            String role = req.getParameter("role");
-            String email = req.getParameter("email");
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
-            String address = req.getParameter("address");
-            // Admin
-            if ("admin".equals(role)) {
-                // Hold on first
-                return;
-            }
-            // Supplier
-            if ("supplier".equals(role)) {
-                MongoCollection<Supplier> suppliers = db.getCollection("suppliers", Supplier.class);
-                
-                if (suppliers.find(eq("email", email)).first() != null) {
-                    sendError(resp, "Email address is already registered as a supplier.");
-                    return;
-                }
+        // 4. Save using DAO
+        userDAO.createUser(newUser);
 
-                String companyName = req.getParameter("companyName");
+        // 5. Success Response
+        Map<String, String> success = new HashMap<>();
+        success.put("status", "success");
+        success.put("message", "User registered successfully as " + newUser.getRole());
+        resp.getWriter().write(gson.toJson(success));
+    }
 
-                Supplier newSupplier = new Supplier(
-                    username,
-                    password,
-                    email,
-                    companyName,
-                    address
-                );
-                suppliers.insertOne(newSupplier);
-                
-                resp.getWriter().write("{\"status\":\"success\", \"message\":\"Supplier registered!\"}");
-            } 
-            // User
-            else {
-                MongoCollection<User> users = db.getCollection("users", User.class);
-                
-                if (users.find(eq("email", email)).first() != null) {
-                    sendError(resp, "Email address is already registered.");
-                    return;
-                }
 
-                String fname = req.getParameter("fname");
-                String lname = req.getParameter("lname");
+    private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+       
+        User loginRequest = gson.fromJson(req.getReader(), User.class);
 
-                User newUser = new User(
-                    fname,
-                    lname,
-                    username,
-                    password,
-                    email,
-                    address
-                );
-                users.insertOne(newUser);
-                
-                resp.getWriter().write("{\"status\":\"success\", \"message\":\"User registered!\"}");
-            }
-        } 
-        // Log in
-        else if ("/login".equals(path)) {
-            String email = req.getParameter("email"); // Assuming login is via email now
-            String password = req.getParameter("password");
+
+        User user = userDAO.findByEmail(loginRequest.getEmail());
+
+        if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
             
-            // Supplier
-            MongoCollection<Supplier> suppliers = db.getCollection("suppliers", Supplier.class);
-            Supplier supplier = suppliers.find(eq("email", email)).first();
-            if (supplier != null && supplier.getPassword().equals(password)) {
-                resp.getWriter().write("{\"status\":\"success\", \"role\":\"supplier\", \"user\": " + gson.toJson(supplier) + "}");
-                return;
-            }
+            // Create Session
+            HttpSession session = req.getSession();
+            session.setAttribute("user_id", user.getId().toString());
+            session.setAttribute("role", user.getRole());
 
-            // User
-            MongoCollection<User> users = db.getCollection("users", User.class);
-            User user = users.find(eq("email", email)).first();
-            if (user != null && user.getPassword().equals(password)) {
-                resp.getWriter().write("{\"status\":\"success\", \"role\":\"user\", \"user\": " + gson.toJson(user) + "}");
-                return;
-            }
+            // Send success JSON
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("status", "success");
+            responseData.put("role", user.getRole());
+            
+            // Hide password before sending back
+            user.setPassword(null);
+            responseData.put("user", user);
 
+            resp.getWriter().write(gson.toJson(responseData));
+        } else {
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             sendError(resp, "Invalid email or password");
         }
+    }
+
+    // --- 3. LOGOUT LOGIC ---
+    private void handleLogout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        resp.getWriter().write(gson.toJson(Map.of("message", "Logged out")));
     }
 
     private void sendError(HttpServletResponse resp, String msg) throws IOException {

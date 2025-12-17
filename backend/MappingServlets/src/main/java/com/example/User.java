@@ -10,16 +10,19 @@ public class User {
     private String password;  //Password of each user
     private String email;
     private String address;
-
+    private String role;
+    private String companyName;
     public User() {}
 
-    public User(String user_fname, String user_lname, String username,String password, String email, String address) {
+    public User(String user_fname, String user_lname, String username,String password, String email, String address , String role , String companyName) {
         this.user_fname = user_fname;
         this.user_lname = user_lname;
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
+        this.role = role; 
+        this.companyName = companyName;
     }
     //Setter and Getter Functions
     public ObjectId getId() { return id; }
@@ -42,4 +45,12 @@ public class User {
     
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+
 }

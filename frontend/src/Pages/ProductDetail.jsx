@@ -1,51 +1,109 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ShopContext } from '../Context/ShopContext'; 
+
 import '../CSS/ProductDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useContext(ShopContext);
+
   
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    // this forces the browser to scroll to top when opening a new product
-    window.scrollTo(0, 0);
+    const fetchProduct = async () => {
+            try {
+                setLoading(true);
+                //fetch all products with the matching id
+                const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products");
+                
+                if (!response.ok) {
+                    throw new Error("Failed to fetch products");
+                }
 
-    fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products')
-      .then(res => res.json())
-      .then(data => {
-        // then look for the product that matches the id
-        const foundProduct = data.find(p => String(p.id) === String(id));
+                const data = await response.json();
+                
+                //Find the specific product that matches the id
+                
+                const foundProduct = data.find(p => String(p.id) === id);
 
-        if (foundProduct) {
-        setProduct(foundProduct);
-        
-        const imagesSource = foundProduct.images || foundProduct.image;
+                if (foundProduct) {
+                    setProduct(foundProduct);
+                    // Set the first image as the default main image
+                    if (foundProduct.images && foundProduct.images.length > 0) {
+                        setSelectedImage(foundProduct.images[0]);
+                    }
+                } else {
+                    setError("Product not found");
+                }
 
-        const rawImage = Array.isArray(imagesSource) && imagesSource.length > 0
-        ? imagesSource[0]
-        : "/products/placeholder.jpg";
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-          setSelectedImage(rawImage);
+        fetchProduct();
+  }, [id]);
+
+ const handleAddToCart = async () => {
+        // Optional: Check if user is logged in via localStorage before even trying
+        const user = localStorage.getItem('user');
+        if (!user) {
+            alert("Please log in to add items to cart.");
+            navigate('/login');
+            return;
         }
-       
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error loading product", err);
-        setLoading(false);
-      });
-  }, []);
 
+        const cartItem = {
+            productId: product.id,
+            productName: product.name,
+            price: product.price,
+            quantity: quantity,
+            images: product.images || []
+        };
+
+        try {
+            const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // 🚨 CRITICAL: Sends Session Cookie
+                body: JSON.stringify(cartItem)
+            });
+
+            if (response.status === 401) {
+                alert("Session expired. Please log in again.");
+                navigate('/login');
+                return;
+            }
+
+            const result = await response.json();
+
+            if (response.ok && result.status === 'success') {
+                alert(`Added ${quantity} x ${product.name} to cart!`);
+            } else {
+                alert("Failed: " + result.message);
+            }
+
+        } catch (error) {
+            console.error("Cart Error:", error);
+            alert("Server connection failed.");
+        }
+   };
+
+   
   if (loading) {
     return <div className="product-detail-page loading"><h2>Loading Product Details...</h2></div>;
   }
-
+  if (error) return <div className="error-container">{error}</div>;//This can return other 
   if (!product) {
     return (
       <div className="product-detail-page error">
@@ -95,15 +153,20 @@ const ProductDetail = () => {
 
           <h2 className="detail-price">RM {product.price.toFixed(2)}</h2>
 
-          <p className="detail-description">{product.description}</p>
+          <div className="detail-description">
+            <h3>Description</h3>
+            <p>{product.description}</p>
+          </div>
 
           <div className="action-buttons">
+            <div className="quantity-wrapper">
+                <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+                <span>{quantity}</span>
+                <button onClick={() => setQuantity(q => q + 1)}>+</button>
+            </div>
             <button 
               className="add-cart-btn" 
-              onClick={() => {
-                addToCart(product.id);
-                alert(`${product.name} added to cart!`);
-              }}
+              onClick={handleAddToCart}
             >
               Add to Cart
             </button>

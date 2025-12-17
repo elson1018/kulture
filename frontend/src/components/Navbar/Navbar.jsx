@@ -61,11 +61,14 @@ const Navbar = ({onNavClick, onAuthClick, isLoggedIn, activePage}) => {
                     <input type='text' placeholder='Search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
                     <button type='submit' className='search-button'><img src={search_icon} alt="Search Icon" /></button>
                 </form>
+                
                 <div className="cart">
                     <button onClick={() => {onNavClick("/checkout")}}><img src={cart_icon} alt="Cart Icon" /></button>
                     <div className="cart-count">0</div>
                 </div>
-                <div className="auth-area">
+
+
+              <div className="auth-area">
                     {isLoggedIn ? (
                         <div className="user" onClick={toggleSidebar}>
                             <img src={user_icon} alt="User Icon" />
