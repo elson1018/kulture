@@ -24,7 +24,7 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
     //Setup necessary CORS Headers
     private void setupCORS(HttpServletResponse resp){
         resp.setHeader("Access-Control-Allow-Origin", "*");// Allows all to access this server 
-        resp.setHeader("Access-Allow-Control-Allow-Method" , "GET , POST , OPTIONS , DELETE"); //Specifiying which method is allowed to access the resource
+        resp.setHeader("Access-Control-Allow-Methods" , "GET , POST , OPTIONS , DELETE"); //Specifiying which method is allowed to access the resource
         resp.setHeader("Access-Control-Allow-Headers" , "Content-Type");//Specify allowed headers for each request
         resp.setHeader("Access-Control-Allow-Credentials", "true");
     }
