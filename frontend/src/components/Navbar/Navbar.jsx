@@ -99,7 +99,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn }) => {
         <div className="cart">
           <button
             onClick={() => {
-              onNavClick("/checkout");
+              onNavClick("/cart");
             }}
           >
             <img src={cart_icon} alt="Cart Icon" />

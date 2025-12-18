@@ -1,0 +1,22 @@
+[
+  {
+    "user_fname": "Admin",
+    "user_lname": "User",
+    "username": "admin",
+    "password": "admin123",
+    "email": "admin@example.com",
+    "address": "Admin Street 1",
+    "role": "ADMIN",
+    "companyName": "Kulture"
+  },
+  {
+    "user_fname": "Test",
+    "user_lname": "Customer",
+    "username": "customer",
+    "password": "customer123",
+    "email": "customer@example.com",
+    "address": "Customer Road 3",
+    "role": "CUSTOMER",
+    "companyName": ""
+  }
+]

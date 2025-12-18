@@ -1,0 +1,41 @@
+[
+  {
+    "id": "S0001",
+    "name": "Green and Black Batik Silk Scarf (8 x 54)",
+    "category": "Souvenirs",
+    "price": 30.0,
+    "description": "100% Hand-printed Silk",
+    "images": [
+      "/products/Souvenirs/Batik_Slik_Scarf_Green.webp",
+      "/products/Souvenirs/Batik_Slik_Scarf_Green_2.webp"
+    ],
+    "rating": 4.8,
+    "company": "Demo Supplier"
+  },
+  {
+    "id": "S0002",
+    "name": "Yellow Wau Bulan",
+    "category": "Souvenirs",
+    "price": 25.0,
+    "description": "Traditional Malaysian kite souvenir.",
+    "images": [
+      "/products/Souvenirs/Wau_Bulan_Yellow.jpg"
+    ],
+    "rating": 4.7,
+    "company": "Demo Supplier"
+  },
+  {
+    "id": "I0001",
+    "name": "Erhu",
+    "category": "Instruments",
+    "price": 350.0,
+    "description": "Traditional Chinese string instrument.",
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.9,
+    "company": "Demo Supplier"
+  }
+]
+
+

@@ -15,6 +15,7 @@ import Food from './Pages/Food';
 import Instruments from './Pages/Instruments';
 import Tutorial from './Pages/Tutorial';
 import AddProduct from './Pages/AddProduct';
+import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
 import HelpCentre from './Pages/HelpCentre';
 import SupplierDashboard from './Pages/SupplierDashboard';
@@ -82,6 +83,7 @@ const AppContent = ({user, setUser}) => {
             
             <Route path='/supplier' element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><SupplierDashboard  user={user}></SupplierDashboard></ProtectedRoute>}/>
             <Route path="/add-product" element={<ProtectedRoute user={user} allowedRoles={['supplier', 'admin']}><AddProduct /></ProtectedRoute>}/>
+            <Route path="/cart" element={<ProtectedRoute user={user}><Cart /></ProtectedRoute>}/>
             <Route path="/checkout" element={<ProtectedRoute user={user}><Checkout /></ProtectedRoute>}/>
           </Routes>
       </div> 
