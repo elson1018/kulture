@@ -7,7 +7,7 @@ import user_icon from "../../assets/user_icon.png";
 import "./Navbar.css";
 import { ShopContext } from "../../Context/ShopContext";
 
-const Navbar = ({ onNavClick, onAuthClick, isLoggedIn }) => {
+const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState("");
@@ -15,9 +15,22 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn }) => {
   // This is the function to hold the search text
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [userName, setUserName] = useState("User"); 
+  const [userRole, setUserRole] = useState("");
+
   const navigate = useNavigate();
   const location = useLocation();
   const { getTotalCartItems } = useContext(ShopContext);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedRole = localStorage.getItem('role');
+    
+    if (storedUser) {
+        setUserName(storedUser.username || "User");
+        setUserRole(storedRole);
+    }
+  }, [isLoggedIn]);
 
   // Keep underline in sync with current route; clear it on generic /shop
   useEffect(() => {
@@ -59,6 +72,11 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn }) => {
 
       setSearchTerm(""); // Clear the search bar after searching
     }
+  };
+
+  const handleSidebarLink = (path) => {
+      navigate(path);
+      setIsSidebarOpen(false);
   };
 
   return (
@@ -126,12 +144,19 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn }) => {
         <div className="sidebar-overlay" onClick={toggleSidebar}>
           <div className="sidebar">
             <img src={user_icon} alt="User Icon" />
-            <ul>
-              <li>My Accounts</li>
-              <li>My Orders</li>
-              <li>Wishlist</li>
-              <li>Settings</li>
-              <li>Logout</li>
+            <ul className="sidebar-links">
+              {(userRole === 'SUPPLIER' || userRole === 'ADMIN') && (
+                <li onClick={() => handleSidebarLink('/supplier')}>Supplier Dashboard</li>
+              )}
+              
+              <li onClick={() => handleSidebarLink('/orders')}>My Orders</li>
+              <li onClick={() => handleSidebarLink('/settings')}>Settings</li>
+              <li className="logout-item" onClick={() => {
+                if(onLogout) onLogout(); 
+                setIsSidebarOpen(false);
+              }}>
+                Logout
+              </li>
             </ul>
           </div>
         </div>
