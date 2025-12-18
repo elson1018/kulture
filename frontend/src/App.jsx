@@ -60,9 +60,19 @@ const AppContent = ({user, setUser}) => {
     }
   };
 
+  // this is the function used to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    
+    setUser(null);
+    
+    navigate('/');
+  };
+
   return (
     <>
-      <Navbar onAuthClick={handleAuthClick} onNavClick={handleNavClick} isLoggedIn={isLoggedIn}/>
+      <Navbar onAuthClick={handleAuthClick} onNavClick={handleNavClick} isLoggedIn={isLoggedIn} onLogout={handleLogout}/>
       <div className='main-content'>
           <Routes>
             <Route path="/" element={<Home />} /> 
