@@ -19,6 +19,7 @@ import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
 import HelpCentre from './Pages/HelpCentre';
 import SupplierDashboard from './Pages/SupplierDashboard';
+import Settings from './Pages/Settings';
 
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
@@ -79,6 +80,8 @@ const AppContent = ({user, setUser}) => {
 
             <Route path="/login" element={<Login onFormSwitch={handleAuthFormSwitch} setUser={setUser}/>} />
             <Route path="/signup" element={<Signup onFormSwitch={handleAuthFormSwitch}/>}/>
+
+            <Route path="/settings" element={<ProtectedRoute user={user}><Settings /></ProtectedRoute> } />
 
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
