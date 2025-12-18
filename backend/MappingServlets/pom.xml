@@ -60,16 +60,30 @@
                 <version>3.3.2</version>
             </plugin>
             
-            <!-- 2. I've added the Tomcat plugin so you can run the server -->
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.9</version>
                 <configuration>
-                    <!-- You can change the port here if 8081 is in use -->
-                    <port>8082</port>
-                    <!-- This sets the app URL to /MappingServlets -->
-                    <path>/${project.build.finalName}</path>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8082</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>MappingServlets-1.0-SNAPSHOT</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
