@@ -6,21 +6,14 @@
     padding-bottom: 60px;
 }
 
-.featured-categories h1,
-.trending-products h1 {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #9E5E4E;
-    font-size: 37px;
-    font-weight: 700;
-}
-
+/* HERO SECTION */
 .hero-section {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 700px;
+    height: 600px;
+    margin-bottom: 0;
     overflow: hidden;
     background: url('/hero-section.png');
     background-size: cover;
@@ -60,7 +53,8 @@
     color: #F0F0F0;
     font-size: 20px;
     margin-bottom: 30px;
-    font-weight: 300;
+    font-weight: 400;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
 .hero-section button {
@@ -71,7 +65,7 @@
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .primary-button {
@@ -81,6 +75,7 @@
 
 .primary-button:hover {
     background-color: #C7813C;
+    transform: translateY(-3px);
 }
 
 .secondary-button {
@@ -90,16 +85,22 @@
 
 .secondary-button:hover {
     background-color: #725c50;
+    transform: translateY(-3px);
 }
 
+/* PROMOTION SECTION */
 .promotion {
     background-color: #D9944E;
     color: white;
     text-align: center;
     padding: 30px 20px;
     margin-bottom: 60px;
-    border-top: 5px solid #C7813C;
-    border-bottom: 5px solid #C7813C;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.promotion-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .promotion p {
@@ -130,10 +131,158 @@
     background-color: #F0F0F0;
 }
 
-.featured-categories {
+/* SECTION HEADERS */
+.featured-categories, .trending-products {
+    padding: 0 5%;
     margin-bottom: 80px;
 }
 
-.trending-products {
+.featured-categories h1,
+.trending-products h1 {
+    text-align: center;
     margin-bottom: 40px;
+    color: #9E5E4E;
+    font-size: 37px;
+    font-weight: 700;
+    position: relative;
+}
+
+/* CATEGORIES GRID */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.cat-image-container {
+    height: 200px;
+    overflow: hidden;
+}
+
+.cat-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.category-card:hover img {
+    transform: scale(1.1);
+}
+
+.cat-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.cat-info h3 {
+    color: #4A3C34;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.cat-info p {
+    color: #888;
+    font-size: 14px;
+}
+
+.section-divider {
+    width: 80%;
+    height: 1px;
+    background-color: #ddd;
+    margin: 60px auto;
+    border-radius: 5px;
+}
+
+/* TRENDING GRID */
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.trending-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.trending-card:hover {
+    border-color: #D9944E;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transform: translateY(-5px);
+}
+
+.trend-image {
+    position: relative;
+    height: 220px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.trend-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #D9944E;
+    color: white;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.trend-info h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trend-cat {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.trend-price {
+    color: #D9944E;
+    font-size: 18px;
+    font-weight: 700;
 }
