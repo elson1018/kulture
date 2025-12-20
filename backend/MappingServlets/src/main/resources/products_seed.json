@@ -35,6 +35,18 @@
     ],
     "rating": 4.9,
     "company": "Demo Supplier"
+  },
+  {
+    "id": "F0001",
+    "name": "Traditional Muruku",
+    "category": "Food",
+    "price": 12.00,
+    "description": "Crunchy and savory traditional Indian-Malaysian snack made from rice flour",
+    "images":[
+      "/products/Food/Murukku.png"
+    ],
+    "rating": 4.9,
+    "company": "Kulture Eats"
   }
 ]
 

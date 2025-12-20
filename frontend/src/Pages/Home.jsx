@@ -32,7 +32,7 @@ const Home = () => {
   };
 
   const categories = [
-    { title: 'Traditional Food', path: '/shop/food', image: '/products/Food/Murukku.jpeg', desc: 'Taste the heritage' },
+    { title: 'Traditional Food', path: '/shop/food', image: '/products/Food/Murukku.png', desc: 'Taste the heritage' },
     { title: 'Souvenirs', path: '/shop/souvenirs', image: '/products/Souvenirs/Congkak.jpg', desc: 'Handcrafted memories' },
     { title: 'Instruments', path: '/shop/instruments', image: '/products/Instruments/Erhu_main.jpg', desc: 'Sounds of culture' },
     { title: 'Tutorials', path: '/shop/tutorial', image: '/products/Tutorials/Fan_dance.jpeg', desc: 'Learn the dance' },
