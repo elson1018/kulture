@@ -25,6 +25,7 @@ const Checkout = () => {
   // Function to calculate Total Price (Price * Quantity)
   const getTotalCartAmount = () => {
     let totalAmount = 0;
+    let shippingfee = 8;
     // Look through every item in the cart
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
@@ -38,9 +39,9 @@ const Checkout = () => {
           // Math: Quantity * Price
           totalAmount += cartItems[item] * itemInfo.price;
         }
-      }
+      } 
     }
-    return totalAmount;
+    return (totalAmount + shippingfee); // Added shipping fee here
   };
 
   return (
@@ -121,6 +122,7 @@ const Checkout = () => {
           className="checkout-summary"
           style={{ maxWidth: "800px", margin: "40px auto", textAlign: "right" }}
         >
+          <p>Shipping Fee: RM 8.00</p> {/* Added shipping fee here */}
           <h2>Subtotal: RM {getTotalCartAmount().toFixed(2)}</h2>
           <div
             style={{
