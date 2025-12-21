@@ -1,7 +1,6 @@
-/* Page Layout */
 .shop-page {
     padding-top: 100px;
-    background-color: #F5F5E9; /* Keeping your theme background */
+    background-color: #F5F5E9;
     min-height: 100vh;
     padding-bottom: 60px;
 }
@@ -12,14 +11,12 @@
     color: #4A3C34;
 }
 
-/* Cart Container */
 .cart-items {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Single Cart Item Card */
 .cart-item {
     display: flex;
     align-items: center;
@@ -44,7 +41,6 @@
     border: 1px solid #eee;
 }
 
-/* Description Section */
 .cart-description {
     flex-grow: 1;
 }
@@ -60,7 +56,6 @@
     font-weight: 700;
 }
 
-/* Quantity Wrapper */
 .quantity-wrapper {
     display: flex;
     align-items: center;
@@ -86,35 +81,31 @@
     text-align: center;
 }
 
-/* Remove Button Container */
 .remove-btn {
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 5px;
-    display: flex;       /* Centers the image */
+    display: flex;
     align-items: center;
     transition: transform 0.2s;
 }
 
-/* Style the Bin Image */
 .remove-btn img {
-    width: 24px;   /* Adjust this size to fit your design */
+    width: 24px;
     height: auto;
-    opacity: 0.7;  /* Optional: Makes it slightly grey until hovered */
+    opacity: 0.7;
     transition: opacity 0.2s;
 }
 
-/* Hover Effect */
 .remove-btn:hover {
-    transform: scale(1.1); /* Slightly enlarges button */
+    transform: scale(1.1);
 }
 
 .remove-btn:hover img {
-    opacity: 1; /* Makes it fully visible on hover */
+    opacity: 1;
 }
 
-/* Checkout Summary Section */
 .checkout-summary {
     max-width: 900px;
     margin: 40px auto;
@@ -133,7 +124,6 @@
     gap: 15px;
 }
 
-/* Buttons */
 .btn-secondary {
     padding: 12px 25px;
     background: #888;
@@ -167,7 +157,6 @@
     transform: translateY(-2px);
 }
 
-/* Empty Cart State */
 .empty-cart {
     text-align: center;
     margin-top: 50px;
@@ -179,7 +168,6 @@
     font-size: 24px;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 600px) {
     .cart-item {
         flex-wrap: wrap;
