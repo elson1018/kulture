@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -83,7 +82,6 @@ public class AuthServlet extends HttpServlet {
             newUser.setRole("CUSTOMER");
         }
 
-        // NOTE: If you need 'companyName' for suppliers, ensure it's added to User.java first!
         
         // 4. Save using DAO
         userDAO.createUser(newUser);
