@@ -3,7 +3,9 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import logo_default from "../../assets/kulture.png"; // will change a new icon later
 import logo_white from "../../assets/white_kulture.png";
 import search_icon from "../../assets/search_icon.png";
+import search_white from "../../assets/white_search.png";
 import cart_icon from "../../assets/cart_icon.png";
+import cart_white from "../../assets/white_cart.png";
 import user_icon from "../../assets/user_icon.png";
 import "./Navbar.css";
 import { ShopContext } from "../../Context/ShopContext";
@@ -104,6 +106,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
             TUTORIAL {activeCategory === "TUTORIAL" ? <hr /> : null}
           </li>
         </ul>
+
         <form className="searchbar" onSubmit={handleSearch}>
           <input
             type="text"
@@ -112,7 +115,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button type="submit" className="search-button">
-            <img src={search_icon} alt="Search Icon" />
+            <img src={isHomePage ? search_white : search_icon} alt="Search Icon" />
           </button>
         </form>
 
@@ -123,7 +126,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
               onNavClick("/cart");
             }}
           >
-            <img src={cart_icon} alt="Cart Icon" />
+            <img src={isHomePage ? cart_white : cart_icon} alt="Cart Icon" />
           </button>
           <div className="cart-count">{getTotalCartItems()}</div>
         </div>
