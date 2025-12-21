@@ -1,0 +1,15 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Force container to be at least the full screen height */
+}
+
+.main-content {
+  flex: 1; 
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
