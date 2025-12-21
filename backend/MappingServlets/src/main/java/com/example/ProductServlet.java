@@ -81,10 +81,10 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
 
         String role = (String) session.getAttribute("role");
         
-        // Allow if ADMIN or SUPPLIER
-        if (!"ADMIN".equals(role) && !"SUPPLIER".equals(role)) {
+        // Allow only ADMIN
+        if (!"ADMIN".equals(role)) {
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403 Error
-            resp.getWriter().write(gson.toJson(Map.of("error", "Access Denied: Admins/Suppliers only")));
+            resp.getWriter().write(gson.toJson(Map.of("error", "Access Denied: Admin only")));
             return;
         }
 

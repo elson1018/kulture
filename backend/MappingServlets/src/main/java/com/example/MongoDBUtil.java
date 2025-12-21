@@ -18,6 +18,7 @@ public class MongoDBUtil {
 
     private MongoDBUtil() {}
 
+    //Get the database instance
     public static MongoDatabase getDatabase() {
         if (mongoClient == null) {
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
@@ -31,5 +32,15 @@ public class MongoDBUtil {
             mongoClient = MongoClients.create(clientSettings);
         }
         return mongoClient.getDatabase(DATABASE_NAME);
+    }
+
+
+    //Close the connection to the database
+    public static void closeConnection() {
+        if (mongoClient != null) {
+           
+            mongoClient.close();
+            mongoClient = null;
+        }
     }
 }
