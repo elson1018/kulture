@@ -10,7 +10,7 @@
       "/products/Souvenirs/Batik_Slik_Scarf_Green_2.webp"
     ],
     "rating": 4.8,
-    "company": "Demo Supplier"
+    "company": "Kulture"
   },
   {
     "id": "S0002",
@@ -18,11 +18,9 @@
     "category": "Souvenirs",
     "price": 25.0,
     "description": "Traditional Malaysian kite souvenir.",
-    "images": [
-      "/products/Souvenirs/Wau_Bulan_Yellow.jpg"
-    ],
+    "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
     "rating": 4.7,
-    "company": "Demo Supplier"
+    "company": "Kulture"
   },
   {
     "id": "I0001",
@@ -30,24 +28,18 @@
     "category": "Instruments",
     "price": 350.0,
     "description": "Traditional Chinese string instrument.",
-    "images": [
-      "/products/Instruments/Erhu_main.jpg"
-    ],
+    "images": ["/products/Instruments/Erhu_main.jpg"],
     "rating": 4.9,
-    "company": "Demo Supplier"
+    "company": "Kulture"
   },
   {
     "id": "F0001",
     "name": "Traditional Muruku",
     "category": "Food",
-    "price": 12.00,
+    "price": 12.0,
     "description": "Crunchy and savory traditional Indian-Malaysian snack made from rice flour",
-    "images":[
-      "/products/Food/Murukku.png"
-    ],
+    "images": ["/products/Food/Murukku.png"],
     "rating": 4.9,
     "company": "Kulture Eats"
   }
 ]
-
-
