@@ -12,13 +12,16 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 600px;
+    height: 100vh;
+    width: 100%;
     margin-bottom: 0;
     overflow: hidden;
     background: url('/hero-section.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    min-height: 600px;
+    z-index: 1;
 }
 
 .hero-section::before {
@@ -28,7 +31,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
     z-index: 1;
 }
 
@@ -38,23 +41,28 @@
     text-align: center;
     max-width: 900px;
     padding: 0 20px;
+    transform: translateY(-50px);
 }
 
 .hero-section h1 {
     color: #FFFFFF;
-    font-size: 60px;
-    margin-bottom: 20px;
+    font-size: 70px;
+    margin-bottom: 25px;
     font-weight: 800;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Text shadow for legibility */
-    line-height: 1.2;
+    text-shadow: 0px 4px 15px rgba(0,0,0,0.3); 
+    line-height: 1.1;
+    letter-spacing: -2px;
 }
 
 .hero-section p {
     color: #F0F0F0;
-    font-size: 20px;
-    margin-bottom: 30px;
+    font-size: 22px;
+    margin-bottom: 40px;
     font-weight: 400;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    text-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-section button {
@@ -90,12 +98,20 @@
 
 /* PROMOTION SECTION */
 .promotion {
-    background-color: #D9944E;
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    width: 85%;
+    max-width: 800px;
+    padding: 40px 30px;
+    margin: -250px auto 60px auto;
+    border-radius: 20px;
     text-align: center;
-    padding: 30px 20px;
-    margin-bottom: 60px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    position: relative;
+    z-index: 10;
 }
 
 .promotion-content {
@@ -104,31 +120,35 @@
 }
 
 .promotion p {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 
 .promotion h1 {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 800;
-    margin-bottom: 20px;
-    color: white;
+    margin-bottom: 15px;
+    color: #ffffff;
 }
 
 .promotion button {
     background-color: white; 
-    color: #4A3C34;
-    padding: 12px 30px;
+    padding: 12px 35px;
     border: none;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .promotion button:hover {
-    background-color: #F0F0F0;
+    background-color: #bebdbc;
+    transform: translateY(-2px);
 }
 
 /* SECTION HEADERS */
