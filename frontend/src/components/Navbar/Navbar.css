@@ -1,9 +1,56 @@
+/*Apply to all pages*/
 .navbar {
     display: flex;
     justify-content: space-around;
     padding: 15px;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/*Home Page Styling*/
+.navbar-home{
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+}
+
+/*Home page wording color*/
+.navbar-home .navbar-menu,
+.navbar-home .navbar-logo p {
+    color: #fefdfc; 
+}
+
+/*Other Selection Page Styling*/
+.navbar-default{
     background-color: #F5F5E9;
+    position: sticky;
+    top: 0;
     box-shadow: 0 1px 3px -2px black;
+}
+
+.navbar-default .navbar-menu,
+.navbar-default .navbar-logo p {
+    color: #4A3C34; 
+}
+
+/*Underline stlying for other pages*/
+.navbar-default .navbar-menu hr{
+    background: #4A3C34;
+}
+
+.navbar-default .searchbar {
+    background-color: white;
+    border: 1px solid #9E5E4E;
+}
+
+/*Logo Styling*/
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 
 .navbar-logo img {
@@ -11,23 +58,7 @@
     height: 45px;
 }
 
-.searchbar img,
-.cart img,
-.user img,
-.auth-area img {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
 .navbar-logo p {
-    color: #4A3C34;
     font-size: 30px;
     font-weight: 600;
 }
@@ -36,7 +67,7 @@
     display: flex;
     align-items: center;
     gap: 50px;
-    color:#4A3C34;
+    color:#ffffff;
     font-size: 20px;
     font-weight: 500;
 }
@@ -55,20 +86,37 @@
     width: 80%;
     height: 3px;
     border-radius: 10px;
-    background: #4A3C34;
+    background: #ad8f7d;
+}
+
+.searchbar img,
+.user img,
+.auth-area img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
 .searchbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #9E5E4E;
-    border-radius: 25px;
+    width: 250px;
+    height: 40px;
     margin: 20px;
     padding: 5px 15px;
-    background-color: white;
-    height: 40px;
-    width: 250px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(158, 94, 78, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;  
+}
+
+.searchbar:hover{
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: #9E5E4E;
 }
 
 .searchbar input {
@@ -91,17 +139,27 @@
     align-items: center;
 }
 
-.search-btn img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-
+/*Cart Styling*/
 .cart {
     display: flex;
     align-items: center;
     gap: 45px;
     cursor: pointer;
+}
+
+.cart img{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.cart-icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .cart-count {
@@ -115,9 +173,10 @@
     border-radius: 11px;
     font-size: 14px;
     background: #4A3C34;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
+/*Auth Area and User Icon Styling*/
 .auth-area {
     display: flex;
     align-items: center;

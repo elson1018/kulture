@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import logo from "../../assets/xing.png"; // will change a new icon later
+import logo_default from "../../assets/kulture.png"; // will change a new icon later
+import logo_white from "../../assets/white_kulture.png";
 import search_icon from "../../assets/search_icon.png";
 import cart_icon from "../../assets/cart_icon.png";
 import user_icon from "../../assets/user_icon.png";
@@ -20,6 +21,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const { getTotalCartItems } = useContext(ShopContext);
 
   useEffect(() => {
@@ -81,9 +83,9 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
 
   return (
     <>
-      <div className="navbar">
+      <div className={isHomePage ? "navbar navbar-home" : "navbar navbar-default"}>
         <div className="navbar-logo" onClick={() => onNavClick("home")}>
-          <img src={logo} alt="Logo" />
+          <img src={isHomePage ? logo_white : logo_default} alt="Logo" />
           <p>Kulture</p>
         </div>
         <ul className="navbar-menu">
@@ -116,6 +118,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
 
         <div className="cart">
           <button
+          className="cart-icon-btn"
             onClick={() => {
               onNavClick("/cart");
             }}
