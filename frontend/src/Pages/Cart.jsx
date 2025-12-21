@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import "../CSS/Souvenirs.css";
-import "../CSS/ProductDetail.css"; // Reuse quantity styles from product detail
+import bin_icon from "../assets/bin.png";
+import "../CSS/Cart.css";
 
 const Cart = () => {
-  const { cartItems, getTotalCartItems, updateCartItemCount } =
-    useContext(ShopContext);
+  const { cartItems, getTotalCartItems, updateCartItemCount } = useContext(ShopContext);
 
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -37,15 +36,12 @@ const Cart = () => {
   };
 
   return (
-    <div className="shop-page" style={{ paddingTop: "100px" }}>
+    <div className="shop-page">
       <div className="shop-header">
         <h1>Your Cart</h1>
       </div>
 
-      <div
-        className="cart-items"
-        style={{ maxWidth: "800px", margin: "0 auto" }}
-      >
+      <div className="cart-items">
         {products.map((product) => {
           if (cartItems[product.id] > 0) {
             const rawImage =
@@ -57,43 +53,26 @@ const Cart = () => {
               : `${rawImage}`;
 
             return (
-              <div
-                key={product.id}
-                className="cart-item"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  background: "white",
-                  padding: "15px",
-                  marginBottom: "15px",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-                }}
-              >
+              <div key={product.id} className="cart-item">
                 <img
                   src={imageSrc}
                   alt={product.name}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "cover",
-                    borderRadius: "5px",
-                    marginRight: "20px",
-                  }}
+                  className="cart-product-image"
                   onError={(e) => {
                     e.target.src = "/products/placeholder.jpg";
                   }}
                 />
 
-                <div className="description" style={{ flexGrow: 1 }}>
-                  <p>
+                <div className="cart-description">
+                  <p className="cart-product-name">
                     <b>{product.name}</b>
                   </p>
-                  <p>RM {product.price.toFixed(2)}</p>
+                  <p className="cart-product-price">RM {product.price.toFixed(2)}</p>
                 </div>
 
                 <div className="quantity-wrapper">
                   <button
+                    className="quantity-btn"
                     onClick={() =>
                       updateCartItemCount(
                         Math.max(1, cartItems[product.id] - 1),
@@ -103,8 +82,9 @@ const Cart = () => {
                   >
                     -
                   </button>
-                  <span>{cartItems[product.id]}</span>
+                  <span className="quantity-display">{cartItems[product.id]}</span>
                   <button
+                    className="quantity-btn"
                     onClick={() =>
                       updateCartItemCount(cartItems[product.id] + 1, product.id)
                     }
@@ -112,6 +92,15 @@ const Cart = () => {
                     +
                   </button>
                 </div>
+
+                {/* i added remove button here */}
+                <button 
+                  className="remove-btn"
+                  title="Remove Item"
+                  onClick={() => updateCartItemCount(0, product.id)}
+                >
+                  <img src={bin_icon} alt="Remove" />
+                </button>
               </div>
             );
           }
@@ -120,48 +109,36 @@ const Cart = () => {
       </div>
 
       {getTotalCartItems() > 0 ? (
-        <div
-          className="checkout-summary"
-          style={{ maxWidth: "800px", margin: "40px auto", textAlign: "right" }}
-        >
+        <div className="checkout-summary">
           <h2>Subtotal: RM {getTotalCartAmount().toFixed(2)}</h2>
-          <div style={{ marginTop: "20px" }}>
+          <div className="checkout-actions">
             <button
+              className="btn-secondary"
               onClick={() => navigate("/shop")}
-              style={{
-                marginRight: "10px",
-                padding: "10px 20px",
-                background: "gray",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
             >
               Continue Shopping
             </button>
             <button
+              className="btn-primary"
               onClick={() => navigate("/checkout")}
-              style={{
-                padding: "10px 20px",
-                background: "#D9944E",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
             >
               Go to Checkout
             </button>
           </div>
         </div>
       ) : (
-        <h2 style={{ textAlign: "center" }}> Your Shopping Cart is Empty</h2>
+        <div className="empty-cart"> {/* show navigate button if the cart is empty */}
+            <h2>Your Shopping Cart is Empty</h2>
+            <button 
+                className="btn-primary" 
+                onClick={() => navigate("/shop")}
+            >
+                Start Shopping
+            </button>
+        </div>
       )}
     </div>
   );
 };
 
 export default Cart;
-
-
