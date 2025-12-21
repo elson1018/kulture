@@ -17,7 +17,6 @@ public class DatabaseSeeder {
         db.getCollection("users").drop();
         db.getCollection("products").drop();
         db.getCollection("carts").drop();
-        System.out.println("Database dropped");
         //Seed Users
         seedUsers(db);
 
