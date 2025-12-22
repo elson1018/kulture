@@ -47,7 +47,6 @@ public class BookingServlet extends HttpServlet {
         }
 
         try {
-            // New DAO method required: getSalesByUserEmail
             List<Sale> userHistory = salesDAO.getSalesByUserEmail(email);
             resp.getWriter().write(gson.toJson(userHistory));
         } catch (Exception e) {
