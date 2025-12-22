@@ -69,6 +69,7 @@ const ProductDetail = () => {
       price: product.price,
       quantity: quantity,
       images: product.images || [],
+      company: product.company || "Kulture",
     };
 
     try {

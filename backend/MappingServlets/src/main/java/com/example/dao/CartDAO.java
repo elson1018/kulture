@@ -24,6 +24,14 @@ public class CartDAO {
         return cartFromDocument(doc);
     }
 
+    public List<CartItem> getCartItems(String userId) {
+        Cart cart = getCart(userId);
+        if (cart != null && cart.getItems() != null) {
+            return cart.getItems();
+        }
+        return new ArrayList<>();
+    }
+
     //Add to cart function
     public void addToCart(String userId, CartItem newItem) {
         Cart cart = getCart(userId);
@@ -79,7 +87,8 @@ public class CartDAO {
                 .append("productName", item.getProductName())
                 .append("price", item.getPrice())
                 .append("quantity", item.getQuantity())
-                .append("image", item.getImages())
+                .append("images", item.getImages())
+                .append("company", item.getCompany())
             );
         }
         return new Document("userId", cart.getUserId())
@@ -111,7 +120,8 @@ public class CartDAO {
                 itemDoc.getString("productName"),
                 price,
                 quantity,
-                images
+                images,
+                itemDoc.getString("company")
             ));
         }
     }

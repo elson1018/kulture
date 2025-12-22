@@ -4,26 +4,34 @@ import "../CSS/SupplierDashboard.css";
 
 const SupplierDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);
+  const [salesData, setSalesData] = useState({ totalRevenue: 0, sales: [] });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMyProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setMyProducts(data);
+        const [productsRes, salesRes] = await Promise.all([
+          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
+          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales")
+        ]);
+
+        if (productsRes.ok) {
+          const products = await productsRes.json();
+          setMyProducts(products);
+        }
+
+        if (salesRes.ok) {
+          const sales = await salesRes.json();
+          setSalesData(sales);
         }
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchMyProducts();
+    fetchData();
   }, []);
 
   return (
@@ -48,12 +56,42 @@ const SupplierDashboard = ({ user }) => {
         </div>
         <div className="stat-card">
           <h3>Total Sales</h3>
-          <p>RM 0.00</p> {/* This one will change later */}
+          <p>RM {salesData.totalRevenue.toFixed(2)}</p>
         </div>
         <div className="stat-card">
-          <h3>Pending Orders</h3>
-          <p>0</p> {/* This one will change later also */}
+          <h3>Total Orders</h3>
+          <p>{salesData.sales.length}</p>
         </div>
+      </div>
+
+      <div className="products-table-section">
+        <h2>Recent Sales</h2>
+        {loading ? (
+          <p>Loading sales...</p>
+        ) : salesData.sales.length > 0 ? (
+          <table className="inventory-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Products</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {salesData.sales.map((sale, index) => (
+                <tr key={sale.id || index}>
+                  <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
+                  <td>{sale.customerEmail}</td>
+                  <td>{sale.productNames.join(", ")}</td>
+                  <td>RM {sale.totalAmount.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No sales recorded yet.</p>
+        )}
       </div>
 
       <div className="products-table-section">

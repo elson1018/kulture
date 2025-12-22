@@ -51,11 +51,22 @@ public class ProductServlet extends HttpServlet{ //Product Servlet
         resp.setStatus(HttpServletResponse.SC_OK);//Send back a successful response
 
         try{
+
+            String action = req.getParameter("action"); //Gets the action parameter from the client request
+            if ("getStats".equals(action)) {
+                SalesDAO salesDAO = new SalesDAO();
+                double totalRevenue = salesDAO.getTotalRevenue();
+                resp.getWriter().write(new Gson().toJson(java.util.Map.of("totalRevenue", totalRevenue)));
+                return;
+            }
+
             List<Product> products = productDAO.getAllProducts();//Gets all the products and store in products
+
             String json = new Gson().toJson(products);//Serialise the products into json format
             resp.getWriter().write(json);//Write the serialised json in the response stream
+
         }catch(Exception e){
-            e.printStackTrace(); // 👈 THIS IS KEY: It will show the error in your terminal
+            e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
            
         } 

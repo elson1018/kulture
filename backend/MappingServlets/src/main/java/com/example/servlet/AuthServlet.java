@@ -106,6 +106,7 @@ public class AuthServlet extends HttpServlet {
             // Create Session
             HttpSession session = req.getSession();
             session.setAttribute("user_id", user.getId().toString());
+            session.setAttribute("email", user.getEmail());
             session.setAttribute("role", user.getRole());
 
             // Send success JSON
