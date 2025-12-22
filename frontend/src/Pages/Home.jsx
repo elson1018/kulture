@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import Instruments from './Instruments'
 import '../CSS/Home.css'
 
 const Home = () => {
@@ -8,6 +7,30 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [trendingProducts, setTrendingProducts] = useState([]);
+
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) { // the button will be displayed after scrolling down 300px
+        setShowScrollBtn(true);
+      } else {
+        setShowScrollBtn(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
     fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products') // fetch products from backedn
@@ -109,6 +132,13 @@ const Home = () => {
           )}
         </div>
       </section>
+
+      {/* I added scroll to top button here */}
+      {showScrollBtn && (
+        <button className="scroll-top-btn" onClick={scrollToTop}>
+          ↑
+        </button>
+      )}
     </div>
   )
 }
