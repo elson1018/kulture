@@ -1,7 +1,8 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Force container to be at least the full screen height */
+  min-height: 100vh; 
+  position: relative;
 }
 
 .main-content {
