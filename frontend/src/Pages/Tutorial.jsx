@@ -52,17 +52,6 @@ const Tutorial = ({ user }) => {
         fetchTutorials();
     }, []);
 
-    useEffect(() => {
-        let filtered = tutorials.filter(t => {
-            const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesLevel = levelFilter === 'all' || t.level?.toLowerCase() === levelFilter;
-            const matchesType = typeFilter === 'all' ||
-                (typeFilter === 'live' ? t.isLiveClass : !t.isLiveClass);
-            return matchesSearch && matchesLevel && matchesType;
-        });
-        setFilteredTutorials(filtered);
-    }, [searchQuery, levelFilter, typeFilter, tutorials]);
-
     const handleBookOrBuyClick = (tutorial) => {
         if (!getUserEmail()) {
             alert('Please log in to book or purchase tutorials.');
