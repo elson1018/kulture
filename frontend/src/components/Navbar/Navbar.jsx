@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import logo_default from "../../assets/kulture.png"; // will change a new icon later
+import logo_default from "../../assets/kulture.png"; 
 import logo_white from "../../assets/white_kulture.png";
 import search_icon from "../../assets/search_icon.png";
 import search_white from "../../assets/white_search.png";
 import cart_icon from "../../assets/cart_icon.png";
 import cart_white from "../../assets/white_cart.png";
 import user_icon from "../../assets/user_icon.png";
+import user_white from "../../assets/white_user.png";
 import "./Navbar.css";
 import { ShopContext } from "../../Context/ShopContext";
 
@@ -23,7 +24,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
   const { getTotalCartItems } = useContext(ShopContext);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
         <div className="auth-area">
           {isLoggedIn ? (
             <div className="user" onClick={toggleSidebar}>
-              <img src={user_icon} alt="User Icon" />
+              <img src={isHomePage ? user_white : user_icon} alt="User Icon" />
             </div>
           ) : (
             <div className="auth-buttons">
