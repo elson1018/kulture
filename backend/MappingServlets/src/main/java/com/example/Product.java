@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.List;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 public class Product {
     @BsonId
     private String id;

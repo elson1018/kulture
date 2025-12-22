@@ -16,7 +16,7 @@ public class ProductDAO {
 
     public ProductDAO() {
         MongoDatabase db = MongoDBUtil.getDatabase(); //Gets the database instance
-        this.productCollection = db.getCollection("products", Product.class); //Why do we need to pass teh product.class inside?
+        this.productCollection = db.getCollection("products", Product.class); 
 
        
     }
