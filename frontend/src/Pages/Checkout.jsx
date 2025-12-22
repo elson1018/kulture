@@ -41,6 +41,27 @@ const Checkout = () => {
         const itemInfo = products.find(
           (product) => product.id === String(item) || product.id === parseInt(item)
         );
+        
+        if (itemInfo) {
+          // this is to check if the item is instrument then apply 10% discount on it
+          const finalPrice = itemInfo.category === "Instruments" 
+            ? itemInfo.price * 0.90 
+            : itemInfo.price;
+
+          totalAmount += cartItems[item] * finalPrice;
+        }
+      }
+    }
+    return totalAmount;
+  };
+
+  const getOriginalCartAmount = () => { // this is without discount one
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        const itemInfo = products.find(
+          (product) => product.id === String(item) || product.id === parseInt(item)
+        );
         if (itemInfo) {
           totalAmount += cartItems[item] * itemInfo.price;
         }
@@ -50,8 +71,10 @@ const Checkout = () => {
   };
 
   // calculate total
-  const subTotal = getTotalCartAmount();
-  const grandTotal = subTotal + shippingFee;
+  const finalSubTotal = getTotalCartAmount(); // total price user pays for items
+  const originalAmount = getOriginalCartAmount(); // total price before discount
+  const discountAmount = originalAmount - finalSubTotal; // total discount value
+  const grandTotal = finalSubTotal + shippingFee;
 
   if (getTotalCartItems() === 0 && products.length > 0) {
     return (
@@ -131,8 +154,15 @@ const Checkout = () => {
             {/* price breakdown */}
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>RM {subTotal.toFixed(2)}</span>
+              <span>RM {originalAmount.toFixed(2)}</span>
             </div>
+
+            {discountAmount > 0 && ( // display total discount value
+              <div className="summary-row">
+                <span>Discount</span>
+                <span>- RM {discountAmount.toFixed(2)}</span>
+              </div>
+            )}
             
             <div className="summary-row">
               <span>Shipping Fee</span>
