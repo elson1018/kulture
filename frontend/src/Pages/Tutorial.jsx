@@ -5,28 +5,19 @@ const API_BASE_URL = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api';
 
 const Tutorial = ({ user }) => {
     const [tutorials, setTutorials] = useState([]);
-    const [filteredTutorials, setFilteredTutorials] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Preview and Booking modal state
     const [previewTutorial, setPreviewTutorial] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [selectedTutorial, setSelectedTutorial] = useState(null);
 
-    // Booking form state
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
     const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
     const [isBooking, setIsBooking] = useState(false);
 
-    // Filter state
-    const [searchQuery, setSearchQuery] = useState('');
-    const [levelFilter, setLevelFilter] = useState('all');
-    const [typeFilter, setTypeFilter] = useState('all');
-
-    // Aligning user identification with Settings.jsx
     const getUserEmail = () => {
         if (user?.email) return user.email;
         const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -36,13 +27,10 @@ const Tutorial = ({ user }) => {
     useEffect(() => {
         const fetchTutorials = async () => {
             try {
-                // Fetching from your existing product API, filtered for Tutorials category
-                const response = await fetch(`${API_BASE_URL}/products`);
+                const response = await fetch(`${API_BASE_URL}/tutorials`);
                 if (!response.ok) throw new Error('Failed to fetch tutorials');
                 const data = await response.json();
-                const tutorialData = data.filter(item => item.category === 'Tutorials');
-                setTutorials(tutorialData);
-                setFilteredTutorials(tutorialData);
+                setTutorials(data);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -100,16 +88,18 @@ const Tutorial = ({ user }) => {
     return (
         <div className="tutorial-page">
             <h1>Tutorials & Classes</h1>
+            <p className="page-subtext">Book a live session or access recorded dance lessons.</p>
 
             <div className="tutorial-grid">
                 {tutorials.map((tutorial) => (
                     <div key={tutorial.id} className="tutorial-card">
-                        <img src={tutorial.images?.[0] || "/products/Tutorials/Fan_dance.jpeg"} alt={tutorial.name} />
+                        <img src={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"} alt={tutorial.name} />
                         <div className="card-content">
                             <h2>{tutorial.name}</h2>
-                            <p>RM{tutorial.price.toFixed(2)}</p>
+                            <p className="instructor-name">By {tutorial.instructor}</p>
+                            <p className="tutorial-price">RM{tutorial.price.toFixed(2)}</p>
                             <div className="tutorial-actions">
-                                <button onClick={() => { setPreviewTutorial(tutorial); setShowPreview(true); }}>Preview</button>
+                                <button onClick={() => { setPreviewTutorial(tutorial); setShowPreview(true); }}>Watch Preview</button>
                                 <button className="book-btn" onClick={() => handleBookOrBuyClick(tutorial)}>
                                     {tutorial.isLiveClass ? "Book Class" : "Buy Now"}
                                 </button>
@@ -119,18 +109,19 @@ const Tutorial = ({ user }) => {
                 ))}
             </div>
 
-            {/* Modal Logic for Preview and Booking */}
+            {/* Booking Modal */}
             {showBookingModal && (
                 <div className="modal-overlay" onClick={() => setShowBookingModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <h2>Confirm {selectedTutorial.isLiveClass ? 'Booking' : 'Purchase'}</h2>
+                        <p>{selectedTutorial.name} with {selectedTutorial.instructor}</p>
                         {selectedTutorial.isLiveClass && (
-                            <>
+                            <div className="datetime-fields">
                                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} />
                                 <input type="time" value={selectedTime} onChange={e => setSelectedTime(e.target.value)} />
-                            </>
+                            </div>
                         )}
-                        <p>{bookingMessage.text}</p>
+                        <p className={`message ${bookingMessage.type}`}>{bookingMessage.text}</p>
                         <button onClick={handleBookingConfirm} disabled={isBooking}>
                             {isBooking ? 'Processing...' : 'Confirm'}
                         </button>

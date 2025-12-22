@@ -63,7 +63,6 @@ public class TutorialServlet extends HttpServlet {
             String name = req.getParameter("name");
             String instructor = req.getParameter("instructor");
             String desc = req.getParameter("description");
-            String level = req.getParameter("level");
             String priceStr = req.getParameter("price");
             String isLiveClassStr = req.getParameter("isLiveClass");
             String imagesParam = req.getParameter("images");
@@ -77,7 +76,7 @@ public class TutorialServlet extends HttpServlet {
             MongoDatabase db = MongoDBUtil.getDatabase();
             MongoCollection<Tutorial> collection = db.getCollection("tutorials", Tutorial.class);
 
-            Tutorial newTutorial = new Tutorial(name, instructor, price, desc, level, isLiveClass, images);
+            Tutorial newTutorial = new Tutorial(name, instructor, price, desc, isLiveClass, images);
             collection.insertOne(newTutorial);
 
             resp.setStatus(HttpServletResponse.SC_CREATED);
