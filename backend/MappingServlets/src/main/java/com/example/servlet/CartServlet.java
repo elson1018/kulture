@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,12 +17,14 @@ import java.util.stream.Collectors;
 public class CartServlet extends HttpServlet {
 
     private CartDAO cartDAO;
+    private UserDAO userDAO;
     private Gson gson;
 
     @Override
     public void init() throws ServletException {
         super.init();
         this.cartDAO = new CartDAO();
+        this.userDAO = new UserDAO();
         this.gson = new Gson();
     }
 
@@ -74,11 +78,72 @@ public class CartServlet extends HttpServlet {
 
         try {
             String userId = (String) session.getAttribute("user_id");
-            
- 
+            String action = req.getParameter("action"); //Get the action parameter from the request
+
+
+                // --- CHECKOUT ACTION ---
+                if ("checkout".equals(action)) {
+                    List<CartItem> items = cartDAO.getCartItems(userId); //stores all the items in the cart of the current user in session
+
+                    if (items == null || items.isEmpty()) { //Validation for the cart
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        resp.getWriter().write(gson.toJson(Map.of("error", "Cart is empty")));
+                        return;
+                    }
+
+                    // Calculate total revenue and collect names for the sale record, grouped by company
+                    Map<String, List<CartItem>> itemsByCompany = items.stream()
+                            .collect(Collectors.groupingBy(item -> item.getCompany() != null ? item.getCompany() : "Kulture"));
+
+                    for (Map.Entry<String, List<CartItem>> entry : itemsByCompany.entrySet()) {
+                        String company = entry.getKey();
+                        List<CartItem> companyItems = entry.getValue();
+
+                        double companyTotal = 0;
+                        List<String> productNames = new ArrayList<>();
+                        for (CartItem item : companyItems) {
+                            companyTotal += item.getPrice() * item.getQuantity();
+                            productNames.add(item.getProductName());
+                        }
+
+                        //Record the total sales in the "sales collection" for each company
+                        SalesDAO salesDAO = new SalesDAO();
+                        Sale newSale = new Sale();
+
+                        String email = (String) session.getAttribute("email");
+                        if (email == null) {
+                            // Fallback: try to get email from database if session attribute is missing
+                            User user = userDAO.findById(userId);
+                            if (user != null) {
+                                email = user.getEmail();
+                                session.setAttribute("email", email); // Restore it to session
+                            }
+                        }
+
+                        if (email == null) {
+                            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                            resp.getWriter().write(gson.toJson(Map.of("status", "error", "message", "fail to get email")));
+                            return;
+                        }
+
+                        newSale.setCustomerEmail(email);
+                        newSale.setProductNames(productNames);
+                        newSale.setTotalAmount(companyTotal);
+                        newSale.setCompany(company);
+
+                        salesDAO.recordSale(newSale); //Record the sale after user has checkedout
+                    }
+
+                    //Clear the cart after successful sale recording
+                    cartDAO.clearCart(userId);
+
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    resp.getWriter().write(gson.toJson(Map.of("status", "success", "message", "Checkout successful!")));
+                    return;
+                }
+
+
             CartItem newItem = gson.fromJson(req.getReader(), CartItem.class);
-            
-        
             if (newItem.getProductId() == null || newItem.getQuantity() <= 0) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().write(gson.toJson(Map.of("status", "error", "message", "Invalid product data")));

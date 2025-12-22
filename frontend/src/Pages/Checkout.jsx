@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../CSS/Checkout.css";
 
 const Checkout = () => {
-  const { cartItems, getTotalCartItems } = useContext(ShopContext);
+  const { cartItems, getTotalCartItems , clearCart} = useContext(ShopContext);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const Checkout = () => {
     paymentMethod: "cod", // by default cash on delivery
   });
 
-  // i put rm8.00 for shipping fee
+  //  rm8.00 for shipping fee default
   const shippingFee = 8.00;
 
   // fetch the products
@@ -27,10 +27,37 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Processing Order with payment:", formData.paymentMethod);
-    alert("Order Placed Successfully!");
+      try {
+          const response = await fetch(
+              "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart?action=checkout",
+              {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  // Crucial: send cookies so the backend knows which user is checking out
+                  credentials: "include",
+              }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+              console.log("Order Processed:", result.message);
+              clearCart();
+              alert("Order Placed Successfully!");
+              // Redirect to a success page or home
+              navigate("/");
+          } else {
+              console.error("Backend Error:", result);
+              alert("Checkout failed: " + (result.message || result.error || "Unknown error"));
+          }
+      } catch (error) {
+          console.error("Error during checkout:", error);
+          alert("An error occurred. Please try again later.");
+      }
     navigate("/"); 
   }; 
 

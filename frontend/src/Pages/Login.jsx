@@ -5,6 +5,7 @@ import padlock_icon from "../assets/padlock.png";
 import eye_closed_icon from "../assets/eye_closed.png";
 import eye_opened_icon from "../assets/eye_opened.png";
 import "../CSS/Login.css";
+import Popup from "../components/Popup/Popup";
 
 const Login = ({ onFormSwitch, setUser }) => {
   const navigate = useNavigate();
@@ -14,12 +15,29 @@ const Login = ({ onFormSwitch, setUser }) => {
     password: "",
   });
 
+  //State to manage popup
+  const [popup, setPopup] = useState({ show: false, msg: "", type: "success" });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const closePopup = () => {
+        setPopup({ ...popup, show: false });
+
+        // If it was a success, navigate after the user clicks "Close"
+        if (popup.type === "success") {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user?.role === "ADMIN") {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
+        }
   };
 
   const handleLoginForm = async (event) => {
@@ -46,7 +64,7 @@ const Login = ({ onFormSwitch, setUser }) => {
       const result = await response.json();
 
       if (response.ok && result.status === "success") {
-        alert("Login successful!");
+
 
         const userData = {
           ...result.user,
@@ -58,17 +76,28 @@ const Login = ({ onFormSwitch, setUser }) => {
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("role", result.role);
 
-        if (result.role === "ADMIN") {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
+        setPopup({
+              show: true,
+              msg: " Login successful!",
+              type: "success"
+        });
+
+
+
+
       } else {
-        alert("Login failed: " + result.message);
+          setPopup({
+              show: true,
+              msg: "Login failed: " + (result.message || "Invalid credentials"),
+              type: "error"
+          });
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
-      alert("An error occurred. Please check the console.");
+        setPopup({
+            show: true,
+            msg: "An error occurred. Please check your connection.",
+            type: "error"
+        });
     }
   };
 
@@ -81,6 +110,12 @@ const Login = ({ onFormSwitch, setUser }) => {
 
   return (
     <div className="login-container">
+        <Popup
+            isOpen={popup.show}
+            message={popup.msg}
+            type={popup.type}
+            onClose={closePopup}
+        />
       <h2 className="form-title">Log In Now</h2>
 
       <form onSubmit={handleLoginForm} className="login-form">
@@ -115,15 +150,12 @@ const Login = ({ onFormSwitch, setUser }) => {
           />
         </div>
 
-        <a href="#" className="forgot-password">
-          Forgot Password?
-        </a>
-        {/* Okay this part we probably wont add ahahh
-         */}
+
 
         <button type="submit" className="login-button">
           Log In
         </button>
+
       </form>
 
       <p className="signup-text">

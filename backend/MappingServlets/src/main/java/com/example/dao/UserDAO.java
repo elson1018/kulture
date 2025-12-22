@@ -48,6 +48,15 @@ public class UserDAO {
         return userFromDocument(doc);
     }
 
+    public User findById(String id) {
+        try {
+            Document doc = usersCollection.find(Filters.eq("_id", new org.bson.types.ObjectId(id))).first();
+            return userFromDocument(doc);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     // Function to change mongoDB document to a Java Object
     private User userFromDocument(Document doc) {
         if (doc == null) return null;

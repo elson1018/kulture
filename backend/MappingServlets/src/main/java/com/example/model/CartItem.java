@@ -9,15 +9,17 @@ public class CartItem {
     private double price;
     private int quantity;
     private List<String> images; 
+    private String company;
 
     public CartItem() {}
 
-    public CartItem(String productId, String productName, double price, int quantity, List<String> images ) {
+    public CartItem(String productId, String productName, double price, int quantity, List<String> images, String company) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
         this.images = images;
+        this.company = company;
     }
 
     // Getters and Setters
@@ -35,6 +37,9 @@ public class CartItem {
 
     public List<String> getImages() { return images; }
     public void setImages(List<String> images) { this.images = images; }
+
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
     
     //Helper function to calculate the final price of each item
     public double getTotalPrice() {

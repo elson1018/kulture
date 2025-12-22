@@ -47,6 +47,10 @@ export const ShopContextProvider = (props) => {
         fetchCartFromServer();
     }, []);
 
+    const clearCart = () => {
+        setCartItems({}); // Wipes all items from the local state
+    };
+
     const addToCart = (itemId, quantity = 1) => {
         setCartItems((prev) => ({
             ...prev,
@@ -86,6 +90,7 @@ export const ShopContextProvider = (props) => {
         removeFromCart,
         updateCartItemCount,
         getTotalCartItems,
+        clearCart,
     };
 
     return (
