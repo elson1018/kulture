@@ -111,17 +111,9 @@ const Tutorial = ({ user }) => {
     return (
         <div className="tutorial-page">
             <h1>Tutorials & Classes</h1>
-            <div className="tutorial-filters">
-                <input type="text" placeholder="Search tutorials..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-                <select value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
-                    <option value="all">All Levels</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                </select>
-            </div>
 
             <div className="tutorial-grid">
-                {filteredTutorials.map((tutorial) => (
+                {tutorials.map((tutorial) => (
                     <div key={tutorial.id} className="tutorial-card">
                         <img src={tutorial.images?.[0] || "/products/Tutorials/Fan_dance.jpeg"} alt={tutorial.name} />
                         <div className="card-content">
