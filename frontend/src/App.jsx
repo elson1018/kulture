@@ -117,7 +117,8 @@ const AppContent = ({ user, setUser }) => {
           <Route path="/shop/food" element={<Food />} />
           <Route path="/shop/souvenirs" element={<Souvenirs />} />
           <Route path="/shop/instruments" element={<Instruments />} />
-          <Route path="/shop/tutorial" element={<Tutorial />} />
+          <Route path="/shop/tutorial" element={<Tutorial user={user} />}
+          />
           <Route path="/product/:id" element={<ProductDetail />} />
 
           <Route
