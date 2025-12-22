@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/api/sales")
-public class SalesServlet extends HttpServlet {
+@WebServlet("/api/bookings")
+public class BookingServlet extends HttpServlet {
     private SalesDAO salesDAO;
     private Gson gson;
 
@@ -24,7 +23,7 @@ public class SalesServlet extends HttpServlet {
 
     private void setupCORS(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
         resp.setHeader("Access-Control-Allow-Credentials", "true");
     }
@@ -39,30 +38,21 @@ public class SalesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setupCORS(resp);
         resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
 
-        // Get email
         String email = req.getParameter("email");
+        if (email == null || email.isEmpty()) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write(gson.toJson(Map.of("error", "Email parameter is required")));
+            return;
+        }
 
         try {
-            double totalRevenue = salesDAO.getTotalRevenue();
-            List<Sale> allSales = salesDAO.getAllSales();
-
-            Map<String, Object> responseData = new HashMap<>();
-            responseData.put("totalRevenue", totalRevenue);
-            responseData.put("sales", allSales);
-
-            resp.getWriter().write(gson.toJson(responseData));
+            // New DAO method required: getSalesByUserEmail
+            List<Sale> userHistory = salesDAO.getSalesByUserEmail(email);
+            resp.getWriter().write(gson.toJson(userHistory));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
         }
-    }
-
-    public List<Sale> getSalesByUserEmail(String email) {
-        List<Sale> userSales = new ArrayList<>();
-        // Filters based on the email associated with the purchase/booking
-        salesCollection.find(com.mongodb.client.model.Filters.eq("userEmail", email)).into(userSales);
-        return userSales;
     }
 }
