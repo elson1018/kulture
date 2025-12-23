@@ -41,17 +41,5 @@
     "images": ["/products/Food/Murukku.png"],
     "rating": 4.9,
     "company": "Kulture Eats"
-  },
-  {
-    "id": "T-001",
-    "name": "Chinese Lion Dance Basics",
-    "category": "Tutorials",
-    "price": 355.0,
-    "instructor": "Master Wong",
-    "isLiveClass": false,
-    "description": "Pre-recorded masterclass on Lion Dance footwork.",
-    "images": ["/products/Tutorials/liondance.jpg"],
-    "rating": 5.0,
-    "company": "Kulture"
   }
 ]
