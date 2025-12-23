@@ -3,7 +3,8 @@ package com.example;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.example.util.MongoDBUtil; // Ensure correct path to your utility
+import com.example.util.MongoDBUtil;
+import com.mongodb.client.model.Filters;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,10 +41,10 @@ public class TutorialServlet extends HttpServlet {
 
         try {
             MongoDatabase db = MongoDBUtil.getDatabase();
-            MongoCollection<Tutorial> collection = db.getCollection("tutorials", Tutorial.class);
+            MongoCollection<Tutorial> collection = db.getCollection("products", Tutorial.class);
 
             List<Tutorial> tutorials = new ArrayList<>();
-            collection.find().into(tutorials);
+            collection.find(Filters.eq("category", "Tutorials")).into(tutorials);
 
             resp.getWriter().write(gson.toJson(tutorials));
         } catch (Exception e) {

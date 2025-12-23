@@ -10,7 +10,7 @@ public class Tutorial {
     private double price;
     private String description;
     private boolean isLiveClass;
-    private List<String> images; // Store video URL
+    private List<String> images;
 
     public Tutorial() {}
 
