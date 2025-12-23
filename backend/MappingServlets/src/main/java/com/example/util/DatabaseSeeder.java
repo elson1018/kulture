@@ -21,8 +21,9 @@ public class DatabaseSeeder {
         db.getCollection("products").drop();
         db.getCollection("carts").drop();
         db.getCollection("sales").drop();
-
-        // Seed Users
+        
+        
+        //Seed Users
         seedUsers(db);
 
         // Seed Products

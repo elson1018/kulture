@@ -60,8 +60,7 @@ public class TutorialServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         try {
-            // Read from parameters or request body (adjust based on your frontend fetch
-            // method)
+            // Read from parameters or request body
             String name = req.getParameter("name");
             String instructor = req.getParameter("instructor");
             String desc = req.getParameter("description");
