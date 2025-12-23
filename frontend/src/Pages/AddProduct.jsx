@@ -96,29 +96,15 @@ const AddProduct = () => {
   };
 
   return (
-    <div
-      className="add-product-container"
-      style={{ padding: "40px", maxWidth: "600px", margin: "0 auto" }}
-    >
-      <h1
-        style={{ textAlign: "center", marginBottom: "30px", color: "#4A3C34" }}
-      >
-        Add New Product
-      </h1>
+    <div className="add-product-container">
+      <h1>Add New Product</h1>
 
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
         {/* Product Name */}
         <div className="form-group">
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-            }}
-          >
+          <label>
             Product Name:
           </label>
           <input
@@ -127,35 +113,17 @@ const AddProduct = () => {
             value={product.name}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
           />
         </div>
 
         <div className="form-group">
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-            }}
-          >
+          <label>
             Category:
           </label>
           <select
             name="category"
             value={product.category}
             onChange={handleChange}
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
           >
             <option value="Souvenirs">Souvenirs</option>
             <option value="Food">Food</option>
@@ -165,13 +133,7 @@ const AddProduct = () => {
         </div>
 
         <div className="form-group">
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-            }}
-          >
+          <label>
             Description:
           </label>
           <textarea
@@ -180,23 +142,11 @@ const AddProduct = () => {
             onChange={handleChange}
             required
             rows="4"
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
           />
         </div>
 
         <div className="form-group">
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-            }}
-          >
+          <label>
             Price (RM):
           </label>
           <input
@@ -206,23 +156,11 @@ const AddProduct = () => {
             value={product.price}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
           />
         </div>
 
         <div className="form-group">
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-            }}
-          >
+          <label>
             Product Image:
           </label>
           <input
@@ -230,21 +168,12 @@ const AddProduct = () => {
             accept="image/*"
             onChange={handleImageUpload}
             required
-            style={{ marginBottom: "10px" }}
           />
           {product.images && (
-            <div
-              style={{
-                marginTop: "10px",
-                border: "1px solid #ddd",
-                padding: "5px",
-                display: "inline-block",
-              }}
-            >
+            <div>
               <img
                 src={product.images}
                 alt="Preview"
-                style={{ width: "150px", height: "150px", objectFit: "cover" }}
               />
             </div>
           )}
@@ -252,17 +181,6 @@ const AddProduct = () => {
 
         <button
           type="submit"
-          style={{
-            padding: "15px",
-            backgroundColor: "#D9944E",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            marginTop: "20px",
-          }}
         >
           Add Product
         </button>
