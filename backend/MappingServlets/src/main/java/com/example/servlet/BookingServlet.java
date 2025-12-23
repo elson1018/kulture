@@ -36,15 +36,15 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setupCORS(resp);
-        String userIdStr = req.getParameter("userId");
+        String email = req.getParameter("email");
 
         try {
             MongoDatabase db = MongoDBUtil.getDatabase();
             MongoCollection<Booking> collection = db.getCollection("bookings", Booking.class);
 
             List<Booking> userBookings = new ArrayList<>();
-            if (userIdStr != null) {
-                collection.find(Filters.eq("userId", new ObjectId(userIdStr))).into(userBookings);
+            if (email != null) {
+                collection.find(Filters.eq("userEmail", email)).into(userBookings);
             }
 
             resp.getWriter().write(gson.toJson(userBookings));
@@ -58,19 +58,19 @@ public class BookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setupCORS(resp);
         try {
-            // Read from request body or parameters
-            String userId = req.getParameter("userId");
-            String tutorialId = req.getParameter("tutorialId");
-            String status = req.getParameter("status");
+            // Read from request body
+            String body = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            Booking requestData = gson.fromJson(body, Booking.class);
 
             MongoDatabase db = MongoDBUtil.getDatabase();
             MongoCollection<Booking> collection = db.getCollection("bookings", Booking.class);
 
             Booking newBooking = new Booking(
-                    new ObjectId(userId),
-                    new ObjectId(tutorialId),
+                    requestData.getUserEmail(),
+                    requestData.getTutorialId(),
                     new Date(),
-                    status != null ? status : "Purchased"
+                    requestData.getStatus() != null ? requestData.getStatus() : "Purchased",
+                    requestData.getScheduledDate()
             );
 
             collection.insertOne(newBooking);
