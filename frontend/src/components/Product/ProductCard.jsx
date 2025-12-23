@@ -16,13 +16,13 @@ const ProductCard = ({ product }) => {
   
 
   const handleViewDetails = () => {
+    window.scrollTo(0, 0);
     navigate(`/product/${product.id}`);
   };
   {console.log("Current Product Image:", imageSrc);}
 
   return (
     <div className="product-card">
-  
       <div className="product-image-container" onClick={handleViewDetails} style={{cursor: 'pointer'}}>
         <img 
           src={imageSrc} 
@@ -32,16 +32,16 @@ const ProductCard = ({ product }) => {
       </div>
       
       <div className="product-info">
-        <h3 className="product-name" onClick={handleViewDetails} style={{cursor: 'pointer'}}>{product.name}</h3>
-        <p className="product-price">RM {product.price.toFixed(2)}</p>
+        {/* The class here must match the CSS (.product-name) */}
+        <h3 className="product-name" onClick={handleViewDetails} style={{cursor: 'pointer'}}>
+            {product.name}
+        </h3>
         
         <div className="product-details">
           <span className="product-rating">⭐ {product.rating || "New"}</span>
-          {/* This will truncate the description if it's too long for the card */}
+        
           <p className="product-desc">
-            {product.description && product.description.length > 60 
-              ? product.description.substring(0, 60) + "..." 
-              : product.description}
+            {product.description ? product.description : "No description available."}
           </p>
         </div>
 

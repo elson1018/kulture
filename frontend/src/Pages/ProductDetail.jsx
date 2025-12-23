@@ -16,6 +16,10 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const handleBack = () => {
+    navigate(-1); 
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -126,6 +130,9 @@ const ProductDetail = () => {
   return (
     <div className="product-detail-page">
       <div className="detail-container">
+        <button className="back-btn" onClick={handleBack}>
+        X CLOSE
+      </button>
         <div className="detail-images">
           <div className="main-image-container">
             <img
