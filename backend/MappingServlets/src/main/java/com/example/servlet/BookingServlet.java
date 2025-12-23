@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/api/bookings")
 public class BookingServlet extends HttpServlet {
@@ -66,7 +67,7 @@ public class BookingServlet extends HttpServlet {
 
             // Get Tutorial details to "join" the data
             MongoCollection<Tutorial> tutorialCol = db.getCollection("tutorials", Tutorial.class);
-            Tutorial tutorial = tutorialCol.find(Filters.eq("_id", reqData.getTutorialId())).first();
+            Tutorial tutorial = tutorialCol.find(Filters.eq("_id", requestData.getTutorialId())).first();
 
             if (tutorial == null) {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -77,13 +78,13 @@ public class BookingServlet extends HttpServlet {
             // Create and insert the enriched Booking
             MongoCollection<Booking> bookingCol = db.getCollection("bookings", Booking.class);
             Booking newBooking = new Booking(
-                    reqData.getUserEmail(),
-                    reqData.getTutorialId(),
+                    requestData.getUserEmail(),
+                    requestData.getTutorialId(),
                     new Date(),
-                    reqData.getStatus(),
+                    requestData.getStatus(),
                     tutorial.getName(),
                     tutorial.getPrice(),
-                    reqData.getScheduledDate()
+                    requestData.getScheduledDate()
             );
 
             bookingCol.insertOne(newBooking);

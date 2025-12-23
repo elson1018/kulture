@@ -11,6 +11,7 @@ public class Booking {
     private String status;
     private String scheduledDate;
     private String tutorialName;
+    private double price;
 
     public Booking() {}
 
@@ -38,4 +39,6 @@ public class Booking {
     public void setScheduledDate(String scheduledDate) { this.scheduledDate = scheduledDate; }
     public String getTutorialName() { return tutorialName; }
     public void setTutorialName(String tutorialName) { this.tutorialName = tutorialName; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 }
