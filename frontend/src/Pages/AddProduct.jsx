@@ -9,13 +9,15 @@ const AddProduct = () => {
     price: "",
     images: "",
     imageFile: null,
+    instructor: '',
+    isLiveClass: false
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setProduct((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -52,6 +54,8 @@ const AddProduct = () => {
       rating: 0.0,
       company: "Kulture",
       imageFileName: fileName, // Pass filename separately for backend to use
+      instructor: product.instructor,
+      isLiveClass: product.isLiveClass,
     };
 
     try {
@@ -79,6 +83,8 @@ const AddProduct = () => {
           price: "",
           images: "",
           imageFile: null,
+          instructor: '',
+          isLiveClass: false
         });
         // Reset file input
         const fileInput = document.querySelector('input[type="file"]');
@@ -160,9 +166,40 @@ const AddProduct = () => {
             <option value="Souvenirs">Souvenirs</option>
             <option value="Food">Food</option>
             <option value="Instruments">Instruments</option>
-            <option value="Dances">Dances</option>
+            <option value="Tutorials">Tutorials</option>
           </select>
         </div>
+
+        {/* Tutorials Field */}
+        {product.category === "Tutorials" && (
+          <>
+            <div className="form-group">
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+                Instructor:
+              </label>
+              <input
+                type="text"
+                name="instructor"
+                value={product.instructor}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <div className="form-group" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <input
+                type="checkbox"
+                name="isLiveClass"
+                checked={product.isLiveClass}
+                onChange={handleChange}
+                id="isLiveClass"
+              />
+              <label htmlFor="isLiveClass" style={{ fontWeight: "bold", cursor: "pointer" }}>
+                Is this a Live Class?
+              </label>
+            </div>
+          </>
+        )}
 
         <div className="form-group">
           <label
