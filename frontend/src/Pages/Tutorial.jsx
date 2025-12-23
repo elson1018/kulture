@@ -6,47 +6,114 @@ const API_BASE_URL = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api';
 const Tutorial = ({ user }) => {
     const [tutorials, setTutorials] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [previewTutorial, setPreviewTutorial] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [selectedTutorial, setSelectedTutorial] = useState(null);
+
     const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTime, setSelectedTime] = useState('');
+    const [selectedTime, setSelectedTime] = useState('08:00-12:00'); // Default to first slot
+    const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
     const [isBooking, setIsBooking] = useState(false);
 
-    useEffect(() => {
-        fetch(`${API_BASE_URL}/tutorials`)
-            .then(res => res.json())
-            .then(data => {
-                setTutorials(data);
-                setIsLoading(false);
-            });
-    }, []);
-
-    const handleBookOrBuy = (tutorial) => {
+    const getUserEmail = () => {
+        if (user?.email) return user.email;
         const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (!storedUser) return alert("Please login first");
-
-        setSelectedTutorial(tutorial);
-        setShowBookingModal(true);
+        return storedUser?.email || null;
     };
 
-    if (isLoading) return <div className="tutorial-page"><h1>Loading...</h1></div>;
+    useEffect(() => {
+        const fetchTutorials = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tutorials`);
+                if (!response.ok) throw new Error('Failed to fetch tutorials');
+                const data = await response.json();
+                setTutorials(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchTutorials();
+    }, []);
+
+    const handleBookOrBuyClick = (tutorial) => {
+        if (!getUserEmail()) {
+            alert('Please log in to book or purchase tutorials.');
+            return;
+        }
+        setSelectedTutorial(tutorial);
+        setShowBookingModal(true);
+        setBookingMessage({ type: '', text: '' });
+
+        if (tutorial.isLiveClass) {
+            // Default to tomorrow's date
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            setSelectedDate(tomorrow.toISOString().split('T')[0]);
+        }
+    };
+
+    const handleBookingConfirm = async () => {
+        // Validation for Fri, Sat, Sun
+        if (selectedTutorial.isLiveClass) {
+            const dateObj = new Date(selectedDate);
+            const day = dateObj.getDay(); // 0=Sun, 5=Fri, 6=Sat
+            if (day !== 0 && day !== 5 && day !== 6) {
+                setBookingMessage({ type: 'error', text: 'Live classes are only available on Fri, Sat, and Sun.' });
+                return;
+            }
+        }
+
+        const email = getUserEmail();
+        setIsBooking(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/bookings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tutorialId: selectedTutorial.id,
+                    userEmail: email,
+                    scheduledDate: selectedTutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null,
+                    status: selectedTutorial.isLiveClass ? 'Upcoming' : 'Purchased'
+                }),
+            });
+
+            if (response.ok) {
+                setBookingMessage({ type: 'success', text: 'Success! View your classes in Settings.' });
+                setTimeout(() => setShowBookingModal(false), 2000);
+            } else {
+                throw new Error('Booking failed');
+            }
+        } catch (err) {
+            setBookingMessage({ type: 'error', text: err.message });
+        } finally {
+            setIsBooking(false);
+        }
+    };
+
+    if (isLoading) return <div className='tutorial-page'><h1>Loading Tutorials...</h1></div>;
 
     return (
         <div className="tutorial-page">
             <h1>Tutorials & Classes</h1>
+            <p className="page-subtext">Book a live session or access recorded dance lessons.</p>
+
             <div className="tutorial-grid">
-                {tutorials.map((t) => (
-                    <div key={t.id} className="tutorial-card">
+                {tutorials.map((tutorial) => (
+                    <div key={tutorial.id} className="tutorial-card">
+                        <img src={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"} alt={tutorial.name} />
                         <div className="card-content">
-                            <h2>{t.name}</h2>
-                            <p>Instructor: {t.instructor}</p>
-                            <p>Price: RM{t.price.toFixed(2)}</p>
+                            <h2>{tutorial.name}</h2>
+                            <p className="instructor-name">By {tutorial.instructor}</p>
+                            <p className="tutorial-price">RM{tutorial.price.toFixed(2)}</p>
                             <div className="tutorial-actions">
-                                <button onClick={() => { setPreviewTutorial(t); setShowPreview(true); }}>Watch Preview</button>
-                                <button className="book-btn" onClick={() => handleBookOrBuy(t)}>
-                                    {t.isLiveClass ? "Book Class" : "Buy Now"}
+                                <button onClick={() => { setPreviewTutorial(tutorial); setShowPreview(true); }}>Watch Preview</button>
+                                <button className="book-btn" onClick={() => handleBookOrBuyClick(tutorial)}>
+                                    {tutorial.isLiveClass ? "Book Class" : "Buy Now"}
                                 </button>
                             </div>
                         </div>
@@ -54,30 +121,31 @@ const Tutorial = ({ user }) => {
                 ))}
             </div>
 
-            {/* Video Preview Modal */}
-            {showPreview && previewTutorial && (
-                <div className="modal-overlay" onClick={() => setShowPreview(false)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="modal-close" onClick={() => setShowPreview(false)}>×</button>
-                        <h2>{previewTutorial.name} - Preview</h2>
-                        <video width="100%" controls autoPlay src={previewTutorial.images[0]} />
-                        <p>{previewTutorial.description}</p>
-                    </div>
-                </div>
-            )}
-
             {/* Booking Modal */}
-            {showBookingModal && selectedTutorial && (
+            {showBookingModal && (
                 <div className="modal-overlay" onClick={() => setShowBookingModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <h2>Confirm Purchase</h2>
+                        <h2>Confirm {selectedTutorial.isLiveClass ? 'Booking' : 'Purchase'}</h2>
+                        <p>{selectedTutorial.name} with {selectedTutorial.instructor}</p>
+
+                        {/* Slots of Live Class */}
                         {selectedTutorial.isLiveClass && (
-                            <div>
+                            <div className="datetime-fields">
+                                <label>Select Date (Fri-Sun):</label>
                                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} />
-                                <input type="time" value={selectedTime} onChange={e => setSelectedTime(e.target.value)} />
+
+                                <label>Select Slot:</label>
+                                <select value={selectedTime} onChange={e => setSelectedTime(e.target.value)}>
+                                    <option value="08:00-12:00">8:00 AM - 12:00 PM</option>
+                                    <option value="16:00-20:00">4:00 PM - 8:00 PM</option>
+                                </select>
                             </div>
                         )}
-                        <button onClick={() => setShowBookingModal(false)}>Confirm</button>
+
+                        <p className={`message ${bookingMessage.type}`}>{bookingMessage.text}</p>
+                        <button onClick={handleBookingConfirm} disabled={isBooking}>
+                            {isBooking ? 'Processing...' : 'Confirm'}
+                        </button>
                     </div>
                 </div>
             )}
