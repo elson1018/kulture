@@ -113,12 +113,12 @@ const Orders = () => {
                 <div className="orders-container">
                     <div className="orders-stats">
                         <div className="stat-card">
-                            <h3>{orders.length}</h3>
-                            <p>Total Orders</p>
+                            <h3>Total Orders</h3>
+                            <p>{orders.length}</p>
                         </div>
                         <div className="stat-card">
-                            <h3>RM {orders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2)}</h3>
-                            <p>Total Spent</p>
+                            <h3>Total Spent</h3>
+                            <p>RM {orders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2)}</p>
                         </div>
                     </div>
 
