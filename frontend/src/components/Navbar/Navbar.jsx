@@ -13,12 +13,8 @@ import { ShopContext } from "../../Context/ShopContext";
 
 const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const [activeCategory, setActiveCategory] = useState("");
-
-  // This is the function to hold the search text
   const [searchTerm, setSearchTerm] = useState("");
-
   const [userName, setUserName] = useState("User");
   const [userRole, setUserRole] = useState("");
 
@@ -147,32 +143,39 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
         </div>
       </div>
 
-      {isSidebarOpen && (
-        <div className="sidebar-overlay" onClick={toggleSidebar}>
-          <div className="sidebar">
-            <img src={user_icon} alt="User Icon" />
-            <ul className="sidebar-links">
-              {userRole === "ADMIN" && (
-                <li onClick={() => handleSidebarLink("/admin")}>
-                  Admin Dashboard
-                </li>
-              )}
+      <div 
+        className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`} 
+        onClick={toggleSidebar}
+      ></div>
 
-              <li onClick={() => handleSidebarLink("/orders")}>My Orders</li>
-              <li onClick={() => handleSidebarLink("/settings")}>Settings</li>
-              <li
-                className="logout-item"
-                onClick={() => {
-                  if (onLogout) onLogout();
-                  setIsSidebarOpen(false);
-                }}
-              >
-                Logout
-              </li>
-            </ul>
-          </div>
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <div className="sidebar-header">
+
+          <h3>Hello, {userName || "User"}</h3>
+          <button className="close-sidebar-btn" onClick={toggleSidebar}>✕</button>
         </div>
-      )}
+
+        <div className="sidebar-user-icon">
+           <img src={user_icon} alt="User Profile" />
+        </div>
+        
+        <ul className="sidebar-links">
+          {userRole === "ADMIN" && (
+            <li onClick={() => handleSidebarLink("/admin")}>Admin Dashboard</li>
+          )}
+          <li onClick={() => handleSidebarLink("/orders")}>My Orders</li>
+          <li onClick={() => handleSidebarLink("/settings")}>Settings</li>
+          <li
+            className="logout-item"
+            onClick={() => {
+              if (onLogout) onLogout();
+              setIsSidebarOpen(false);
+            }}
+          >
+            Logout
+          </li>
+        </ul>
+      </div>
     </>
   );
 };
