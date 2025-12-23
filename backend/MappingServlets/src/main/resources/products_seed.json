@@ -51,8 +51,7 @@
     "isLiveClass": false,
     "description": "Pre-recorded masterclass on Lion Dance footwork.",
     "images": [
-      "/products/Tutorials/liondance.jpg",
-      "video"
+      "https://www.w3schools.com/html/mov_bbb.mp4"
     ]
   }
 ]
