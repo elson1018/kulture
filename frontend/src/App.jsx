@@ -23,6 +23,7 @@ import Tutorial from "./Pages/Tutorial";
 import AddProduct from "./Pages/AddProduct";
 import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
+import Orders from "./Pages/Orders";
 import HelpCentre from "./Pages/HelpCentre";
 import SupplierDashboard from "./Pages/SupplierDashboard";
 import Settings from "./Pages/Settings";
@@ -149,6 +150,14 @@ const AppContent = ({ user, setUser }) => {
             element={
               <ProtectedRoute user={user}>
                 <Checkout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute user={user}>
+                <Orders />
               </ProtectedRoute>
             }
           />
