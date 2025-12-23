@@ -10,14 +10,17 @@ public class Booking {
     private Date bookingDate;
     private String status;
     private String scheduledDate;
+    private String tutorialName;
 
     public Booking() {}
 
-    public Booking(String userEmail, ObjectId tutorialId, Date bookingDate, String status, String scheduledDate) {
+    public Booking(String userEmail, ObjectId tutorialId, Date bookingDate, String status, String tutorialName, double price, String scheduledDate) {
         this.userEmail = userEmail;
         this.tutorialId = tutorialId;
         this.bookingDate = bookingDate;
         this.status = status;
+        this.tutorialName = tutorialName;
+        this.price = price;
         this.scheduledDate = scheduledDate;
     }
 
@@ -33,4 +36,6 @@ public class Booking {
     public void setStatus(String status) { this.status = status; }
     public String getScheduledDate() { return scheduledDate; }
     public void setScheduledDate(String scheduledDate) { this.scheduledDate = scheduledDate; }
+    public String getTutorialName() { return tutorialName; }
+    public void setTutorialName(String tutorialName) { this.tutorialName = tutorialName; }
 }
