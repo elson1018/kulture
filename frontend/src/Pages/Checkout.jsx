@@ -4,18 +4,19 @@ import { useNavigate } from "react-router-dom";
 import "../CSS/Checkout.css";
 
 const Checkout = () => {
-  const { cartItems, getTotalCartItems , clearCart} = useContext(ShopContext);
+  const { cartItems, getTotalCartItems, clearCart } = useContext(ShopContext);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    paymentMethod: "cod", // by default cash on delivery
+    paymentMethod: "cod", 
   });
 
-  //  rm8.00 for shipping fee default
+  // [NEW] State to control when to show the QR code
+  const [showQR, setShowQR] = useState(false);
+
   const shippingFee = 8.00;
 
-  // fetch the products
   useEffect(() => {
     fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products")
       .then((res) => res.json())
@@ -25,41 +26,49 @@ const Checkout = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    // reset the qr view if user switches payment method
+    if (e.target.name === 'paymentMethod') {
+      setShowQR(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      try {
-          const response = await fetch(
-              "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart?action=checkout",
-              {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  // Crucial: send cookies so the backend knows which user is checking out
-                  credentials: "include",
-              }
-          );
 
-          const result = await response.json();
+    if (formData.paymentMethod === 'card' && !showQR) {
+      setShowQR(true);
+      return; 
+    }
 
-          if (response.ok) {
-              console.log("Order Processed:", result.message);
-              clearCart();
-              alert("Order Placed Successfully!");
-              // Redirect to a success page or home
-              navigate("/");
-          } else {
-              console.error("Backend Error:", result);
-              alert("Checkout failed: " + (result.message || result.error || "Unknown error"));
-          }
-      } catch (error) {
-          console.error("Error during checkout:", error);
-          alert("An error occurred. Please try again later.");
+    try {
+      const response = await fetch(
+        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart?action=checkout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Order Processed:", result.message);
+        clearCart();
+        alert("Order Placed Successfully!");
+        navigate("/");
+      } else {
+        console.error("Backend Error:", result);
+        alert("Checkout failed: " + (result.message || result.error || "Unknown error"));
       }
-    navigate("/"); 
-  }; 
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
@@ -68,13 +77,10 @@ const Checkout = () => {
         const itemInfo = products.find(
           (product) => product.id === String(item) || product.id === parseInt(item)
         );
-        
         if (itemInfo) {
-          // this is to check if the item is instrument then apply 10% discount on it
           const finalPrice = itemInfo.category === "Instruments" 
             ? itemInfo.price * 0.90 
             : itemInfo.price;
-
           totalAmount += cartItems[item] * finalPrice;
         }
       }
@@ -82,7 +88,7 @@ const Checkout = () => {
     return totalAmount;
   };
 
-  const getOriginalCartAmount = () => { // this is without discount one
+  const getOriginalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
@@ -97,10 +103,9 @@ const Checkout = () => {
     return totalAmount;
   };
 
-  // calculate total
-  const finalSubTotal = getTotalCartAmount(); // total price user pays for items
-  const originalAmount = getOriginalCartAmount(); // total price before discount
-  const discountAmount = originalAmount - finalSubTotal; // total discount value
+  const finalSubTotal = getTotalCartAmount();
+  const originalAmount = getOriginalCartAmount();
+  const discountAmount = originalAmount - finalSubTotal;
   const grandTotal = finalSubTotal + shippingFee;
 
   if (getTotalCartItems() === 0 && products.length > 0) {
@@ -149,6 +154,19 @@ const Checkout = () => {
                   <span>Credit / Debit Card</span>
                 </label>
               </div>
+
+              {showQR && (
+                <div className="qr-section">
+                  <p className="qr-instruction">Scan DuitNow QR to Pay:</p>
+                  <img 
+                    src="/qr-payment.png" 
+                    alt="Payment QR Code" 
+                    className="qr-image"
+                  />
+                  <p className="qr-note">Please screenshot receipt after payment.</p>
+                </div>
+              )}
+
             </section>
           </form>
         </div>
@@ -178,14 +196,13 @@ const Checkout = () => {
             
             <div className="summary-divider"></div>
             
-            {/* price breakdown */}
             <div className="summary-row">
               <span>Subtotal</span>
               <span>RM {originalAmount.toFixed(2)}</span>
             </div>
 
-            {discountAmount > 0 && ( // display total discount value
-              <div className="summary-row">
+            {discountAmount > 0 && (
+              <div className="summary-row" style={{color: 'green'}}>
                 <span>Discount</span>
                 <span>- RM {discountAmount.toFixed(2)}</span>
               </div>
@@ -209,7 +226,7 @@ const Checkout = () => {
                   form="checkout-form" 
                   className="btn-primary full-width-btn"
                 >
-                  Place Order
+                  {showQR ? "I Have Paid" : "Place Order"}
                </button>
                <button 
                   type="button" 
