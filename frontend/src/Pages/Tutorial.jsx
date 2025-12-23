@@ -100,21 +100,29 @@ const Tutorial = ({ user }) => {
 
     return (
         <div className="tutorial-page">
-            <h1>Tutorials & Classes</h1>
-            <p className="page-subtext">Book a live session or access recorded dance lessons.</p>
+            <div className="tutorial-header">
+                <h1>Tutorials & Classes</h1>
+                <p className="page-subtext">Book a live session or access recorded dance lessons.</p>
+            </div>
 
             <div className="tutorial-grid">
                 {tutorials.map((tutorial) => (
-                    <div key={tutorial.id} className="tutorial-card">
-                        <img src={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"} alt={tutorial.name} />
-                        <div className="card-content">
-                            <h2>{tutorial.name}</h2>
-                            <p className="instructor-name">By {tutorial.instructor}</p>
-                            <p className="tutorial-price">RM{tutorial.price.toFixed(2)}</p>
-                            <div className="tutorial-actions">
-                                <button onClick={() => { setPreviewTutorial(tutorial); setShowPreview(true); }}>Watch Preview</button>
+                    <div key={tutorial.id} className="tutorial-card-horizontal">
+                        <div className="card-image-container">
+                            <img src={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"} alt={tutorial.name} />
+                        </div>
+                        <div className="card-info-horizontal">
+                            <div className="card-header-row">
+                                <h2>{tutorial.name}</h2>
+                                <p className="tutorial-price">RM{tutorial.price.toFixed(2)}</p>
+                            </div>
+                            <p className="instructor-name">Instructor: {tutorial.instructor}</p>
+                            <p className="tutorial-description">{tutorial.description}</p>
+
+                            <div className="tutorial-actions-horizontal">
+                                <button className="preview-btn">Watch Preview</button>
                                 <button className="book-btn" onClick={() => handleBookOrBuyClick(tutorial)}>
-                                    {tutorial.isLiveClass ? "Book Class" : "Buy Now"}
+                                    {tutorial.isLiveClass ? "Book Live Class" : "Buy Recorded Tutorial"}
                                 </button>
                             </div>
                         </div>
