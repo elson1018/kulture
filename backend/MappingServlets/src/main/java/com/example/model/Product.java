@@ -13,17 +13,23 @@ public class Product {
     private List<String> images;
     private double rating;
     private String company;
+    private String instructor;
+    private boolean isLiveClass;
 
     public Product() {}
 
-    public Product(String  name, String category, double price, String description, List<String> images , double rating) {
+    public Product(String id, String name, String category, double price, String description,
+                   List<String> images, double rating, String company, String instructor, boolean isLiveClass) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.description = description;
         this.images = images;
         this.rating = rating;
-        this.company = " ";
+        this.company = company;
+        this.instructor = instructor;
+        this.isLiveClass = isLiveClass;
     }
 
     public String getId() { return id; }
@@ -49,4 +55,10 @@ public class Product {
 
     public String getCompany() { return company; }
     public void setCompany(String company) { this.company = company; }
+
+    public String getInstructor() { return instructor; }
+    public void setInstructor(String instructor) { this.instructor = instructor; }
+
+    public boolean getIsLiveClass() { return isLiveClass; }
+    public void setIsLiveClass(boolean isLiveClass) { this.isLiveClass = isLiveClass; }
 }
