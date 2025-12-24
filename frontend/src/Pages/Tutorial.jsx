@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../CSS/Tutorial.css';
+import TutorialCard from '../components/Tutorial/TutorialCard';
 
 const API_BASE_URL = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api';
 
-const Tutorial = ({ user }) => {
+const Tutorial = () => {
     const [tutorials, setTutorials] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const [previewTutorial, setPreviewTutorial] = useState(null);
-    const [showPreview, setShowPreview] = useState(false);
-    const [showBookingModal, setShowBookingModal] = useState(false);
-    const [selectedTutorial, setSelectedTutorial] = useState(null);
-
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTime, setSelectedTime] = useState('08:00-12:00'); // Default to first slot
-    const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
-    const [isBooking, setIsBooking] = useState(false);
-
-    const getUserEmail = () => {
-        if (user?.email) return user.email;
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        return storedUser?.email || null;
-    };
 
     useEffect(() => {
         const fetchTutorials = async () => {
@@ -40,61 +25,6 @@ const Tutorial = ({ user }) => {
         fetchTutorials();
     }, []);
 
-    const handleBookOrBuyClick = (tutorial) => {
-        if (!getUserEmail()) {
-            alert('Please log in to book or purchase tutorials.');
-            return;
-        }
-        setSelectedTutorial(tutorial);
-        setShowBookingModal(true);
-        setBookingMessage({ type: '', text: '' });
-
-        if (tutorial.isLiveClass) {
-            // Default to tomorrow's date
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            setSelectedDate(tomorrow.toISOString().split('T')[0]);
-        }
-    };
-
-    const handleBookingConfirm = async () => {
-        // Validation for Fri, Sat, Sun
-        if (selectedTutorial.isLiveClass) {
-            const dateObj = new Date(selectedDate);
-            const day = dateObj.getDay(); // 0=Sun, 5=Fri, 6=Sat
-            if (day !== 0 && day !== 5 && day !== 6) {
-                setBookingMessage({ type: 'error', text: 'Live classes are only available on Fri, Sat, and Sun.' });
-                return;
-            }
-        }
-
-        const email = getUserEmail();
-        setIsBooking(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/bookings`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    tutorialId: selectedTutorial.id,
-                    userEmail: email,
-                    scheduledDate: selectedTutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null,
-                    status: selectedTutorial.isLiveClass ? 'Upcoming' : 'Purchased'
-                }),
-            });
-
-            if (response.ok) {
-                setBookingMessage({ type: 'success', text: 'Success! View your classes in Settings.' });
-                setTimeout(() => setShowBookingModal(false), 2000);
-            } else {
-                throw new Error('Booking failed');
-            }
-        } catch (err) {
-            setBookingMessage({ type: 'error', text: err.message });
-        } finally {
-            setIsBooking(false);
-        }
-    };
-
     if (isLoading) return <div className='tutorial-page'><h1>Loading Tutorials...</h1></div>;
 
     return (
@@ -106,57 +36,9 @@ const Tutorial = ({ user }) => {
 
             <div className="tutorial-grid">
                 {tutorials.map((tutorial) => (
-                    <div key={tutorial.id} className="tutorial-card-horizontal">
-                        <div className="card-image-container">
-                            <img src={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"} alt={tutorial.name} />
-                        </div>
-                        <div className="card-info-horizontal">
-                            <div className="card-header-row">
-                                <h2>{tutorial.name}</h2>
-                                <p className="tutorial-price">RM{tutorial.price.toFixed(2)}</p>
-                            </div>
-                            <p className="instructor-name">Instructor: {tutorial.instructor}</p>
-                            <p className="tutorial-description">{tutorial.description}</p>
-
-                            <div className="tutorial-actions-horizontal">
-                                <button className="preview-btn">Watch Preview</button>
-                                <button className="book-btn" onClick={() => handleBookOrBuyClick(tutorial)}>
-                                    {tutorial.isLiveClass ? "Book Live Class" : "Buy Recorded Tutorial"}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <TutorialCard key={tutorial.id} tutorial={tutorial} />
                 ))}
             </div>
-
-            {/* Booking Modal */}
-            {showBookingModal && (
-                <div className="modal-overlay" onClick={() => setShowBookingModal(false)}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <h2>Confirm {selectedTutorial.isLiveClass ? 'Booking' : 'Purchase'}</h2>
-                        <p>{selectedTutorial.name} with {selectedTutorial.instructor}</p>
-
-                        {/* Slots of Live Class */}
-                        {selectedTutorial.isLiveClass && (
-                            <div className="datetime-fields">
-                                <label>Select Date (Fri-Sun):</label>
-                                <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} />
-
-                                <label>Select Slot:</label>
-                                <select value={selectedTime} onChange={e => setSelectedTime(e.target.value)}>
-                                    <option value="08:00-12:00">8:00 AM - 12:00 PM</option>
-                                    <option value="16:00-20:00">4:00 PM - 8:00 PM</option>
-                                </select>
-                            </div>
-                        )}
-
-                        <p className={`message ${bookingMessage.type}`}>{bookingMessage.text}</p>
-                        <button onClick={handleBookingConfirm} disabled={isBooking}>
-                            {isBooking ? 'Processing...' : 'Confirm'}
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

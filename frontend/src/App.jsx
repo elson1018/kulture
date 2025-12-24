@@ -20,6 +20,7 @@ import ProductDetail from "./Pages/ProductDetail";
 import Food from "./Pages/Food";
 import Instruments from "./Pages/Instruments";
 import Tutorial from "./Pages/Tutorial";
+import TutorialDetail from "./Pages/TutorialDetail";
 import AddProduct from "./Pages/AddProduct";
 import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
@@ -117,8 +118,8 @@ const AppContent = ({ user, setUser }) => {
           <Route path="/shop/food" element={<Food />} />
           <Route path="/shop/souvenirs" element={<Souvenirs />} />
           <Route path="/shop/instruments" element={<Instruments />} />
-          <Route path="/shop/tutorial" element={<Tutorial user={user} />}
-          />
+          <Route path="/shop/tutorial" element={<Tutorial user={user} />} />
+          <Route path="/tutorial/:id" element={<TutorialDetail />} />
           <Route path="/product/:id" element={<ProductDetail />} />
 
           <Route
