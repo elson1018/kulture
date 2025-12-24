@@ -54,7 +54,7 @@ const TutorialDetail = () => {
 
     const handlePreview = () => {
         setShowPreview(true);
-        // Simulate 5 seconds preview
+        // Simulate 10 seconds preview
         setTimeout(() => {
             setShowPreview(false);
             // Small delay to allow React to unmount the video/iframe before alert blocks the UI
@@ -65,7 +65,7 @@ const TutorialDetail = () => {
                     type: "notification"
                 });
             }, 100);
-        }, 5000);
+        }, 10000);
     };
 
     const handleBookOrBuy = async () => {
@@ -176,7 +176,7 @@ const TutorialDetail = () => {
                                         </video>
                                     )
                                 ) : (
-                                    <p>▶ Video Preview Playing (5s)...</p>
+                                    <p>▶ Video Preview Playing (10s)...</p>
                                 )}
                             </div>
                         ) : (
