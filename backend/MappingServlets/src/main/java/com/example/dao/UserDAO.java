@@ -1,10 +1,12 @@
-package com.example;
+package com.example.dao;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.example.util.MongoDBUtil;
+import com.example.model.User;
 import org.bson.Document;
 
 import java.io.InputStream;
@@ -20,10 +22,9 @@ public class UserDAO {
         MongoDatabase database = MongoDBUtil.getDatabase();
         this.usersCollection = database.getCollection("users");
 
-     
     }
 
-    //Create a new user
+    // Create a new user
     public void createUser(User user) {
         Document doc = new Document("user_fname", user.getUser_fname())
                 .append("user_lname", user.getUser_lname())
@@ -37,7 +38,7 @@ public class UserDAO {
         usersCollection.insertOne(doc);
     }
 
-    //Find a user by Email
+    // Find a user by Email
     public User findByEmail(String email) {
         Document doc = usersCollection.find(Filters.eq("email", email)).first();
         return userFromDocument(doc);
@@ -59,7 +60,8 @@ public class UserDAO {
 
     // Function to change mongoDB document to a Java Object
     private User userFromDocument(Document doc) {
-        if (doc == null) return null;
+        if (doc == null)
+            return null;
 
         User user = new User(
                 doc.getString("user_fname"),
@@ -69,11 +71,9 @@ public class UserDAO {
                 doc.getString("email"),
                 doc.getString("address"),
                 doc.getString("role"),
-                doc.getString("companyName")
-        );
+                doc.getString("companyName"));
         user.setId(doc.getObjectId("_id"));
         return user;
     }
 
-    
 }

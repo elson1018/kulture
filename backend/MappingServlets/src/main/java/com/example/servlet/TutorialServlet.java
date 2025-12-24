@@ -1,12 +1,12 @@
-package com.example;
+package com.example.servlet;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.example.util.MongoDBUtil;
+import com.example.model.Tutorial;
 import com.mongodb.client.model.Filters;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +60,8 @@ public class TutorialServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         try {
-            // Read from parameters or request body (adjust based on your frontend fetch method)
+            // Read from parameters or request body (adjust based on your frontend fetch
+            // method)
             String name = req.getParameter("name");
             String instructor = req.getParameter("instructor");
             String desc = req.getParameter("description");

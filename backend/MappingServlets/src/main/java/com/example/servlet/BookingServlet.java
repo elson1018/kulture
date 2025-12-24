@@ -1,9 +1,12 @@
-package com.example;
+package com.example.servlet;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.example.util.MongoDBUtil;
+import com.example.model.Booking;
+import com.example.model.Tutorial;
 import org.bson.types.ObjectId;
 
 import javax.servlet.ServletException;
@@ -84,8 +87,7 @@ public class BookingServlet extends HttpServlet {
                     requestData.getStatus(),
                     tutorial.getName(),
                     tutorial.getPrice(),
-                    requestData.getScheduledDate()
-            );
+                    requestData.getScheduledDate());
 
             bookingCol.insertOne(newBooking);
             resp.setStatus(HttpServletResponse.SC_CREATED);

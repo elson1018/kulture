@@ -1,6 +1,8 @@
-package com.example;
+package com.example.servlet;
 
 import com.google.gson.Gson;
+import com.example.dao.SalesDAO;
+import com.example.model.Sale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +44,7 @@ public class SalesServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         // Get email
-        String email = req.getParameter("email");
+        // String emailParam = req.getParameter("email");
 
         try {
             double totalRevenue = salesDAO.getTotalRevenue();
@@ -60,9 +62,6 @@ public class SalesServlet extends HttpServlet {
     }
 
     public List<Sale> getSalesByUserEmail(String email) {
-        List<Sale> userSales = new ArrayList<>();
-        // Filters based on the email associated with the purchase/booking
-        salesCollection.find(com.mongodb.client.model.Filters.eq("userEmail", email)).into(userSales);
-        return userSales;
+        return salesDAO.getSalesByUserEmail(email);
     }
 }

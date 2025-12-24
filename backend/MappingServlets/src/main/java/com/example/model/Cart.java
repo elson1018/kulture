@@ -1,13 +1,15 @@
-package com.example;
+package com.example.model;
+
+import com.example.model.CartItem;
 
 import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-  
-    private ObjectId id;       // The unique ID of this Cart document
-    private String userId;     // Links this cart to a specific User
+
+    private ObjectId id; // The unique ID of this Cart document
+    private String userId; // Links this cart to a specific User
     private List<CartItem> items;
 
     public Cart() {
@@ -20,14 +22,29 @@ public class Cart {
     }
 
     // Getters and Setters
-    public ObjectId getId() { return id; }
-    public void setId(ObjectId id) { this.id = id; }
+    public ObjectId getId() {
+        return id;
+    }
 
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
-    public List<CartItem> getItems() { return items; }
-    public void setItems(List<CartItem> items) { this.items = items; }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CartItem> items) {
+        this.items = items;
+    }
 
     // Helper to get the grand total of the whole cart
     public double getCartGrandTotal() {

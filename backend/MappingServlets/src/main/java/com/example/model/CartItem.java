@@ -1,19 +1,21 @@
-package com.example;
+package com.example.model;
 
 import java.util.List;
 
 public class CartItem {
-    //Declare variables neede for the cart
+    // Declare variables neede for the cart
     private String productId;
     private String productName;
     private double price;
     private int quantity;
-    private List<String> images; 
+    private List<String> images;
     private String company;
 
-    public CartItem() {}
+    public CartItem() {
+    }
 
-    public CartItem(String productId, String productName, double price, int quantity, List<String> images, String company) {
+    public CartItem(String productId, String productName, double price, int quantity, List<String> images,
+            String company) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -23,25 +25,55 @@ public class CartItem {
     }
 
     // Getters and Setters
-    public String getProductId() { return productId; }
-    public void setProductId(String productId) { this.productId = productId; }
+    public String getProductId() {
+        return productId;
+    }
 
-    public String getProductName() { return productName; }
-    public void setProductName(String productName) { this.productName = productName; }
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public String getProductName() {
+        return productName;
+    }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-    public List<String> getImages() { return images; }
-    public void setImages(List<String> images) { this.images = images; }
+    public double getPrice() {
+        return price;
+    }
 
-    public String getCompany() { return company; }
-    public void setCompany(String company) { this.company = company; }
-    
-    //Helper function to calculate the final price of each item
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    // Helper function to calculate the final price of each item
     public double getTotalPrice() {
         return this.price * this.quantity;
     }
