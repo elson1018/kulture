@@ -23,6 +23,28 @@ public class TutorialDAO {
     }
 
     public void saveTutorial(Tutorial tutorial) {
+        tutorial.setId(generateNextId());
         tutorialCollection.insertOne(tutorial);
+    }
+
+    private String generateNextId() {
+        Tutorial lastTutorial = tutorialCollection.find()
+                .sort(com.mongodb.client.model.Sorts.descending("_id"))
+                .limit(1)
+                .first();
+
+        if (lastTutorial == null || lastTutorial.getId() == null) {
+            return "T-0001";
+        }
+
+        String lastId = lastTutorial.getId();
+        // Assuming format T-XXXX
+        try {
+            int idNum = Integer.parseInt(lastId.substring(2));
+            return String.format("T-%04d", idNum + 1);
+        } catch (NumberFormatException e) {
+            // Fallback if existing/malformed IDs exist
+            return "T-" + System.currentTimeMillis();
+        }
     }
 }
