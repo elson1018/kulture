@@ -38,6 +38,9 @@ const Cart = () => {
   return (
     <div className="shop-page">
       <div className="shop-header">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
         <h1>Your Cart</h1>
       </div>
 
