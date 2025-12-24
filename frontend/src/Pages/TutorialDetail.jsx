@@ -119,7 +119,22 @@ const TutorialDetail = () => {
                     <div className="main-image-container">
                         {showPreview ? (
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', color: '#fff' }}>
-                                <p>▶ Video Preview Playing (5s)...</p>
+                                {/* Show Video Player if videoUrl exists and user wants to preview or watch */}
+                                {tutorial.videoUrl ? (
+                                    <video
+                                        controls
+                                        width="100%"
+                                        height="100%"
+                                        poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
+                                        style={{ backgroundColor: '#000' }}
+                                    >
+                                        {/* Check if it is a full URL or local path */}
+                                        <source src={tutorial.videoUrl} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                ) : (
+                                    <p>▶ Video Preview Playing (5s)...</p>
+                                )}
                             </div>
                         ) : (
                             <img

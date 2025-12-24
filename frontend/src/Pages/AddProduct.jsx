@@ -36,6 +36,40 @@ const AddProduct = () => {
     }
   };
 
+  const generateThumbnail = (videoUrl) => {
+    const video = document.getElementById('thumbnail-generator');
+    if (!video) return;
+
+    video.src = videoUrl;
+
+    video.onloadeddata = () => {
+      // Wait a bit ensuring seek frame is ready
+      setTimeout(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        try {
+          const dataURL = canvas.toDataURL('image/jpeg');
+          setProduct(prev => ({
+            ...prev,
+            images: dataURL // Set as product image
+          }));
+          console.log("Thumbnail generated successfully!");
+        } catch (e) {
+          console.error("Thumbnail generation failed (likely CORS):", e);
+          alert("Could not auto-generate thumbnail due to browser security (CORS) on this URL. Please upload a cover image manually.");
+        }
+      }, 500);
+    };
+
+    video.onerror = () => {
+      console.error("Error loading video for thumbnail");
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -202,6 +236,42 @@ const AddProduct = () => {
                 Is this a Live Class?
               </label>
             </div>
+            {/* Video URL Input and Auto-Thumbnail */}
+            {!product.isLiveClass && (
+              <div className="form-group">
+                <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+                  Video URL (Direct MP4 link):
+                </label>
+                <input
+                  type="text"
+                  name="videoUrl"
+                  placeholder="https://example.com/video.mp4"
+                  value={product.videoUrl}
+                  onChange={(e) => {
+                    const url = e.target.value;
+                    setProduct(prev => ({ ...prev, videoUrl: url }));
+                  }}
+                  onBlur={(e) => {
+                    // Trigger thumbnail generation when user leaves the field
+                    const url = e.target.value;
+                    if (url) generateThumbnail(url);
+                  }}
+                  style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc", marginBottom: "10px" }}
+                />
+                <p style={{ fontSize: '0.8em', color: '#666' }}>
+                  * Enter a direct video URL. We will try to auto-generate a thumbnail cover from the 1st second.
+                </p>
+                {/* Hidden Video Element for Thumbnail Generation */}
+                <video
+                  id="thumbnail-generator"
+                  crossOrigin="anonymous"
+                  style={{ display: 'none' }}
+                  preload="metadata"
+                  muted
+                >
+                </video>
+              </div>
+            )}
           </>
         )}
 
