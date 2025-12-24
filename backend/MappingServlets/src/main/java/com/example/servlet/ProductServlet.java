@@ -83,14 +83,11 @@ public class ProductServlet extends HttpServlet { // Product Servlet
 
         HttpSession session = req.getSession(false); // Don't create a new session if one doesn't exist
 
-        /*
-         * if (session == null || session.getAttribute("role") == null) {
-         * resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Error
-         * resp.getWriter().write(gson.toJson(Map.of("error",
-         * "You must be logged in")));
-         * return;
-         * }
-         */
+        if (session == null || session.getAttribute("role") == null) {
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Error
+            resp.getWriter().write(gson.toJson(Map.of("error", "You must be logged in")));
+            return;
+        }
 
         String role = (String) session.getAttribute("role");
 
