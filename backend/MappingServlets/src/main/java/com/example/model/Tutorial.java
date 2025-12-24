@@ -1,15 +1,24 @@
 package com.example.model;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import java.util.List;
 
 public class Tutorial {
+    @BsonId
     private ObjectId id;
+    @BsonProperty("name")
     private String name;
+    @BsonProperty("instructor")
     private String instructor;
+    @BsonProperty("price")
     private double price;
+    @BsonProperty("description")
     private String description;
+    @BsonProperty("isLiveClass")
     private boolean isLiveClass;
+    @BsonProperty("images")
     private List<String> images;
 
     public Tutorial() {

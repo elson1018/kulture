@@ -58,9 +58,13 @@ const AddProduct = () => {
       isLiveClass: product.isLiveClass,
     };
 
+    const endpoint = product.category === "Tutorials"
+      ? "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"
+      : "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products";
+
     try {
       const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products",
+        endpoint,
         {
           method: "POST",
           headers: {
@@ -92,7 +96,7 @@ const AddProduct = () => {
       } else {
         alert(
           "Error adding product: " +
-            (result.message || result.error || "Unknown error")
+          (result.message || result.error || "Unknown error")
         );
       }
     } catch (error) {

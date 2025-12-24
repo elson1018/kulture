@@ -27,11 +27,10 @@ const Tutorial = ({ user }) => {
     useEffect(() => {
         const fetchTutorials = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/products`);
+                const response = await fetch(`${API_BASE_URL}/tutorials`);
                 if (!response.ok) throw new Error('Failed to fetch tutorials');
                 const data = await response.json();
-                const filteredData = data.filter(item => item.category === "Tutorials");
-                setTutorials(filteredData);
+                setTutorials(data);
             } catch (err) {
                 setError(err.message);
             } finally {

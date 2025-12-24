@@ -14,11 +14,12 @@ public class Product {
     private List<String> images;
     private double rating;
     private String company;
+    @BsonProperty("instructor")
     private String instructor;
+    @BsonProperty("isLiveClass")
     private boolean isLiveClass;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(String id, String name, String category, double price, String description,
             List<String> images, double rating, String company, String instructor, boolean isLiveClass) {
@@ -34,83 +35,33 @@ public class Product {
         this.isLiveClass = isLiveClass;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public String getCategory() {
-        return category;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    public List<String> getImages() { return images; }
+    public void setImages(List<String> images) { this.images = images; }
 
-    public double getPrice() {
-        return price;
-    }
+    public double getRating() { return rating; }
+    public void setRating(double rating) { this.rating = rating; }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getInstructor() { return instructor; }
+    public void setInstructor(String instructor) { this.instructor = instructor; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
-    public boolean getIsLiveClass() {
-        return isLiveClass;
-    }
-
-    public void setIsLiveClass(boolean isLiveClass) {
-        this.isLiveClass = isLiveClass;
-    }
+    public boolean getIsLiveClass() { return isLiveClass; }
+    public void setIsLiveClass(boolean isLiveClass) { this.isLiveClass = isLiveClass; }
 }
