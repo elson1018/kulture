@@ -143,6 +143,7 @@ const TutorialDetail = () => {
                                     ) : (
                                         <video
                                             controls
+                                            autoPlay
                                             width="100%"
                                             height="100%"
                                             poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
