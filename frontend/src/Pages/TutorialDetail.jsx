@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../CSS/ProductDetail.css"; // Reuse ProductDetail styles
+import Popup from "../components/Popup/Popup";
 
 const TutorialDetail = () => {
     const { id } = useParams();
@@ -11,6 +12,9 @@ const TutorialDetail = () => {
     const [error, setError] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
+
+    // Popup state
+    const [popup, setPopup] = useState({ isOpen: false, message: '', type: '' });
 
     // Booking states
     const [showBookingModal, setShowBookingModal] = useState(false);
@@ -53,7 +57,14 @@ const TutorialDetail = () => {
         // Simulate 5 seconds preview
         setTimeout(() => {
             setShowPreview(false);
-            alert("Preview ended. Please purchase to watch the full tutorial.");
+            // Small delay to allow React to unmount the video/iframe before alert blocks the UI
+            setTimeout(() => {
+                setPopup({
+                    isOpen: true,
+                    message: "Preview ended. Please purchase to watch the full tutorial.",
+                    type: "notification"
+                });
+            }, 100);
         }, 5000);
     };
 
@@ -61,8 +72,12 @@ const TutorialDetail = () => {
         // Check user login from localStorage
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
-            alert("Please log in to book or purchase.");
-            navigate("/login");
+            setPopup({
+                isOpen: true,
+                message: "Please log in to book or purchase.",
+                type: "notification"
+            });
+            setTimeout(() => navigate("/login"), 1500); // Redirect after short delay
             return;
         }
 
@@ -123,6 +138,13 @@ const TutorialDetail = () => {
 
     return (
         <div className="product-detail-page">
+            <Popup
+                isOpen={popup.isOpen}
+                message={popup.message}
+                type={popup.type}
+                onClose={() => setPopup({ ...popup, isOpen: false })}
+            />
+
             <div className="detail-container">
                 <div className="detail-images">
                     <div className="main-image-container">
