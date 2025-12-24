@@ -1,11 +1,8 @@
 package com.example.model;
 
 import java.util.List;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Product {
-    @BsonId
     private String id;
     private String name;
     private String category;
@@ -14,15 +11,11 @@ public class Product {
     private List<String> images;
     private double rating;
     private String company;
-    @BsonProperty("instructor")
-    private String instructor;
-    @BsonProperty("isLiveClass")
-    private boolean isLiveClass;
 
     public Product() {}
 
     public Product(String id, String name, String category, double price, String description,
-            List<String> images, double rating, String company, String instructor, boolean isLiveClass) {
+            List<String> images, double rating, String company) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -31,8 +24,6 @@ public class Product {
         this.images = images;
         this.rating = rating;
         this.company = company;
-        this.instructor = instructor;
-        this.isLiveClass = isLiveClass;
     }
 
     public String getId() { return id; }
@@ -58,10 +49,4 @@ public class Product {
 
     public String getCompany() { return company; }
     public void setCompany(String company) { this.company = company; }
-
-    public String getInstructor() { return instructor; }
-    public void setInstructor(String instructor) { this.instructor = instructor; }
-
-    public boolean getIsLiveClass() { return isLiveClass; }
-    public void setIsLiveClass(boolean isLiveClass) { this.isLiveClass = isLiveClass; }
 }
