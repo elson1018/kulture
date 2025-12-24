@@ -108,6 +108,15 @@ const TutorialDetail = () => {
         }
     };
 
+    const getYouTubeId = (url) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const youtubeId = tutorial ? getYouTubeId(tutorial.videoUrl) : null;
+
     if (loading) return <div className="product-detail-page loading"><h2>Loading...</h2></div>;
     if (error) return <div className="error-container">{error}</div>;
     if (!tutorial) return <div className="product-detail-page error"><h2>Tutorial not found</h2></div>;
@@ -121,17 +130,28 @@ const TutorialDetail = () => {
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', color: '#fff' }}>
                                 {/* Show Video Player if videoUrl exists and user wants to preview or watch */}
                                 {tutorial.videoUrl ? (
-                                    <video
-                                        controls
-                                        width="100%"
-                                        height="100%"
-                                        poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
-                                        style={{ backgroundColor: '#000' }}
-                                    >
-                                        {/* Check if it is a full URL or local path */}
-                                        <source src={tutorial.videoUrl} type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
+                                    youtubeId ? (
+                                        <iframe
+                                            width="100%"
+                                            height="100%"
+                                            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+                                            title="YouTube video player"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    ) : (
+                                        <video
+                                            controls
+                                            width="100%"
+                                            height="100%"
+                                            poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
+                                            style={{ backgroundColor: '#000' }}
+                                        >
+                                            <source src={tutorial.videoUrl} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    )
                                 ) : (
                                     <p>▶ Video Preview Playing (5s)...</p>
                                 )}

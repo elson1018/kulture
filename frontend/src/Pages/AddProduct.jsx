@@ -10,7 +10,8 @@ const AddProduct = () => {
     images: "",
     imageFile: null,
     instructor: '',
-    isLiveClass: false
+    isLiveClass: false,
+    videoUrl: ""
   });
 
   const handleChange = (e) => {
@@ -37,6 +38,14 @@ const AddProduct = () => {
   };
 
   const generateThumbnail = (videoUrl) => {
+    // Check for YouTube URL first
+    const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    if (youtubeRegExp.test(videoUrl)) {
+      console.log("YouTube URL detected. Auto-thumbnail skipped.");
+      alert("YouTube URL detected. Please upload a cover image manually as we cannot auto-generate thumbnails from YouTube.");
+      return;
+    }
+
     const video = document.getElementById('thumbnail-generator');
     if (!video) return;
 
@@ -90,6 +99,7 @@ const AddProduct = () => {
       imageFileName: fileName, // Pass filename separately for backend to use
       instructor: product.instructor,
       isLiveClass: product.isLiveClass,
+      videoUrl: product.videoUrl
     };
 
     const endpoint = product.category === "Tutorials"
@@ -245,7 +255,7 @@ const AddProduct = () => {
                 <input
                   type="text"
                   name="videoUrl"
-                  placeholder="https://example.com/video.mp4"
+                  placeholder="https://example.com/video.mp4 OR https://www.youtube.com/watch?v=..."
                   value={product.videoUrl}
                   onChange={(e) => {
                     const url = e.target.value;
@@ -259,7 +269,7 @@ const AddProduct = () => {
                   style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc", marginBottom: "10px" }}
                 />
                 <p style={{ fontSize: '0.8em', color: '#666' }}>
-                  * Enter a direct video URL. We will try to auto-generate a thumbnail cover from the 1st second.
+                  * Enter a direct video URL or YouTube Link. For YouTube, please upload an image manually.
                 </p>
                 {/* Hidden Video Element for Thumbnail Generation */}
                 <video
