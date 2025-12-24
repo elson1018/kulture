@@ -82,9 +82,6 @@ const Login = ({ onFormSwitch, setUser }) => {
               type: "success"
         });
 
-
-
-
       } else {
           setPopup({
               show: true,
