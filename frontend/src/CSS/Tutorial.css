@@ -1,0 +1,31 @@
+.tutorial-page {
+    padding: 40px 5% 5% 5%;
+    background-color: #F5F5E9;
+    min-height: 100vh;
+}
+
+.tutorial-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.tutorial-header h1 {
+    font-size: 42px;
+    color: #9E5E4E;
+}
+
+.page-subtext {
+    font-size: 1.2rem;
+    color: #000000;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.tutorial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+

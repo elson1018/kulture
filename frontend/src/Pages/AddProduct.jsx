@@ -9,13 +9,16 @@ const AddProduct = () => {
     price: "",
     images: "",
     imageFile: null,
+    instructor: '',
+    isLiveClass: false,
+    videoUrl: ""
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setProduct((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -52,11 +55,18 @@ const AddProduct = () => {
       rating: 0.0,
       company: "Kulture",
       imageFileName: fileName, // Pass filename separately for backend to use
+      instructor: product.instructor,
+      isLiveClass: product.isLiveClass,
+      videoUrl: product.videoUrl
     };
+
+    const endpoint = product.category === "Tutorials"
+      ? "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"
+      : "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products";
 
     try {
       const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products",
+        endpoint,
         {
           method: "POST",
           headers: {
@@ -79,6 +89,9 @@ const AddProduct = () => {
           price: "",
           images: "",
           imageFile: null,
+          instructor: '',
+          isLiveClass: false,
+          videoUrl: ""
         });
         // Reset file input
         const fileInput = document.querySelector('input[type="file"]');
@@ -86,7 +99,7 @@ const AddProduct = () => {
       } else {
         alert(
           "Error adding product: " +
-            (result.message || result.error || "Unknown error")
+          (result.message || result.error || "Unknown error")
         );
       }
     } catch (error) {
@@ -94,6 +107,10 @@ const AddProduct = () => {
       alert("Failed to connect to the server. Is Tomcat running?");
     }
   };
+
+  // Dynamic label for image field
+
+  const imageLabel = product.category === "Tutorials" ? "Tutorial Thumbnail:" : "Product Image:";
 
   return (
     <div className="add-product-container">
@@ -128,9 +145,56 @@ const AddProduct = () => {
             <option value="Souvenirs">Souvenirs</option>
             <option value="Food">Food</option>
             <option value="Instruments">Instruments</option>
-            <option value="Dances">Dances</option>
+            <option value="Tutorials">Tutorials</option>
           </select>
         </div>
+
+        {/* Tutorials Field */}
+        {product.category === "Tutorials" && (
+          <>
+            <div className="form-group">
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+                Instructor:
+              </label>
+              <input
+                type="text"
+                name="instructor"
+                value={product.instructor}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <div className="form-group" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <input
+                type="checkbox"
+                name="isLiveClass"
+                checked={product.isLiveClass}
+                onChange={handleChange}
+                id="isLiveClass"
+              />
+              <label htmlFor="isLiveClass" style={{ fontWeight: "bold", cursor: "pointer" }}>
+                Is this a Live Class?
+              </label>
+            </div>
+            {/* Video URL Input - only for recorded tutorials */}
+            {!product.isLiveClass && (
+              <div className="form-group">
+                <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+                  Video URL:
+                </label>
+                <input
+                  type="text"
+                  name="videoUrl"
+                  placeholder="https://example.com/video.mp4 OR https://www.youtube.com/watch?v=..."
+                  value={product.videoUrl}
+                  onChange={handleChange}
+                  style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+                />
+              </div>
+            )}
+          </>
+        )}
 
         <div className="form-group">
           <label>
@@ -142,6 +206,7 @@ const AddProduct = () => {
             onChange={handleChange}
             required
             rows="4"
+            resize="none"
           />
         </div>
 
@@ -161,7 +226,7 @@ const AddProduct = () => {
 
         <div className="form-group">
           <label>
-            Product Image:
+            {imageLabel}
           </label>
           <input
             type="file"

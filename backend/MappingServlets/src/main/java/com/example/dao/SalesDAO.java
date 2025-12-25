@@ -14,11 +14,13 @@ public class SalesDAO {
         MongoDatabase db = MongoDBUtil.getDatabase();
         this.salesCollection = db.getCollection("sales", Sale.class);
     }
-    //Gets a individual sale
+
+    // Gets a individual sale
     public void recordSale(Sale sale) {
         salesCollection.insertOne(sale);
     }
-    //Return the total revenue of all products
+
+    // Return the total revenue of all products
     public double getTotalRevenue() {
         List<Sale> allSales = getAllSales();
         return allSales.stream().mapToDouble(Sale::getTotalAmount).sum();

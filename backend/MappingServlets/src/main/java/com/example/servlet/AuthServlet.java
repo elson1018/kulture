@@ -1,9 +1,10 @@
-package com.example.servlet;
 
-import com.example.dao.UserDAO;
-import com.example.model.User;
 
 import com.google.gson.Gson;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.example.dao.UserDAO;
+import com.example.model.User;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mongodb.client.model.Filters.eq;
 
-@WebServlet("/api/auth/*") 
+@WebServlet("/api/auth/*")
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -25,11 +27,11 @@ public class AuthServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        this.gson = new Gson();       
-        this.userDAO = new UserDAO(); 
-       
+        this.gson = new Gson();
+        this.userDAO = new UserDAO();
+
     }
-    //CORS Setup
+    // CORS Setup
 
     private void setupCORS(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
@@ -37,41 +39,39 @@ public class AuthServlet extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
         resp.setHeader("Access-Control-Allow-Credentials", "true");
     }
-    //Override available doOptions to set the CORS headers for preflight requests
+
+    // Override available doOptions to set the CORS headers for preflight requests
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
         setupCORS(resp);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
-
-    //Handle different authentication requests
+    // Handle different authentication requests
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setupCORS(resp);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-      
-            String path = req.getPathInfo(); 
 
-            if ("/register".equals(path)) {
-                handleRegister(req, resp);
-            } else if ("/login".equals(path)) {
-                handleLogin(req, resp);
-            } else if ("/logout".equals(path)) {
-                handleLogout(req, resp);
-            } else {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write(gson.toJson(Map.of("error", "Invalid Endpoint")));
-            }
+        String path = req.getPathInfo();
+
+        if ("/register".equals(path)) {
+            handleRegister(req, resp);
+        } else if ("/login".equals(path)) {
+            handleLogin(req, resp);
+        } else if ("/logout".equals(path)) {
+            handleLogout(req, resp);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write(gson.toJson(Map.of("error", "Invalid Endpoint")));
+        }
     }
-    
 
     private void handleRegister(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    
+
         User newUser = gson.fromJson(req.getReader(), User.class);
 
-     
         if (userDAO.findByEmail(newUser.getEmail()) != null) {
             sendError(resp, "Email address is already registered.");
             return;
@@ -82,7 +82,6 @@ public class AuthServlet extends HttpServlet {
             newUser.setRole("CUSTOMER");
         }
 
-        
         // 4. Save using DAO
         userDAO.createUser(newUser);
 
@@ -93,16 +92,14 @@ public class AuthServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(success));
     }
 
-
     private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-       
-        User loginRequest = gson.fromJson(req.getReader(), User.class);
 
+        User loginRequest = gson.fromJson(req.getReader(), User.class);
 
         User user = userDAO.findByEmail(loginRequest.getEmail());
 
         if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
-            
+
             // Create Session
             HttpSession session = req.getSession();
             session.setAttribute("user_id", user.getId().toString());
@@ -113,7 +110,7 @@ public class AuthServlet extends HttpServlet {
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("status", "success");
             responseData.put("role", user.getRole());
-            
+
             // Hide password before sending back
             user.setPassword(null);
             responseData.put("user", user);

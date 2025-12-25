@@ -1,12 +1,12 @@
 
 package com.example.dao;
-import com.example.model.Cart;
-import com.example.model.CartItem;
-import com.example.util.MongoDBUtil;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.example.util.MongoDBUtil;
+import com.example.model.Cart;
+import com.example.model.CartItem;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,11 @@ public class CartDAO {
         this.cartCollection = database.getCollection("carts");
     }
 
-    //Get Cart function
+    // Get Cart function
     public Cart getCart(String userId) {
         Document doc = cartCollection.find(Filters.eq("userId", userId)).first();
         if (doc == null) {
-            return new Cart(userId); 
+            return new Cart(userId);
         }
         return cartFromDocument(doc);
     }
@@ -36,14 +36,18 @@ public class CartDAO {
         return new ArrayList<>();
     }
 
-    //Add to cart function
+    // Add to cart function
     public void addToCart(String userId, CartItem newItem) {
         Cart cart = getCart(userId);
         boolean itemExists = false;
 
         // Check if product is already in cart
         for (CartItem item : cart.getItems()) {
-            if (item.getProductId().equals(newItem.getProductId())) {
+            boolean sameProduct = item.getProductId().equals(newItem.getProductId());
+            boolean sameDate = (item.getSelectedDate() == null && newItem.getSelectedDate() == null) ||
+                               (item.getSelectedDate() != null && item.getSelectedDate().equals(newItem.getSelectedDate()));
+
+            if (sameProduct && sameDate) {
                 // Just update quantity
                 item.setQuantity(item.getQuantity() + newItem.getQuantity());
                 itemExists = true;
@@ -78,7 +82,7 @@ public class CartDAO {
     private void saveCart(Cart cart) {
         Document doc = cartToDocument(cart);
         // "upsert": Replace if exists, Insert if new
-        cartCollection.replaceOne(Filters.eq("userId", cart.getUserId()), doc, 
+        cartCollection.replaceOne(Filters.eq("userId", cart.getUserId()), doc,
                 new com.mongodb.client.model.ReplaceOptions().upsert(true));
     }
 
@@ -87,51 +91,64 @@ public class CartDAO {
         List<Document> itemDocs = new ArrayList<>();
         for (CartItem item : cart.getItems()) {
             itemDocs.add(new Document()
-                .append("productId", item.getProductId())
-                .append("productName", item.getProductName())
-                .append("price", item.getPrice())
-                .append("quantity", item.getQuantity())
-                .append("images", item.getImages())
-                .append("company", item.getCompany())
-            );
+                    .append("productId", item.getProductId())
+                    .append("productName", item.getProductName())
+                    .append("price", item.getPrice())
+                    .append("quantity", item.getQuantity())
+                    .append("images", item.getImages())
+                    .append("company", item.getCompany())
+                    .append("itemType", item.getItemType())
+                    .append("selectedDate", item.getSelectedDate()));
         }
         return new Document("userId", cart.getUserId())
                 .append("items", itemDocs);
     }
-//Convert Document into Cart
+
+    // Convert Document into Cart
     private Cart cartFromDocument(Document doc) {
         Cart cart = new Cart(doc.getString("userId"));
         List<Document> itemDocs = (List<Document>) doc.get("items");
-        
+
         List<CartItem> items = new ArrayList<>();
         if (itemDocs != null) {
-        for (Document itemDoc : itemDocs) {
+            for (Document itemDoc : itemDocs) {
 
-            // Wrapping and conversion to correct data types
-            Double priceWrapper = itemDoc.getDouble("price");
-            double price = (priceWrapper != null) ? priceWrapper : 0.0;
+              
+                Object priceObj = itemDoc.get("price");
+                double price = 0.0;
+                if (priceObj instanceof Number) {
+                    price = ((Number) priceObj).doubleValue();
+                } else if (priceObj instanceof String) {
+                     // Fallback for string representation just in case
+                     try {
+                         price = Double.parseDouble((String) priceObj);
+                     } catch (NumberFormatException e) {
+                         price = 0.0;
+                     }
+                }
 
-            Integer qtyWrapper = itemDoc.getInteger("quantity");
-            int quantity = (qtyWrapper != null) ? qtyWrapper : 0;
-            
-            List<String> images = itemDoc.getList("images", String.class);
-            if (images == null) {
-                images = new ArrayList<>(); 
+                Integer qtyWrapper = itemDoc.getInteger("quantity");
+                int quantity = (qtyWrapper != null) ? qtyWrapper : 0;
+
+                List<String> images = itemDoc.getList("images", String.class);
+                if (images == null) {
+                    images = new ArrayList<>();
+                }
+                // Add each individual cart java object into the list
+                items.add(new CartItem(
+                        itemDoc.getString("productId"),
+                        itemDoc.getString("productName"),
+                        price,
+                        quantity,
+                        images,
+                        itemDoc.getString("company"),
+                        itemDoc.getString("itemType"),
+                        itemDoc.getString("selectedDate")));
             }
-            //Add each individual cart java object into the list
-            items.add(new CartItem(
-                itemDoc.getString("productId"),
-                itemDoc.getString("productName"),
-                price,
-                quantity,
-                images,
-                itemDoc.getString("company")
-            ));
         }
-    }
 
-    cart.setItems(items);
-    return cart;
-}
+        cart.setItems(items);
+        return cart;
+    }
 
 }

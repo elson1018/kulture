@@ -1,9 +1,8 @@
 package com.example.servlet;
 
+import com.google.gson.Gson;
 import com.example.dao.SalesDAO;
 import com.example.model.Sale;
-
-import com.google.gson.Gson;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,6 +43,7 @@ public class SalesServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
+
         try {
             String email = req.getParameter("email");
 
@@ -52,7 +52,7 @@ public class SalesServlet extends HttpServlet {
                 List<Sale> customerSales = salesDAO.getSalesByCustomerEmail(email);
                 resp.getWriter().write(gson.toJson(Map.of("sales", customerSales)));
             } else {
-                // this return all sales for admin dashboard one
+                // this return all sales for admin dashboard
                 double totalRevenue = salesDAO.getTotalRevenue();
                 List<Sale> allSales = salesDAO.getAllSales();
 
@@ -66,5 +66,9 @@ public class SalesServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
         }
+    }
+
+    public List<Sale> getSalesByUserEmail(String email) {
+        return salesDAO.getSalesByCustomerEmail(email);
     }
 }

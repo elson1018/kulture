@@ -16,14 +16,16 @@ public class Product {
 
     public Product() {}
 
-    public Product(String  name, String category, double price, String description, List<String> images , double rating) {
+    public Product(String id, String name, String category, double price, String description,
+            List<String> images, double rating, String company) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.description = description;
         this.images = images;
         this.rating = rating;
-        this.company = " ";
+        this.company = company;
     }
 
     public String getId() { return id; }
@@ -43,7 +45,7 @@ public class Product {
 
     public List<String> getImages() { return images; }
     public void setImages(List<String> images) { this.images = images; }
-    
+
     public double getRating() { return rating; }
     public void setRating(double rating) { this.rating = rating; }
 

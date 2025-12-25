@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
-          View Product
+          View Details
         </button>
       </div>
     </div>
