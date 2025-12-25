@@ -1,8 +1,9 @@
-package com.example;
+package com.example.servlet;
+
+import com.example.dao.UserDAO;
+import com.example.model.User;
 
 import com.google.gson.Gson;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.mongodb.client.model.Filters.eq;
 
 @WebServlet("/api/auth/*") 
 public class AuthServlet extends HttpServlet {

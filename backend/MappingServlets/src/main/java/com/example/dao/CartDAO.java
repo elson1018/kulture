@@ -1,5 +1,9 @@
 
-package com.example;
+package com.example.dao;
+import com.example.model.Cart;
+import com.example.model.CartItem;
+import com.example.util.MongoDBUtil;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;

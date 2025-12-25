@@ -1,4 +1,8 @@
-package com.example;
+package com.example.servlet;
+
+import com.example.dao.ProductDAO;
+import com.example.dao.SalesDAO;
+import com.example.model.Product;
 
 
 import com.google.gson.Gson;// JSON serialization

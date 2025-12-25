@@ -1,4 +1,12 @@
-package com.example;
+package com.example.servlet;
+
+import com.example.dao.CartDAO;
+import com.example.dao.UserDAO;
+import com.example.dao.SalesDAO;
+import com.example.model.Cart;
+import com.example.model.CartItem;
+import com.example.model.Sale;
+import com.example.model.User;
 
 import com.google.gson.Gson;
 import javax.servlet.ServletException;
