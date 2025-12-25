@@ -19,13 +19,21 @@ const Shop = () => {
         setError(null);
 
         // Fetch products from backed
-        const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products");
+        // Fetch products and tutorials in parallel
+        const [productsParam, tutorialsParam] = await Promise.all([
+          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
+          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials")
+        ]);
 
-        if (!response.ok) {
+        if (!productsParam.ok || !tutorialsParam.ok) {
           throw new Error(`HTTP ERROR Status: ${response.status}`);
         }
 
-        const allData = await response.json();
+        const productsData = await productsParam.json();
+        const tutorialsData = await tutorialsParam.json();
+
+        // Combine them
+        const allData = [...productsData, ...tutorialsData];
 
         // Filter logic
         let filteredData = allData;
@@ -75,7 +83,7 @@ const Shop = () => {
     <div className='shop-page'>
       <div className="shop-header">
         {searchTerm && (
-          <button className="back-button" onClick={() => navigate(-1)}> 
+          <button className="back-button" onClick={() => navigate(-1)}>
             ← Back
           </button>
         )}
