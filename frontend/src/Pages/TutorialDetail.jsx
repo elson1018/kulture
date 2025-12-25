@@ -7,7 +7,7 @@ import { ShopContext } from "../Context/ShopContext";
 const TutorialDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { addToCart } = useContext(ShopContext);
+    const { addToCart, addToCartBackend } = useContext(ShopContext);
 
     const [tutorial, setTutorial] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -100,7 +100,8 @@ const TutorialDetail = () => {
         }
 
         setIsAddingToCart(true);
-        const user = JSON.parse(localStorage.getItem('user'));
+        // The user check is handled in addToCartBackend, but for the modal flow we might want to keep the earlier check "initiationAddToCart".
+        // However, safe to rely on backend or context check.
 
         const finalQty = tutorial.isLiveClass ? quantity : 1;
 
@@ -115,43 +116,23 @@ const TutorialDetail = () => {
             selectedDate: tutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null
         };
 
-        try {
-            const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(cartItem),
-            });
+        const result = await addToCartBackend(cartItem);
 
-            if (response.status === 401) {
-                setPopup({ isOpen: true, message: "Session expired. Please log in again.", type: "error" });
+        setIsAddingToCart(false);
+
+        if (result.success) {
+            setPopup({ isOpen: true, message: result.message, type: "success" });
+            setShowBookingModal(false);
+        } else {
+            if (result.type === "auth") {
+                setPopup({ isOpen: true, message: result.message, type: "error" });
                 setTimeout(() => navigate("/login"), 1500);
-                return;
-            }
-
-            const result = await response.json();
-
-            if (response.ok && result.status === "success") {
-                addToCart(String(tutorial.id), finalQty);
-                setPopup({ isOpen: true, message: `Added ${finalQty} session(s) of ${tutorial.name} to cart!`, type: "success" });
-                setShowBookingModal(false);
             } else {
                 setBookingMessage({ type: 'error', text: "Failed: " + result.message });
-                // If not in modal, show popup
                 if (!showBookingModal) {
                     setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
                 }
             }
-        } catch (err) {
-            console.error("Cart Error:", err);
-            setBookingMessage({ type: 'error', text: "Server connection failed." });
-            if (!showBookingModal) {
-                setPopup({ isOpen: true, message: "Server connection failed.", type: "error" });
-            }
-        } finally {
-            setIsAddingToCart(false);
         }
     };
 
