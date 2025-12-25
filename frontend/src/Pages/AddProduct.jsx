@@ -247,6 +247,7 @@ const AddProduct = () => {
 
         <button
           type="submit"
+          className="submit-btn"
         >
           {isTutorial ? "Add Tutorial" : "Add Product"}
         </button>
