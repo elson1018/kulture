@@ -6,18 +6,16 @@ const SupplierDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);
   const [myTutorials, setMyTutorials] = useState([]);
   const [salesData, setSalesData] = useState({ totalRevenue: 0, sales: [] });
-  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsRes, tutorialsRes, salesRes, bookingsRes] = await Promise.all([
+        const [productsRes, tutorialsRes, salesRes] = await Promise.all([
           fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
           fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/bookings", { credentials: "include" })
+          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales")
         ]);
 
         if (productsRes.ok) {
@@ -35,10 +33,7 @@ const SupplierDashboard = ({ user }) => {
           setSalesData(sales);
         }
 
-        if (bookingsRes.ok) {
-          const bookingsData = await bookingsRes.json();
-          setBookings(bookingsData.bookings || []);
-        }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -48,23 +43,44 @@ const SupplierDashboard = ({ user }) => {
     fetchData();
   }, []);
 
-  // Calculate tutorial revenue from bookings
-  const getTutorialRevenue = () => {
-    return bookings.reduce((total, booking) => total + (booking.price || 0), 0);
-  };
+  // Derive stats from Sales
+  const tutorialNames = new Set(myTutorials.map(t => t.name));
+  const liveClassNames = new Set(myTutorials.filter(t => t.isLiveClass).map(t => t.name));
 
-  const totalRevenue = salesData.totalRevenue + getTutorialRevenue();
+  // Count total bookings (ONLY Live Classes)
+  const totalBookings = salesData.sales.reduce((count, sale) => {
+    return count + sale.productNames.filter(name => {
+      // Check if name matches a live class.
+      // Sales data appends dates to live class names: "Name (Date)".
+      // We extract the base name to check against our list of known Live Classes.
+      const baseName = name.split(" (")[0]; // remove appended date if any
+      return liveClassNames.has(baseName) || liveClassNames.has(name);
+    }).length;
+  }, 0);
+
+  // Count total physical orders (Sales that contain Physical Products OR Recorded Videos)
+  // "Total Orders" should include anything that is NOT a Live Class booking.
+  const physicalOrdersCount = salesData.sales.filter(sale => {
+    // Check for physical products or recorded videos (excludes live class bookings)
+    const hasNonBookingItem = sale.productNames.some(name => {
+      const baseName = name.split(" (")[0];
+      return !liveClassNames.has(baseName) && !liveClassNames.has(name);
+    });
+    return hasNonBookingItem;
+  }).length;
+
+  const totalRevenue = salesData.totalRevenue;
 
   // Delete product handler
   const handleDeleteProduct = async (productId) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
-    
+
     try {
       const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products?id=${productId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         setMyProducts(prev => prev.filter(p => p.id !== productId));
         alert('Product deleted successfully!');
@@ -81,13 +97,13 @@ const SupplierDashboard = ({ user }) => {
   // Delete tutorial handler
   const handleDeleteTutorial = async (tutorialId) => {
     if (!window.confirm('Are you sure you want to delete this tutorial?')) return;
-    
+
     try {
       const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials?id=${tutorialId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         setMyTutorials(prev => prev.filter(t => t.id !== tutorialId));
         alert('Tutorial deleted successfully!');
@@ -131,11 +147,11 @@ const SupplierDashboard = ({ user }) => {
         </div>
         <div className="stat-card">
           <h3>Total Orders</h3>
-          <p>{salesData.sales.length}</p>
+          <p>{physicalOrdersCount}</p>
         </div>
         <div className="stat-card">
           <h3>Total Bookings</h3>
-          <p>{bookings.length}</p>
+          <p>{totalBookings}</p>
         </div>
       </div>
 
@@ -169,7 +185,7 @@ const SupplierDashboard = ({ user }) => {
         )}
       </div>
 
-      
+
 
       <div className="products-table-section">
         <h2>Listed Products</h2>
@@ -201,8 +217,8 @@ const SupplierDashboard = ({ user }) => {
                     <td>RM {Number(product.price).toFixed(2)}</td>
                     <td>{product.category}</td>
                     <td>
-                      <button 
-                        className="action-button delete" 
+                      <button
+                        className="action-button delete"
                         onClick={() => handleDeleteProduct(product.id)}
                       >
                         Delete
@@ -255,8 +271,8 @@ const SupplierDashboard = ({ user }) => {
                     <td>RM {Number(tutorial.price).toFixed(2)}</td>
                     <td>{tutorial.isLiveClass ? "Live Class" : "Recorded"}</td>
                     <td>
-                      <button 
-                        className="action-button delete" 
+                      <button
+                        className="action-button delete"
                         onClick={() => handleDeleteTutorial(tutorial.id)}
                       >
                         Delete
