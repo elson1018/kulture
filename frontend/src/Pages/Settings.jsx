@@ -4,8 +4,7 @@ import '../CSS/Settings.css';
 const Settings = () => {
     const [activeTab, setActiveTab] = useState('profile'); // set the active section
     const [loading, setLoading] = useState(false);
-    const [history, setHistory] = useState([]);
-    
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -25,22 +24,10 @@ const Settings = () => {
                 phone: user.phone || '',
                 address: user.address || ''
             }));
-            fetchUserHistory(user.email);
         }
     }, []);
 
-    // Function to fetch all service records
-    const fetchUserHistory = async (email) => {
-        try {
-            const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/bookings?email=${email}`);
-            if (response.ok) {
-                const data = await response.json();
-                setHistory(data);
-            }
-        } catch (error) {
-            console.error("Error fetching history:", error);
-        }
-    };
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -85,7 +72,6 @@ const Settings = () => {
             <div className="settings-sidebar">
                 <h3>Settings</h3>
                 <button className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>Edit Profile</button>
-                <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>My History</button>
                 <button className={activeTab === 'security' ? 'active' : ''} onClick={() => setActiveTab('security')}>Security & Password</button>
             </div>
 
@@ -94,7 +80,7 @@ const Settings = () => {
                 {activeTab === 'profile' && (
                     <form className="profile-form" onSubmit={handleUpdateProfile}>
                         <h2>Edit Profile </h2>
-                        
+
                         <div className="form-group">
                             <label>Username</label>
                             <input type="text" name="username" value={formData.username} onChange={handleChange} />
@@ -121,34 +107,7 @@ const Settings = () => {
                     </form>
                 )}
 
-                {/* History Section (Purchases and Bookings) */}
-                {activeTab === 'history' && (
-                    <div className="history-section">
-                        <h2>My Service History</h2>
-                        {history.length > 0 ? (
-                            <div className="history-list">
-                                {history.map((item) => (
-                                    <div key={item.id} className="history-item">
-                                        <div className="history-header">
-                                            <span className={`status-badge ${item.status.toLowerCase()}`}>
-                                                {item.status}
-                                            </span>
-                                            <h3>{item.tutorialName}</h3>
-                                        </div>
-                                        <div className="history-details">
-                                            <p><strong>Type:</strong> {item.scheduledDate ? "Live Class" : "Recorded Tutorial"}</p>
-                                            {item.scheduledDate && <p><strong>Scheduled:</strong> {new Date(item.scheduledDate).toLocaleString()}</p>}
-                                            <p><strong>Price Paid:</strong> RM{item.price.toFixed(2)}</p>
-                                        </div>
-                                        <hr />
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>You haven't purchased or booked any tutorials yet.</p>
-                        )}
-                    </div>
-                )}
+
 
                 {/* Password section */}
                 {activeTab === 'security' && (
