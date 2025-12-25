@@ -10,8 +10,8 @@
 }
 
 .tutorial-header h1 {
-  font-size: 42px;
-  color: #9E5E4E;
+    font-size: 42px;
+    color: #9E5E4E;
 }
 
 .page-subtext {
@@ -22,90 +22,10 @@
     line-height: 1.6;
 }
 
-.tutorial-card-horizontal {
-    display: flex;
-    flex-direction: row;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-    height: 300px;
-    width: 100%;
-}
-.tutorial-card-horizontal:hover {
-    transform: translateY(-5px);
+.tutorial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
 }
 
-.card-image-container {
-    width: 300px;
-    min-width: 300px;
-    height: 300px;
-}
-
-.card-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-info-horizontal {
-    padding: 30px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.card-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.tutorial-description {
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.tutorial-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.instructor-name {
-    font-weight: 600;
-    color: #e67e22;
-    margin-bottom: 10px;
-}
-
-.tutorial-actions-horizontal {
-    display: flex;
-    gap: 15px;
-}
-
-.preview-btn {
-    background: #f0f0f0;
-    color: #333;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.book-btn {
-    background: #e67e22;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}

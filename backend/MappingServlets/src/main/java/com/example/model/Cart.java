@@ -1,6 +1,5 @@
 package com.example.model;
 
-import com.example.model.CartItem;
 
 import org.bson.types.ObjectId;
 import java.util.ArrayList;

@@ -10,18 +10,29 @@ public class CartItem {
     private int quantity;
     private List<String> images;
     private String company;
+    // New fields for Tutorials/Bookings
+    private String itemType; // "product", "tutorial", "live_class"
+    private String selectedDate; // For live classes
 
     public CartItem() {
     }
 
     public CartItem(String productId, String productName, double price, int quantity, List<String> images,
-            String company) {
+            String company, String itemType, String selectedDate) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
         this.images = images;
         this.company = company;
+        this.itemType = itemType != null ? itemType : "product";
+        this.selectedDate = selectedDate;
+    }
+
+    // Constructor for backward compatibility
+    public CartItem(String productId, String productName, double price, int quantity, List<String> images,
+            String company) {
+        this(productId, productName, price, quantity, images, company, "product", null);
     }
 
     // Getters and Setters
@@ -72,6 +83,12 @@ public class CartItem {
     public void setCompany(String company) {
         this.company = company;
     }
+
+    public String getItemType() { return itemType; }
+    public void setItemType(String itemType) { this.itemType = itemType; }
+    
+    public String getSelectedDate() { return selectedDate; }
+    public void setSelectedDate(String selectedDate) { this.selectedDate = selectedDate; }
 
     // Helper function to calculate the final price of each item
     public double getTotalPrice() {

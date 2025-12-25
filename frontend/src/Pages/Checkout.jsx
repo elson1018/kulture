@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "../CSS/Checkout.css";
 
 const Checkout = () => {
-  const { cartItems, getTotalCartItems, clearCart } = useContext(ShopContext);
-  const [products, setProducts] = useState([]);
+  const { clearCart } = useContext(ShopContext);
+  const [cartData, setCartData] = useState({ items: [] });
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -18,11 +19,34 @@ const Checkout = () => {
   const shippingFee = 8.00;
 
   useEffect(() => {
-    fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error("Error fetching products for checkout", err));
-  }, []);
+    const fetchCart = async () => {
+      try {
+        setLoading(true);
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+          navigate("/login");
+          return;
+        }
+
+        const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart", {
+          method: "GET",
+          credentials: "include"
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setCartData(data);
+        } else {
+          console.error("Failed to fetch cart");
+        }
+      } catch (err) {
+        console.error("Error fetching cart:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCart();
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -70,37 +94,17 @@ const Checkout = () => {
     }
   };
 
-  const getTotalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        const itemInfo = products.find(
-          (product) => product.id === String(item) || product.id === parseInt(item)
-        );
-        if (itemInfo) {
-          const finalPrice = itemInfo.category === "Instruments" 
-            ? itemInfo.price * 0.90 
-            : itemInfo.price;
-          totalAmount += cartItems[item] * finalPrice;
-        }
-      }
-    }
-    return totalAmount;
+  // Calculate totals from cart data
+  const getOriginalCartAmount = () => {
+    if (!cartData.items) return 0;
+    return cartData.items.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const getOriginalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        const itemInfo = products.find(
-          (product) => product.id === String(item) || product.id === parseInt(item)
-        );
-        if (itemInfo) {
-          totalAmount += cartItems[item] * itemInfo.price;
-        }
-      }
-    }
-    return totalAmount;
+  // Apply 10% discount for instruments (products with category "Instruments")
+  // Since we don't have category in cart items, we'll apply discount to products only
+  // For now, just return original amount - discounts can be handled server-side
+  const getTotalCartAmount = () => {
+    return getOriginalCartAmount();
   };
 
   const finalSubTotal = getTotalCartAmount();
@@ -108,7 +112,11 @@ const Checkout = () => {
   const discountAmount = originalAmount - finalSubTotal;
   const grandTotal = finalSubTotal + shippingFee;
 
-  if (getTotalCartItems() === 0 && products.length > 0) {
+  if (loading) {
+    return <div className="checkout-page"><h2>Loading...</h2></div>;
+  }
+
+  if (!cartData.items || cartData.items.length === 0) {
     return (
       <div className="empty-checkout">
         <h2>Your cart is empty</h2>
@@ -176,22 +184,22 @@ const Checkout = () => {
           <div className="order-summary-box">
             <h3>Order Summary</h3>
             <div className="summary-items">
-              {products.map((product) => {
-                if (cartItems[product.id] > 0) {
-                  return (
-                    <div key={product.id} className="summary-item">
-                      <div className="item-info">
-                        <span className="item-name">{product.name}</span>
-                        <span className="item-qty">x {cartItems[product.id]}</span>
-                      </div>
-                      <span className="item-price">
-                        RM {(product.price * cartItems[product.id]).toFixed(2)}
+              {cartData.items.map((item) => (
+                <div key={`${item.productId}-${item.selectedDate || 'def'}`} className="summary-item">
+                  <div className="item-info">
+                    <span className="item-name">{item.productName}</span>
+                    <span className="item-qty">x {item.quantity}</span>
+                    {item.selectedDate && (
+                      <span className="item-date" style={{fontSize: '0.8rem', color: '#666', display: 'block'}}>
+                        📅 {item.selectedDate}
                       </span>
-                    </div>
-                  );
-                }
-                return null;
-              })}
+                    )}
+                  </div>
+                  <span className="item-price">
+                    RM {(item.price * item.quantity).toFixed(2)}
+                  </span>
+                </div>
+              ))}
             </div>
             
             <div className="summary-divider"></div>

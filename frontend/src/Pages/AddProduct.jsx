@@ -10,7 +10,8 @@ const AddProduct = () => {
     images: "",
     imageFile: null,
     instructor: '',
-    isLiveClass: false
+    isLiveClass: false,
+    videoUrl: ""
   });
 
   const handleChange = (e) => {
@@ -56,11 +57,16 @@ const AddProduct = () => {
       imageFileName: fileName, // Pass filename separately for backend to use
       instructor: product.instructor,
       isLiveClass: product.isLiveClass,
+      videoUrl: product.videoUrl
     };
+
+    const endpoint = product.category === "Tutorials"
+      ? "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"
+      : "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products";
 
     try {
       const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products",
+        endpoint,
         {
           method: "POST",
           headers: {
@@ -84,7 +90,8 @@ const AddProduct = () => {
           images: "",
           imageFile: null,
           instructor: '',
-          isLiveClass: false
+          isLiveClass: false,
+          videoUrl: ""
         });
         // Reset file input
         const fileInput = document.querySelector('input[type="file"]');
@@ -92,7 +99,7 @@ const AddProduct = () => {
       } else {
         alert(
           "Error adding product: " +
-            (result.message || result.error || "Unknown error")
+          (result.message || result.error || "Unknown error")
         );
       }
     } catch (error) {
@@ -100,6 +107,10 @@ const AddProduct = () => {
       alert("Failed to connect to the server. Is Tomcat running?");
     }
   };
+
+  // Dynamic label for image field
+
+  const imageLabel = product.category === "Tutorials" ? "Tutorial Thumbnail:" : "Product Image:";
 
   return (
     <div className="add-product-container">
@@ -166,6 +177,22 @@ const AddProduct = () => {
                 Is this a Live Class?
               </label>
             </div>
+            {/* Video URL Input - only for recorded tutorials */}
+            {!product.isLiveClass && (
+              <div className="form-group">
+                <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+                  Video URL:
+                </label>
+                <input
+                  type="text"
+                  name="videoUrl"
+                  placeholder="https://example.com/video.mp4 OR https://www.youtube.com/watch?v=..."
+                  value={product.videoUrl}
+                  onChange={handleChange}
+                  style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+                />
+              </div>
+            )}
           </>
         )}
 
@@ -179,6 +206,7 @@ const AddProduct = () => {
             onChange={handleChange}
             required
             rows="4"
+            resize="none"
           />
         </div>
 
@@ -198,7 +226,7 @@ const AddProduct = () => {
 
         <div className="form-group">
           <label>
-            Product Image:
+            {imageLabel}
           </label>
           <input
             type="file"

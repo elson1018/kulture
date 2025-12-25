@@ -43,7 +43,11 @@ public class CartDAO {
 
         // Check if product is already in cart
         for (CartItem item : cart.getItems()) {
-            if (item.getProductId().equals(newItem.getProductId())) {
+            boolean sameProduct = item.getProductId().equals(newItem.getProductId());
+            boolean sameDate = (item.getSelectedDate() == null && newItem.getSelectedDate() == null) ||
+                               (item.getSelectedDate() != null && item.getSelectedDate().equals(newItem.getSelectedDate()));
+
+            if (sameProduct && sameDate) {
                 // Just update quantity
                 item.setQuantity(item.getQuantity() + newItem.getQuantity());
                 itemExists = true;
@@ -92,7 +96,9 @@ public class CartDAO {
                     .append("price", item.getPrice())
                     .append("quantity", item.getQuantity())
                     .append("images", item.getImages())
-                    .append("company", item.getCompany()));
+                    .append("company", item.getCompany())
+                    .append("itemType", item.getItemType())
+                    .append("selectedDate", item.getSelectedDate()));
         }
         return new Document("userId", cart.getUserId())
                 .append("items", itemDocs);
@@ -107,9 +113,19 @@ public class CartDAO {
         if (itemDocs != null) {
             for (Document itemDoc : itemDocs) {
 
-                // Wrapping and conversion to correct data types
-                Double priceWrapper = itemDoc.getDouble("price");
-                double price = (priceWrapper != null) ? priceWrapper : 0.0;
+              
+                Object priceObj = itemDoc.get("price");
+                double price = 0.0;
+                if (priceObj instanceof Number) {
+                    price = ((Number) priceObj).doubleValue();
+                } else if (priceObj instanceof String) {
+                     // Fallback for string representation just in case
+                     try {
+                         price = Double.parseDouble((String) priceObj);
+                     } catch (NumberFormatException e) {
+                         price = 0.0;
+                     }
+                }
 
                 Integer qtyWrapper = itemDoc.getInteger("quantity");
                 int quantity = (qtyWrapper != null) ? qtyWrapper : 0;
@@ -125,7 +141,9 @@ public class CartDAO {
                         price,
                         quantity,
                         images,
-                        itemDoc.getString("company")));
+                        itemDoc.getString("company"),
+                        itemDoc.getString("itemType"),
+                        itemDoc.getString("selectedDate")));
             }
         }
 

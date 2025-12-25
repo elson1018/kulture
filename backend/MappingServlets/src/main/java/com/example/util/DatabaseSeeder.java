@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.MongoDatabase;
 import com.example.dao.UserDAO;
+
 import com.example.model.Product;
+import com.example.model.Tutorial;
 import com.example.model.User;
 
 import java.io.InputStream;
@@ -16,11 +18,14 @@ public class DatabaseSeeder {
     public static void seedAll() {
         MongoDatabase db = MongoDBUtil.getDatabase();
 
-        // Drop Collections
-        db.getCollection("users").drop();
-        db.getCollection("products").drop();
-        db.getCollection("carts").drop();
-        db.getCollection("sales").drop();
+        // Drop Collections Safely
+        List<String> collectionsToDrop = List.of("users", "products", "carts", "sales", "tutorials");
+        for (String collectionName : db.listCollectionNames()) {
+            if (collectionsToDrop.contains(collectionName)) {
+                db.getCollection(collectionName).drop();
+                System.out.println("Dropped collection: " + collectionName);
+            }
+        }
         
         
         //Seed Users
@@ -28,6 +33,9 @@ public class DatabaseSeeder {
 
         // Seed Products
         seedProducts(db);
+
+        // Seed Tutorials
+        seedTutorials(db);
     }
 
     private static void seedUsers(MongoDatabase db) {
@@ -59,6 +67,25 @@ public class DatabaseSeeder {
             if (products != null) {
                 db.getCollection("products", Product.class).insertMany(products);
                 System.out.println("Seeded " + products.size() + " products.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void seedTutorials(MongoDatabase db) {
+        try (InputStream is = DatabaseSeeder.class.getClassLoader().getResourceAsStream("tutorials_seed.json")) {
+            if (is == null)
+                return;
+            InputStreamReader reader = new InputStreamReader(is);
+            Type listType = new TypeToken<List<Tutorial>>() {
+            }.getType();
+            List<Tutorial> tutorials = new Gson().fromJson(reader, listType);
+            if (tutorials != null) {
+                db.getCollection("tutorials", Tutorial.class).insertMany(tutorials);
+                System.out.println("Seeded " + tutorials.size() + " tutorials.");
+            }else{
+                System.out.println("Unable to seed tutorials");
             }
         } catch (Exception e) {
             e.printStackTrace();

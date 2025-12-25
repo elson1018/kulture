@@ -83,14 +83,11 @@ public class ProductServlet extends HttpServlet { // Product Servlet
 
         HttpSession session = req.getSession(false); // Don't create a new session if one doesn't exist
 
-        /*
-         * if (session == null || session.getAttribute("role") == null) {
-         * resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Error
-         * resp.getWriter().write(gson.toJson(Map.of("error",
-         * "You must be logged in")));
-         * return;
-         * }
-         */
+        if (session == null || session.getAttribute("role") == null) {
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Error
+            resp.getWriter().write(gson.toJson(Map.of("error", "You must be logged in")));
+            return;
+        }
 
         String role = (String) session.getAttribute("role");
 
@@ -264,5 +261,46 @@ public class ProductServlet extends HttpServlet { // Product Servlet
         // Return path in format that matches existing products:
         // "/products/{category}/{filename}"
         return "/products/" + category + "/" + fileName;
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setupCORS(resp);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("role") == null) {
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            resp.getWriter().write(gson.toJson(Map.of("error", "You must be logged in")));
+            return;
+        }
+
+        String role = (String) session.getAttribute("role");
+        if (!"ADMIN".equalsIgnoreCase(role)) {
+            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            resp.getWriter().write(gson.toJson(Map.of("error", "Access Denied: Admin only")));
+            return;
+        }
+
+        try {
+            String productId = req.getParameter("id");
+            if (productId == null || productId.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Product ID is required")));
+                return;
+            }
+
+            boolean deleted = productDAO.deleteProduct(productId);
+            if (deleted) {
+                resp.getWriter().write(gson.toJson(Map.of("status", "success", "message", "Product deleted")));
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Product not found")));
+            }
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
+        }
     }
 }

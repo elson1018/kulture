@@ -1,12 +1,11 @@
 package com.example.model;
 
-import org.bson.types.ObjectId;
 import java.util.Date;
 
 public class Booking {
-    private ObjectId id;
+    private String id;
     private String userEmail;
-    private ObjectId tutorialId;
+    private String tutorialId;
     private Date bookingDate;
     private String status;
     private String scheduledDate;
@@ -16,7 +15,7 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(String userEmail, ObjectId tutorialId, Date bookingDate, String status, String tutorialName,
+    public Booking(String userEmail, String tutorialId, Date bookingDate, String status, String tutorialName,
             double price, String scheduledDate) {
         this.userEmail = userEmail;
         this.tutorialId = tutorialId;
@@ -27,11 +26,11 @@ public class Booking {
         this.scheduledDate = scheduledDate;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,11 +42,11 @@ public class Booking {
         this.userEmail = userEmail;
     }
 
-    public ObjectId getTutorialId() {
+    public String getTutorialId() {
         return tutorialId;
     }
 
-    public void setTutorialId(ObjectId tutorialId) {
+    public void setTutorialId(String tutorialId) {
         this.tutorialId = tutorialId;
     }
 

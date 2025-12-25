@@ -1,0 +1,24 @@
+[
+  {
+    "id": "T-0001",
+    "name": "Guitar for Beginners",
+    "instructor": "John Doe",
+    "price": 29.99,
+    "description": "Learn the basics of playing the guitar.",
+    "isLiveClass": false,
+    "rating": 4.8,
+    "images": ["/products/Tutorials/Mandolin.jpg"],
+    "videoUrl": "https://www.youtube.com/watch?v=Y2H_0H4buCU&list=RDY2H_0H4buCU&start_radio=1"
+  },
+  {
+    "id": "T-0002",
+    "name": "Advanced Piano Techniques",
+    "instructor": "Jane Smith",
+    "price": 49.99,
+    "description": "Master complex piano compositions.",
+    "isLiveClass": true,
+    "rating": 4.9,
+    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
+    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
+  }
+]

@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.example.model.Product;
 import com.example.util.MongoDBUtil;
 
@@ -26,6 +27,11 @@ public class ProductDAO {
 
     public void saveProduct(Product product) {
         productCollection.insertOne(product);
+    }
+
+    public boolean deleteProduct(String productId) {
+        // @BsonId maps 'id' field to MongoDB's '_id'
+        return productCollection.deleteOne(Filters.eq("_id", productId)).getDeletedCount() > 0;
     }
 
 }

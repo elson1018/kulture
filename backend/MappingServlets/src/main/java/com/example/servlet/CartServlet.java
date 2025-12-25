@@ -1,9 +1,12 @@
+
 package com.example.servlet;
 
 import com.google.gson.Gson;
 import com.example.dao.CartDAO;
 import com.example.dao.SalesDAO;
 import com.example.dao.UserDAO;
+import com.example.dao.BookingDAO;
+import com.example.model.Booking;
 import com.example.model.Cart;
 import com.example.model.CartItem;
 import com.example.model.Sale;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,6 +30,8 @@ public class CartServlet extends HttpServlet {
 
     private CartDAO cartDAO;
     private UserDAO userDAO;
+    private SalesDAO salesDAO;
+    private BookingDAO bookingDAO;
     private Gson gson;
 
     @Override
@@ -33,6 +39,8 @@ public class CartServlet extends HttpServlet {
         super.init();
         this.cartDAO = new CartDAO();
         this.userDAO = new UserDAO();
+        this.salesDAO = new SalesDAO();
+        this.bookingDAO = new BookingDAO();
         this.gson = new Gson();
     }
 
@@ -106,16 +114,8 @@ public class CartServlet extends HttpServlet {
                     String company = entry.getKey();
                     List<CartItem> companyItems = entry.getValue();
 
-                    double companyTotal = 0;
+                    double totalAmount = 0;
                     List<String> productNames = new ArrayList<>();
-                    for (CartItem item : companyItems) {
-                        companyTotal += item.getPrice() * item.getQuantity();
-                        productNames.add(item.getProductName());
-                    }
-
-                    // Record the total sales in the "sales collection" for each company
-                    SalesDAO salesDAO = new SalesDAO();
-                    Sale newSale = new Sale();
 
                     String email = (String) session.getAttribute("email");
                     if (email == null) {
@@ -133,9 +133,30 @@ public class CartServlet extends HttpServlet {
                         return;
                     }
 
+                    for (CartItem item : companyItems) {
+                        totalAmount += item.getPrice() * item.getQuantity();
+                        productNames.add(item.getProductName());
+
+                        // Create Booking for tutorials
+                        if ("tutorial".equals(item.getItemType()) || "live_class".equals(item.getItemType())) {
+                             String status = "Confirmed";
+                             Booking booking = new Booking(
+                                     email,
+                                     item.getProductId(),
+                                     new Date(),
+                                     status,
+                                     item.getProductName(),
+                                     item.getPrice(),
+                                     item.getSelectedDate()
+                             );
+                             bookingDAO.createBooking(booking);
+                        }
+                    }
+
+                    Sale newSale = new Sale();
                     newSale.setCustomerEmail(email);
                     newSale.setProductNames(productNames);
-                    newSale.setTotalAmount(companyTotal);
+                    newSale.setTotalAmount(totalAmount);
                     newSale.setCompany(company);
 
                     salesDAO.recordSale(newSale); // Record the sale after user has checkedout
