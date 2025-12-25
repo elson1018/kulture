@@ -20,12 +20,7 @@ const ProductCard = ({ product }) => {
 
   const handleViewDetails = () => {
     window.scrollTo(0, 0);
-    // Check if it's a tutorial (based on category or unique field like instructor)
-    if (product.category === "Tutorials" || product.instructor) {
-      navigate(`/tutorial/${product.id}`);
-    } else {
-      navigate(`/product/${product.id}`);
-    }
+    navigate(`/product/${product.id}`);
   };
 
   const handleAddToCart = async (e) => {
@@ -79,15 +74,9 @@ const ProductCard = ({ product }) => {
           </p>
         </div>
 
-        {(product.category === "Tutorials" || product.instructor) ? (
-          <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
-            View Class
-          </button>
-        ) : (
-          <button className="add-to-cart-btn primary-button" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
-        )}
+        <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
+          View Details
+        </button>
       </div>
     </div>
   );
