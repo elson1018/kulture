@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import ProductCard from '../components/Product/ProductCard';
+import TutorialCard from '../components/Tutorial/TutorialCard';
 import '../CSS/Shop.css';
 
 const Shop = () => {
@@ -95,8 +96,12 @@ const Shop = () => {
       </div>
 
       <div className="product-grid">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {products.map((item) => (
+          (item.category === "Tutorials" || item.instructor) ? (
+            <TutorialCard key={item.id} tutorial={item} />
+          ) : (
+            <ProductCard key={item.id} product={item} />
+          )
         ))}
       </div>
 
