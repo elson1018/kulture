@@ -43,9 +43,9 @@ public class SalesDAO {
         return companySales.stream().mapToDouble(Sale::getTotalAmount).sum();
     }
 
-    public List<Sale> getSalesByUserEmail(String email) {
-        List<Sale> userSales = new ArrayList<>();
-        salesCollection.find(com.mongodb.client.model.Filters.eq("userEmail", email)).into(userSales);
-        return userSales;
+    public List<Sale> getSalesByCustomerEmail(String email) {
+        List<Sale> customerSales = new ArrayList<>();
+        salesCollection.find(com.mongodb.client.model.Filters.eq("customerEmail", email)).into(customerSales);
+        return customerSales;
     }
 }

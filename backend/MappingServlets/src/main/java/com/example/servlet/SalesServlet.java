@@ -43,18 +43,25 @@ public class SalesServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        // Get email
-        // String emailParam = req.getParameter("email");
 
         try {
-            double totalRevenue = salesDAO.getTotalRevenue();
-            List<Sale> allSales = salesDAO.getAllSales();
+            String email = req.getParameter("email");
 
-            Map<String, Object> responseData = new HashMap<>();
-            responseData.put("totalRevenue", totalRevenue);
-            responseData.put("sales", allSales);
+            if (email != null && !email.isEmpty()) {
+                // this return orders for specific customer
+                List<Sale> customerSales = salesDAO.getSalesByCustomerEmail(email);
+                resp.getWriter().write(gson.toJson(Map.of("sales", customerSales)));
+            } else {
+                // this return all sales for admin dashboard
+                double totalRevenue = salesDAO.getTotalRevenue();
+                List<Sale> allSales = salesDAO.getAllSales();
 
-            resp.getWriter().write(gson.toJson(responseData));
+                Map<String, Object> responseData = new HashMap<>();
+                responseData.put("totalRevenue", totalRevenue);
+                responseData.put("sales", allSales);
+
+                resp.getWriter().write(gson.toJson(responseData));
+            }
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
@@ -62,6 +69,6 @@ public class SalesServlet extends HttpServlet {
     }
 
     public List<Sale> getSalesByUserEmail(String email) {
-        return salesDAO.getSalesByUserEmail(email);
+        return salesDAO.getSalesByCustomerEmail(email);
     }
 }
