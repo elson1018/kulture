@@ -1,9 +1,9 @@
 package com.example.dao;
 
+import com.example.model.Sale;
+import com.example.util.MongoDBUtil;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.example.util.MongoDBUtil;
-import com.example.model.Sale;
 import java.util.ArrayList;
 import java.util.List;
 

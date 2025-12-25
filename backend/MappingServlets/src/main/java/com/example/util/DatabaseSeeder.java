@@ -1,5 +1,8 @@
 package com.example.util;
 
+import com.example.model.Product;
+import com.example.model.User;
+import com.example.dao.UserDAO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.MongoDatabase;

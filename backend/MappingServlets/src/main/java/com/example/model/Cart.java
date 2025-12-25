@@ -1,6 +1,4 @@
 package com.example.model;
-
-
 import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
