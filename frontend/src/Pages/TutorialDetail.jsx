@@ -101,9 +101,9 @@ const TutorialDetail = () => {
 
         setIsAddingToCart(true);
         const user = JSON.parse(localStorage.getItem('user'));
-        
+
         const finalQty = tutorial.isLiveClass ? quantity : 1;
-        
+
         const cartItem = {
             productId: tutorial.id,
             productName: tutorial.name,
@@ -134,15 +134,15 @@ const TutorialDetail = () => {
             const result = await response.json();
 
             if (response.ok && result.status === "success") {
-                 addToCart(String(tutorial.id), finalQty);
-                 setPopup({ isOpen: true, message: `Added ${finalQty} session(s) of ${tutorial.name} to cart!`, type: "success" });
-                 setShowBookingModal(false);
+                addToCart(String(tutorial.id), finalQty);
+                setPopup({ isOpen: true, message: `Added ${finalQty} session(s) of ${tutorial.name} to cart!`, type: "success" });
+                setShowBookingModal(false);
             } else {
-                 setBookingMessage({ type: 'error', text: "Failed: " + result.message });
-                 // If not in modal, show popup
-                 if (!showBookingModal) {
-                     setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
-                 }
+                setBookingMessage({ type: 'error', text: "Failed: " + result.message });
+                // If not in modal, show popup
+                if (!showBookingModal) {
+                    setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
+                }
             }
         } catch (err) {
             console.error("Cart Error:", err);
@@ -154,7 +154,7 @@ const TutorialDetail = () => {
             setIsAddingToCart(false);
         }
     };
-    
+
     // Helper to get YouTube ID
     const getYouTubeId = (url) => {
         if (!url) return null;
@@ -179,9 +179,9 @@ const TutorialDetail = () => {
             />
 
             <div className="detail-container">
-            <button className="back-btn" onClick={handleBack}>
-                X CLOSE
-            </button>
+                <button className="back-btn" onClick={handleBack}>
+                    X CLOSE
+                </button>
                 <div className="detail-images">
                     <div className="main-image-container">
                         {showPreview ? (
@@ -228,11 +228,11 @@ const TutorialDetail = () => {
                 <div className="detail-info">
                     <p className="detail-category">Tutorials • {tutorial.isLiveClass ? "Live Class" : "Recorded"}</p>
                     <h1>{tutorial.name}</h1>
-                    
+
                     <div className="detail-rating">
                         <span>{tutorial.rating || ""} ⭐</span>
                         <span className="review-count">(Based on user reviews)</span>
-                        
+
                     </div>
 
                     <div className="detail-instructor">
@@ -247,10 +247,10 @@ const TutorialDetail = () => {
                     </div>
 
                     <div className="action-buttons">
-                        <button className="add-cart-btn" onClick={handlePreview} style={{ backgroundColor: '#555' }}>
+                        <button className="buy-now-btn" onClick={handlePreview}>
                             Watch Preview
                         </button>
-                        <button className="buy-now-btn" onClick={initiationAddToCart}>
+                        <button className="add-cart-btn" onClick={initiationAddToCart}>
                             {tutorial.isLiveClass ? "Book Live Class" : "Add to Cart"}
                         </button>
                     </div>
