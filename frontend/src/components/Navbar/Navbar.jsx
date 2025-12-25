@@ -48,6 +48,8 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
       setActiveCategory("INSTRUMENTS");
     } else if (path.startsWith("/shop/tutorial")) {
       setActiveCategory("TUTORIAL");
+    } else {
+      setActiveCategory("");
     }
   }, [location.pathname]);
 
