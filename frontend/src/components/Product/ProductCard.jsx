@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductCard.css'
-const BACKEND_URL = "http://localhost:8082/MappingServlets-1.0-SNAPSHOT";
+import Popup from "../../components/Popup/Popup";
+import { ShopContext } from "../../Context/ShopContext";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const { addToCartBackend } = useContext(ShopContext);
+  const [popup, setPopup] = useState({ isOpen: false, message: "", type: "" });
 
   const rawImage = Array.isArray(product.images) && product.images.length > 0
     ? product.images[0]
@@ -24,11 +27,37 @@ const ProductCard = ({ product }) => {
       navigate(`/product/${product.id}`);
     }
   };
-  {console.log("Current Product Image:", imageSrc);}
+
+  const handleAddToCart = async (e) => {
+    e.stopPropagation(); // Prevent card click
+    const cartItem = {
+      productId: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: 1,
+      images: product.images || [],
+      company: product.company || "Kulture",
+    };
+
+    const result = await addToCartBackend(cartItem);
+    if (result.success) {
+      setPopup({ isOpen: true, message: result.message, type: "success" });
+    } else {
+      if (result.type === "auth") navigate("/login");
+      else setPopup({ isOpen: true, message: result.message, type: "error" });
+    }
+  };
+  { console.log("Current Product Image:", imageSrc); }
 
   return (
     <div className="product-card">
-      <div className="product-image-container" onClick={handleViewDetails} style={{cursor: 'pointer'}}>
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={() => setPopup({ ...popup, isOpen: false })}
+      />
+      <div className="product-image-container" onClick={handleViewDetails} style={{ cursor: 'pointer' }}>
         <img
           src={imageSrc}
           alt={product.name}
@@ -50,9 +79,15 @@ const ProductCard = ({ product }) => {
           </p>
         </div>
 
-        <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
-          View Details
-        </button>
+        {(product.category === "Tutorials" || product.instructor) ? (
+          <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
+            View Class
+          </button>
+        ) : (
+          <button className="add-to-cart-btn primary-button" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );
