@@ -59,6 +59,43 @@ export const ShopContextProvider = (props) => {
         console.log(`Added item ${itemId} with quantity ${quantity}`);
     };
 
+    const addToCartBackend = async (cartItem) => {
+        try {
+            const user = localStorage.getItem("user");
+            if (!user) {
+                return { success: false, message: "Please log in to add items to cart.", type: "auth" };
+            }
+
+            const response = await fetch(
+                "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify(cartItem),
+                }
+            );
+
+            if (response.status === 401) {
+                return { success: false, message: "Session expired. Please log in again.", type: "auth" };
+            }
+
+            const result = await response.json();
+
+            if (response.ok && result.status === "success") {
+                addToCart(String(cartItem.productId), cartItem.quantity);
+                return { success: true, message: `Added ${cartItem.quantity} x ${cartItem.productName} to cart!` };
+            } else {
+                return { success: false, message: result.message || "Failed to add to cart." };
+            }
+        } catch (error) {
+            console.error("Cart Error:", error);
+            return { success: false, message: "Server connection failed." };
+        }
+    };
+
     const removeFromCart = (itemId) => {
         setCartItems((prev) => {
             const newCart = { ...prev };
@@ -87,6 +124,7 @@ export const ShopContextProvider = (props) => {
     const contextValue = {
         cartItems,
         addToCart,
+        addToCartBackend,
         removeFromCart,
         updateCartItemCount,
         getTotalCartItems,
