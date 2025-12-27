@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
+import { ENDPOINTS } from "../config/api";
 
 import "../CSS/ProductDetail.css";
 import Popup from "../components/Popup/Popup";
@@ -8,7 +9,7 @@ import Popup from "../components/Popup/Popup";
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useContext(ShopContext);
+  const { addToCartBackend } = useContext(ShopContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,9 +28,7 @@ const ProductDetail = () => {
       try {
         setLoading(true);
         //fetch all products with the matching id
-        const response = await fetch(
-          "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"
-        );
+        const response = await fetch(ENDPOINTS.PRODUCTS);
 
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -61,14 +60,6 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = async () => {
-    // Optional: Check if user is logged in via localStorage before even trying
-    const user = localStorage.getItem("user");
-    if (!user) {
-      setPopup({ isOpen: true, message: "Please log in to add items to cart.", type: "error" });
-      setTimeout(() => navigate("/login"), 1500);
-      return;
-    }
-
     const cartItem = {
       productId: product.id,
       productName: product.name,
@@ -78,37 +69,16 @@ const ProductDetail = () => {
       company: product.company || "Kulture",
     };
 
-    try {
-      const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(cartItem),
-        }
-      );
+    // addToCartBackend from ShopContext
+    const result = await addToCartBackend(cartItem);
 
-      if (response.status === 401) {
-        setPopup({ isOpen: true, message: "Session expired. Please log in again.", type: "error" });
+    if (result.success) {
+      setPopup({ isOpen: true, message: result.message, type: "success" });
+    } else {
+      setPopup({ isOpen: true, message: result.message, type: "error" });
+      if (result.type === "auth") {
         setTimeout(() => navigate("/login"), 1500);
-        return;
       }
-
-      const result = await response.json();
-
-      if (response.ok && result.status === "success") {
-        // Update local cart context so navbar and checkout reflect the new quantity
-        addToCart(String(product.id), quantity);
-        setPopup({ isOpen: true, message: `Added ${quantity} x ${product.name} to cart!`, type: "success" });
-      } else {
-        setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
-      }
-    } catch (error) {
-      console.error("Cart Error:", error);
-      setPopup({ isOpen: true, message: "Server connection failed.", type: "error" });
     }
   };
 

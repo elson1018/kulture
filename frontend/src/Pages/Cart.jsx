@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../config/api";
 import bin_icon from "../assets/bin.png";
 import "../CSS/Cart.css";
 
@@ -25,7 +26,7 @@ const Cart = () => {
                 return;
             }
 
-            const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart", {
+            const response = await fetch(ENDPOINTS.CART, {
                 method: "GET",
                 credentials: "include"
             });
@@ -48,7 +49,7 @@ const Cart = () => {
 
     const handleRemoveItem = async (productId) => {
         try {
-            const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart?productId=${productId}`, {
+            const response = await fetch(`${ENDPOINTS.CART}?productId=${productId}`, {
                 method: "DELETE",
                 credentials: "include"
             });
@@ -90,7 +91,7 @@ const Cart = () => {
                  quantity: delta
              };
              
-             const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart", {
+             const response = await fetch(ENDPOINTS.CART, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

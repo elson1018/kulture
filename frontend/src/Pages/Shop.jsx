@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { ENDPOINTS } from '../config/api';
 import ProductCard from '../components/Product/ProductCard';
 import TutorialCard from '../components/Tutorial/TutorialCard';
 import '../CSS/Shop.css';
@@ -22,8 +23,8 @@ const Shop = () => {
         // Fetch products from backed
         // Fetch products and tutorials in parallel
         const [productsParam, tutorialsParam] = await Promise.all([
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials")
+          fetch(ENDPOINTS.PRODUCTS),
+          fetch(ENDPOINTS.TUTORIALS)
         ]);
 
         if (!productsParam.ok || !tutorialsParam.ok) {

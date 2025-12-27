@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { ENDPOINTS } from '../config/api';
 import '../CSS/Home.css'
 
 const Home = () => {
@@ -33,7 +34,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products') // fetch products from backedn
+    fetch(ENDPOINTS.PRODUCTS) // fetch products from backend
       .then(res => res.json())
       .then(data => {
         

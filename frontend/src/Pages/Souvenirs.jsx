@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ENDPOINTS } from '../config/api';
 import ProductCard from '../components/Product/ProductCard'
 import '../CSS/Souvenirs.css';
 
@@ -9,7 +10,7 @@ const Souvenirs = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products');
+        const response = await fetch(ENDPOINTS.PRODUCTS);
         
         if (!response.ok) {
           throw new Error('Failed to fetch products');

@@ -1,0 +1,218 @@
+
+
+/* ===== MODAL OVERLAY ===== */
+.booking-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* ===== MODAL CONTENT ===== */
+.booking-modal {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 420px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.booking-modal h2 {
+    color: #4A3C34;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+}
+
+.booking-modal .modal-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* ===== FORM FIELDS ===== */
+.booking-form-fields {
+    margin: 15px 0;
+}
+
+.booking-form-fields label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4A3C34;
+}
+
+.booking-form-fields input[type="date"],
+.booking-form-fields select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #4A3C34;
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.booking-form-fields input[type="date"]:focus,
+.booking-form-fields select:focus {
+    border-color: #D9944E;
+}
+
+/* Custom select dropdown arrow */
+.booking-form-fields select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A3C34' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* ===== QUANTITY SELECTOR ===== */
+.modal-quantity-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    width: fit-content;
+}
+
+.modal-quantity-wrapper button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #4A3C34;
+    transition: color 0.2s;
+}
+
+.modal-quantity-wrapper button:hover {
+    color: #D9944E;
+}
+
+.modal-quantity-wrapper span {
+    padding: 0 10px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* ===== MODAL BUTTONS ===== */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-btn-primary {
+    flex: 1;
+    padding: 12px 20px;
+    background: #D9944E;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.modal-btn-primary:hover {
+    background: #C7813C;
+}
+
+.modal-btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.modal-btn-secondary {
+    flex: 1;
+    padding: 12px 20px;
+    background: transparent;
+    color: #4A3C34;
+    border: 2px solid #4A3C34;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.modal-btn-secondary:hover {
+    background: #4A3C34;
+    color: white;
+}
+
+/* ===== MESSAGE STATES ===== */
+.booking-message {
+    margin: 10px 0;
+}
+
+.booking-message.error {
+    color: #e74c3c;
+}
+
+.booking-message.success {
+    color: #27ae60;
+}
+
+/* ===== VIDEO PREVIEW ===== */
+.video-preview-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+}
+
+.video-preview-container video {
+    background-color: #000;
+}
+
+/* ===== INSTRUCTOR INFO ===== */
+.detail-instructor {
+    margin-bottom: 15px;
+}
+
+.detail-instructor span {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* ===== UTILITY CLASSES (Reusable) ===== */
+.loading-state {
+    padding-top: 100px;
+    text-align: center;
+}
+
+.loading-state h2 {
+    text-align: center;
+}
+
+.error-state {
+    padding-top: 100px;
+    text-align: center;
+}
+
+.error-state h2 {
+    text-align: center;
+    color: #e74c3c;
+}
+
+.empty-message {
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+}

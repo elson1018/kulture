@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../config/api";
 import email_icon from "../assets/email.png";
 import padlock_icon from "../assets/padlock.png";
 import eye_closed_icon from "../assets/eye_closed.png";
@@ -48,8 +49,7 @@ const Login = ({ onFormSwitch, setUser }) => {
       password: formData.password,
     };
 
-    const url =
-      "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/auth/login";
+    const url = ENDPOINTS.AUTH_LOGIN;
 
     try {
       const response = await fetch(url, {

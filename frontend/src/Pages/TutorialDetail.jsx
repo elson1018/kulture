@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../config/api";
 import "../CSS/ProductDetail.css"; // Reuse ProductDetail styles
 import Popup from "../components/Popup/Popup";
 import { ShopContext } from "../Context/ShopContext";
@@ -33,7 +34,7 @@ const TutorialDetail = () => {
         const fetchTutorial = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials");
+                const response = await fetch(ENDPOINTS.TUTORIALS);
                 if (!response.ok) throw new Error("Failed to fetch tutorials");
 
                 const data = await response.json();
@@ -240,46 +241,56 @@ const TutorialDetail = () => {
 
             {/* Booking Modal for Live Class Date Selection */}
             {showBookingModal && (
-                <div className="modal-overlay" onClick={() => setShowBookingModal(false)} style={{
-                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000
-                }}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()} style={{
-                        background: 'white', padding: '20px', borderRadius: '8px', width: '400px', maxWidth: '90%'
-                    }}>
+                <div className="booking-modal-overlay" onClick={() => setShowBookingModal(false)}>
+                    <div className="booking-modal" onClick={e => e.stopPropagation()}>
                         <h2>Select Date for Live Class</h2>
-                        <p>{tutorial.name}</p>
+                        <p className="modal-subtitle">{tutorial.name}</p>
 
-                        <div className="datetime-fields" style={{ margin: '15px 0' }}>
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Select Date (Fri-Sun):</label>
-                            <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '10px' }} />
+                        <div className="booking-form-fields">
+                            <label>Select Date (Fri-Sun):</label>
+                            <input 
+                                type="date" 
+                                value={selectedDate} 
+                                onChange={e => setSelectedDate(e.target.value)} 
+                            />
 
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Select Slot:</label>
-                            <select value={selectedTime} onChange={e => setSelectedTime(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '10px' }}>
+                            <label>Select Slot:</label>
+                            <select 
+                                value={selectedTime} 
+                                onChange={e => setSelectedTime(e.target.value)}
+                            >
                                 <option value="08:00-12:00">8:00 AM - 12:00 PM</option>
                                 <option value="16:00-20:00">4:00 PM - 8:00 PM</option>
                             </select>
 
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Number of Sessions:</label>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <button type="button" onClick={() => setQuantity(q => Math.max(1, q - 1))} style={{ padding: '5px 12px', fontSize: '1.2rem', cursor: 'pointer' }}>-</button>
-                                <span style={{ fontSize: '1.2rem', fontWeight: 'bold', minWidth: '30px', textAlign: 'center' }}>{quantity}</span>
-                                <button type="button" onClick={() => setQuantity(q => q + 1)} style={{ padding: '5px 12px', fontSize: '1.2rem', cursor: 'pointer' }}>+</button>
+                            <label>Number of Sessions:</label>
+                            <div className="modal-quantity-wrapper">
+                                <button 
+                                    type="button" 
+                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                                >-</button>
+                                <span>{quantity}</span>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setQuantity(q => q + 1)}
+                                >+</button>
                             </div>
                         </div>
 
-                        <p className={`message ${bookingMessage.type}`} style={{
-                            color: bookingMessage.type === 'error' ? 'red' : 'green', margin: '10px 0'
-                        }}>{bookingMessage.text}</p>
+                        <p className={`booking-message ${bookingMessage.type}`}>{bookingMessage.text}</p>
 
-                        <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                            <button onClick={handleAddToCart} disabled={isAddingToCart} style={{
-                                padding: '10px 20px', background: '#D9944E', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer'
-                            }}>
+                        <div className="modal-actions">
+                            <button 
+                                className="modal-btn-primary"
+                                onClick={handleAddToCart} 
+                                disabled={isAddingToCart}
+                            >
                                 {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                             </button>
-                            <button onClick={() => setShowBookingModal(false)} style={{
-                                padding: '10px 20px', background: '#ccc', color: 'black', border: 'none', borderRadius: '5px', cursor: 'pointer'
-                            }}>
+                            <button 
+                                className="modal-btn-secondary"
+                                onClick={() => setShowBookingModal(false)}
+                            >
                                 Cancel
                             </button>
                         </div>

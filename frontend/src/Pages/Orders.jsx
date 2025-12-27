@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../config/api";
 import "../CSS/Orders.css";
 
 const Orders = () => {
@@ -20,7 +21,7 @@ const Orders = () => {
                 }
 
                 const response = await fetch(
-                    `http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales?email=${encodeURIComponent(user.email)}`,
+                    `${ENDPOINTS.SALES}?email=${encodeURIComponent(user.email)}`,
                     {
                         method: "GET",
                         headers: {

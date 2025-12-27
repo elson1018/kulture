@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ENDPOINTS } from "../config/api";
 import "../CSS/AddProduct.css";
 
 const AddProduct = () => {
@@ -61,8 +62,8 @@ const AddProduct = () => {
     };
 
     const endpoint = product.category === "Tutorials"
-      ? "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"
-      : "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products";
+      ? ENDPOINTS.TUTORIALS
+      : ENDPOINTS.PRODUCTS;
 
     try {
       const response = await fetch(
