@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ENDPOINTS } from '../config/api';
-import '../CSS/Settings.css';
+import { ENDPOINTS } from '../../config/api';
+import './Settings.css';
 
 const Settings = () => {
     const [activeTab, setActiveTab] = useState('profile'); // set the active section

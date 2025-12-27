@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Context/ShopContext";
+import { ShopContext } from "../../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import bin_icon from "../assets/bin.png";
-import "../CSS/Cart.css";
+import { ENDPOINTS } from "../../config/api";
+import bin_icon from "../../assets/bin.png";
+import "./Cart.css";
 
 const Cart = () => {
    

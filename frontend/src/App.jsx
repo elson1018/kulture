@@ -8,27 +8,41 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
 import Footer from "./components/Footer/Footer";
-import Team from "./Pages/Team";
-import Contact from "./Pages/Contact";
-import Shop from "./Pages/Shop";
-import Souvenirs from "./Pages/Souvenirs";
-import ProductDetail from "./Pages/ProductDetail";
-import Food from "./Pages/Food";
-import Instruments from "./Pages/Instruments";
-import Tutorial from "./Pages/Tutorial";
-import TutorialDetail from "./Pages/TutorialDetail";
-import AddProduct from "./Pages/AddProduct";
-import Cart from "./Pages/Cart";
-import Checkout from "./Pages/Checkout";
-import Orders from "./Pages/Orders";
-import HelpCentre from "./Pages/HelpCentre";
-import SupplierDashboard from "./Pages/AdminDashboard";
-import Settings from "./Pages/Settings";
 import ScrollToTop from "./components/ScrollToTop";
+
+// Auth pages
+import Login from "./Pages/auth/Login";
+import Signup from "./Pages/auth/Signup";
+
+// Static pages
+import Home from "./Pages/static/Home";
+import Team from "./Pages/static/Team";
+import Contact from "./Pages/static/Contact";
+import HelpCentre from "./Pages/static/HelpCentre";
+
+// Shop pages
+import Shop from "./Pages/shop/Shop";
+import Food from "./Pages/shop/Food";
+import Souvenirs from "./Pages/shop/Souvenirs";
+import Instruments from "./Pages/shop/Instruments";
+import ProductDetail from "./Pages/shop/ProductDetail";
+
+// Tutorial pages
+import Tutorial from "./Pages/tutorials/Tutorial";
+import TutorialDetail from "./Pages/tutorials/TutorialDetail";
+
+// Cart pages
+import Cart from "./Pages/cart/Cart";
+import Checkout from "./Pages/cart/Checkout";
+
+// Admin pages
+import AdminDashboard from "./Pages/admin/AdminDashboard";
+import AddProduct from "./Pages/admin/AddProduct";
+import Orders from "./Pages/admin/Orders";
+
+// User pages
+import Settings from "./Pages/user/Settings";
 
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
@@ -128,7 +142,7 @@ const AppContent = ({ user, setUser }) => {
             path="/admin"
             element={
               <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
-                <SupplierDashboard user={user}></SupplierDashboard>
+                <AdminDashboard user={user}></AdminDashboard>
               </ProtectedRoute>
             }
           />

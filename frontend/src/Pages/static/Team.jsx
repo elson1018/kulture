@@ -1,6 +1,6 @@
 import React from 'react'
-import photo_img from '../assets/people.png'
-import '../CSS/Team.css'
+import photo_img from '../../assets/people.png'
+import './Team.css'
 
 const teamMembers = [
     {id: 1, name: "Tan Chin Qian", title: "Founder", bio: "I love Kulture", photo: photo_img},

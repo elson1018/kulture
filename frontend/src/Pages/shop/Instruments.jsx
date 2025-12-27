@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ENDPOINTS } from '../config/api';
-import ProductCard from '../components/Product/ProductCard'
-import '../CSS/Instruments.css';
+import { ENDPOINTS } from '../../config/api';
+import ProductCard from '../../components/Product/ProductCard'
+import './Instruments.css';
 
 const Instruments = () => {
   const [products, setProduct] = useState([]);

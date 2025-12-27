@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import "../CSS/Orders.css";
+import { ENDPOINTS } from "../../config/api";
+import "./Orders.css";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);

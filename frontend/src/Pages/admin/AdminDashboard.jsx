@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import "../CSS/SupplierDashboard.css";
+import { ENDPOINTS } from "../../config/api";
+import "./SupplierDashboard.css";
 
 const SupplierDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);

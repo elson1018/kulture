@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ENDPOINTS } from "../config/api";
-import "../CSS/AddProduct.css";
+import { ENDPOINTS } from "../../config/api";
+import "./AddProduct.css";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({

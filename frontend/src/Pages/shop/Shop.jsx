@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ENDPOINTS } from '../config/api';
-import ProductCard from '../components/Product/ProductCard';
-import TutorialCard from '../components/Tutorial/TutorialCard';
-import '../CSS/Shop.css';
+import { ENDPOINTS } from '../../config/api';
+import ProductCard from '../../components/Product/ProductCard';
+import TutorialCard from '../../components/Tutorial/TutorialCard';
+import './Shop.css';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);

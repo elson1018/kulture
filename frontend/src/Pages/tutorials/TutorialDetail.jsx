@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import "../CSS/ProductDetail.css";
-import "../CSS/TutorialDetail.css";
-import Popup from "../components/Popup/Popup";
-import { ShopContext } from "../Context/ShopContext";
+import { ENDPOINTS } from "../../config/api";
+import "../shop/ProductDetail.css";
+import "./TutorialDetail.css";
+import Popup from "../../components/Popup/Popup";
+import { ShopContext } from "../../Context/ShopContext";
 
 const TutorialDetail = () => {
     const { id } = useParams();

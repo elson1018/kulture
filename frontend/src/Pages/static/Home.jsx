@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { ENDPOINTS } from '../config/api';
-import '../CSS/Home.css'
+import { ENDPOINTS } from '../../config/api';
+import './Home.css'
 
 const Home = () => {
 

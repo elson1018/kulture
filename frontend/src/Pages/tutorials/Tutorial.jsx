@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ENDPOINTS } from '../config/api';
-import '../CSS/Tutorial.css';
-import TutorialCard from '../components/Tutorial/TutorialCard';
+import { ENDPOINTS } from '../../config/api';
+import './Tutorial.css';
+import TutorialCard from '../../components/Tutorial/TutorialCard';
 
 const Tutorial = () => {
     const [tutorials, setTutorials] = useState([]);

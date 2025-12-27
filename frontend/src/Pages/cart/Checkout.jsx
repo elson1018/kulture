@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Context/ShopContext";
+import { ShopContext } from "../../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import Popup from "../components/Popup/Popup";
-import "../CSS/Checkout.css";
+import { ENDPOINTS } from "../../config/api";
+import Popup from "../../components/Popup/Popup";
+import "./Checkout.css";
 
 const Checkout = () => {
   const { clearCart } = useContext(ShopContext);

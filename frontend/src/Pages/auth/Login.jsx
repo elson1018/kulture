@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../config/api";
-import email_icon from "../assets/email.png";
-import padlock_icon from "../assets/padlock.png";
-import eye_closed_icon from "../assets/eye_closed.png";
-import eye_opened_icon from "../assets/eye_opened.png";
-import "../CSS/Login.css";
-import Popup from "../components/Popup/Popup";
+import { ENDPOINTS } from "../../config/api";
+import email_icon from "../../assets/email.png";
+import padlock_icon from "../../assets/padlock.png";
+import eye_closed_icon from "../../assets/eye_closed.png";
+import eye_opened_icon from "../../assets/eye_opened.png";
+import "./Login.css";
+import Popup from "../../components/Popup/Popup";
 
 const Login = ({ onFormSwitch, setUser }) => {
   const navigate = useNavigate();
