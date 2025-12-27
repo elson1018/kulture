@@ -7,7 +7,7 @@ import { ShopContext } from "../Context/ShopContext";
 const TutorialDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { addToCart } = useContext(ShopContext);
+    const { addToCart, addToCartBackend } = useContext(ShopContext);
 
     const [tutorial, setTutorial] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -100,10 +100,11 @@ const TutorialDetail = () => {
         }
 
         setIsAddingToCart(true);
-        const user = JSON.parse(localStorage.getItem('user'));
-        
+        // The user check is handled in addToCartBackend, but for the modal flow we might want to keep the earlier check "initiationAddToCart".
+        // However, safe to rely on backend or context check.
+
         const finalQty = tutorial.isLiveClass ? quantity : 1;
-        
+
         const cartItem = {
             productId: tutorial.id,
             productName: tutorial.name,
@@ -115,46 +116,26 @@ const TutorialDetail = () => {
             selectedDate: tutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null
         };
 
-        try {
-            const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(cartItem),
-            });
+        const result = await addToCartBackend(cartItem);
 
-            if (response.status === 401) {
-                setPopup({ isOpen: true, message: "Session expired. Please log in again.", type: "error" });
+        setIsAddingToCart(false);
+
+        if (result.success) {
+            setPopup({ isOpen: true, message: result.message, type: "success" });
+            setShowBookingModal(false);
+        } else {
+            if (result.type === "auth") {
+                setPopup({ isOpen: true, message: result.message, type: "error" });
                 setTimeout(() => navigate("/login"), 1500);
-                return;
-            }
-
-            const result = await response.json();
-
-            if (response.ok && result.status === "success") {
-                 addToCart(String(tutorial.id), finalQty);
-                 setPopup({ isOpen: true, message: `Added ${finalQty} session(s) of ${tutorial.name} to cart!`, type: "success" });
-                 setShowBookingModal(false);
             } else {
-                 setBookingMessage({ type: 'error', text: "Failed: " + result.message });
-                 // If not in modal, show popup
-                 if (!showBookingModal) {
-                     setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
-                 }
+                setBookingMessage({ type: 'error', text: "Failed: " + result.message });
+                if (!showBookingModal) {
+                    setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
+                }
             }
-        } catch (err) {
-            console.error("Cart Error:", err);
-            setBookingMessage({ type: 'error', text: "Server connection failed." });
-            if (!showBookingModal) {
-                setPopup({ isOpen: true, message: "Server connection failed.", type: "error" });
-            }
-        } finally {
-            setIsAddingToCart(false);
         }
     };
-    
+
     // Helper to get YouTube ID
     const getYouTubeId = (url) => {
         if (!url) return null;
@@ -179,9 +160,9 @@ const TutorialDetail = () => {
             />
 
             <div className="detail-container">
-            <button className="back-btn" onClick={handleBack}>
-                X CLOSE
-            </button>
+                <button className="back-btn" onClick={handleBack}>
+                    X CLOSE
+                </button>
                 <div className="detail-images">
                     <div className="main-image-container">
                         {showPreview ? (
@@ -228,11 +209,11 @@ const TutorialDetail = () => {
                 <div className="detail-info">
                     <p className="detail-category">Tutorials • {tutorial.isLiveClass ? "Live Class" : "Recorded"}</p>
                     <h1>{tutorial.name}</h1>
-                    
+
                     <div className="detail-rating">
                         <span>{tutorial.rating || ""} ⭐</span>
                         <span className="review-count">(Based on user reviews)</span>
-                        
+
                     </div>
 
                     <div className="detail-instructor">
@@ -247,10 +228,10 @@ const TutorialDetail = () => {
                     </div>
 
                     <div className="action-buttons">
-                        <button className="add-cart-btn" onClick={handlePreview} style={{ backgroundColor: '#555' }}>
+                        <button className="buy-now-btn" onClick={handlePreview}>
                             Watch Preview
                         </button>
-                        <button className="buy-now-btn" onClick={initiationAddToCart}>
+                        <button className="add-cart-btn" onClick={initiationAddToCart}>
                             {tutorial.isLiveClass ? "Book Live Class" : "Add to Cart"}
                         </button>
                     </div>

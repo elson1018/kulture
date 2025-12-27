@@ -1,14 +1,14 @@
 [
   {
     "id": "T-0001",
-    "name": "Guitar for Beginners",
+    "name": "Tanko Bushi Bon Odori Dance",
     "instructor": "John Doe",
-    "price": 29.99,
-    "description": "Learn the basics of playing the guitar.",
+    "price": 49.99,
+    "description": "Japanese Traditional Dance. Learn the basic movement of Tanko Bushi Bon Odori Dance",
     "isLiveClass": false,
     "rating": 4.8,
-    "images": ["/products/Tutorials/Mandolin.jpg"],
-    "videoUrl": "https://www.youtube.com/watch?v=Y2H_0H4buCU&list=RDY2H_0H4buCU&start_radio=1"
+    "images": ["/products/Tutorials/TankoBushiBonOdoriDance.webp"],
+    "videoUrl": "https://youtu.be/FcmwzdqfB9E"
   },
   {
     "id": "T-0002",

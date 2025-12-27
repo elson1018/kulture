@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 
 import "../CSS/ProductDetail.css";
+import Popup from "../components/Popup/Popup";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -15,9 +16,10 @@ const ProductDetail = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [popup, setPopup] = useState({ isOpen: false, message: "", type: "" });
 
   const handleBack = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -62,8 +64,8 @@ const ProductDetail = () => {
     // Optional: Check if user is logged in via localStorage before even trying
     const user = localStorage.getItem("user");
     if (!user) {
-      alert("Please log in to add items to cart.");
-      navigate("/login");
+      setPopup({ isOpen: true, message: "Please log in to add items to cart.", type: "error" });
+      setTimeout(() => navigate("/login"), 1500);
       return;
     }
 
@@ -90,8 +92,8 @@ const ProductDetail = () => {
       );
 
       if (response.status === 401) {
-        alert("Session expired. Please log in again.");
-        navigate("/login");
+        setPopup({ isOpen: true, message: "Session expired. Please log in again.", type: "error" });
+        setTimeout(() => navigate("/login"), 1500);
         return;
       }
 
@@ -100,13 +102,13 @@ const ProductDetail = () => {
       if (response.ok && result.status === "success") {
         // Update local cart context so navbar and checkout reflect the new quantity
         addToCart(String(product.id), quantity);
-        alert(`Added ${quantity} x ${product.name} to cart!`);
+        setPopup({ isOpen: true, message: `Added ${quantity} x ${product.name} to cart!`, type: "success" });
       } else {
-        alert("Failed: " + result.message);
+        setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
       }
     } catch (error) {
       console.error("Cart Error:", error);
-      alert("Server connection failed.");
+      setPopup({ isOpen: true, message: "Server connection failed.", type: "error" });
     }
   };
 
@@ -129,10 +131,16 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail-page">
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={() => setPopup({ ...popup, isOpen: false })}
+      />
       <div className="detail-container">
         <button className="back-btn" onClick={handleBack}>
-        X CLOSE
-      </button>
+          X CLOSE
+        </button>
         <div className="detail-images">
           <div className="main-image-container">
             <img

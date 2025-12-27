@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import logo_default from "../../assets/kulture.png"; 
+import logo_default from "../../assets/kulture.png";
 import logo_white from "../../assets/white_kulture.png";
 import search_icon from "../../assets/search_icon.png";
 import search_white from "../../assets/white_search.png";
@@ -9,6 +9,7 @@ import cart_white from "../../assets/white_cart.png";
 import user_icon from "../../assets/user_icon.png";
 import user_white from "../../assets/white_user.png";
 import "./Navbar.css";
+import Popup from "../Popup/Popup";
 import { ShopContext } from "../../Context/ShopContext";
 
 const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
@@ -17,6 +18,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [userName, setUserName] = useState("User");
   const [userRole, setUserRole] = useState("");
+  const [popup, setPopup] = useState({ isOpen: false, message: "", type: "" });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,6 +48,8 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
       setActiveCategory("INSTRUMENTS");
     } else if (path.startsWith("/shop/tutorial")) {
       setActiveCategory("TUTORIAL");
+    } else {
+      setActiveCategory("");
     }
   }, [location.pathname]);
 
@@ -118,7 +122,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
 
         <div className="cart">
           <button
-          className="cart-icon-btn"
+            className="cart-icon-btn"
             onClick={() => {
               onNavClick("/cart");
             }}
@@ -143,10 +147,17 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
         </div>
       </div>
 
-      <div 
-        className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`} 
+      <div
+        className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`}
         onClick={toggleSidebar}
       ></div>
+
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={() => setPopup({ ...popup, isOpen: false })}
+      />
 
       <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
@@ -156,9 +167,9 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
         </div>
 
         <div className="sidebar-user-icon">
-           <img src={user_icon} alt="User Profile" />
+          <img src={user_icon} alt="User Profile" />
         </div>
-        
+
         <ul className="sidebar-links">
           {userRole === "ADMIN" && (
             <li onClick={() => handleSidebarLink("/admin")}>Admin Dashboard</li>
@@ -170,6 +181,11 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
             onClick={() => {
               if (onLogout) onLogout();
               setIsSidebarOpen(false);
+              setPopup({ isOpen: true, message: "Logout successful", type: "success" });
+              // Auto-close popup after 2 seconds
+              setTimeout(() => {
+                setPopup((prev) => ({ ...prev, isOpen: false }));
+              }, 2000);
             }}
           >
             Logout
