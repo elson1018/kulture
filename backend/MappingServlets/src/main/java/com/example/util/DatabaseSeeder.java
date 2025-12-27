@@ -6,11 +6,8 @@ import com.example.dao.UserDAO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.MongoDatabase;
-import com.example.dao.UserDAO;
-
-import com.example.model.Product;
 import com.example.model.Tutorial;
-import com.example.model.User;
+
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
