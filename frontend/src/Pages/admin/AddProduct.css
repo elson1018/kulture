@@ -84,3 +84,14 @@
 .submit-btn:hover {
   background-color: #c4823d;
 }
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  cursor: pointer;
+}

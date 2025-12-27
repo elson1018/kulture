@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import ProductCard from '../components/Product/ProductCard';
-import TutorialCard from '../components/Tutorial/TutorialCard';
-import '../CSS/Shop.css';
+import { ENDPOINTS } from '../../config/api';
+import ProductCard from '../../components/Product/ProductCard';
+import TutorialCard from '../../components/Tutorial/TutorialCard';
+import './Shop.css';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -22,8 +23,8 @@ const Shop = () => {
         // Fetch products from backed
         // Fetch products and tutorials in parallel
         const [productsParam, tutorialsParam] = await Promise.all([
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials")
+          fetch(ENDPOINTS.PRODUCTS),
+          fetch(ENDPOINTS.TUTORIALS)
         ]);
 
         if (!productsParam.ok || !tutorialsParam.ok) {
@@ -65,17 +66,16 @@ const Shop = () => {
   // Loading
   if (isLoading) {
     return (
-      <div className='shop-page' style={{ paddingTop: '100px' }}>
-        <h2 style={{ textAlign: 'center' }}>Searching Products...</h2>
+      <div className='shop-page loading-state'>
+        <h2>Searching Products...</h2>
       </div>
     );
   }
 
-  // Show error
   if (error) {
     return (
-      <div className='shop-page' style={{ paddingTop: '100px' }}>
-        <h2 style={{ textAlign: 'center', color: 'red' }}>Error: {error}</h2>
+      <div className='shop-page error-state'>
+        <h2>Error: {error}</h2>
       </div>
     );
   }
@@ -106,7 +106,7 @@ const Shop = () => {
       </div>
 
       {!isLoading && products.length === 0 && (
-        <p id='empty-product-message' style={{ textAlign: 'center', marginTop: '40px' }}>
+        <p className='empty-product-message'>
           No products found matching "{searchTerm}".
         </p>
       )}

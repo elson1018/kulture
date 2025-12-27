@@ -19,7 +19,7 @@ const TutorialCard = ({ tutorial }) => {
 
     return (
         <div className="product-card">
-            <div className="product-image-container" onClick={handleViewDetails} style={{ cursor: 'pointer' }}>
+            <div className="product-image-container clickable" onClick={handleViewDetails}>
                 <img
                     src={imageSrc}
                     alt={tutorial.name}
@@ -28,15 +28,15 @@ const TutorialCard = ({ tutorial }) => {
             </div>
 
             <div className="product-info">
-                <h3 className="product-name" onClick={handleViewDetails} style={{ cursor: 'pointer' }}>{tutorial.name}</h3>
+                <h3 className="product-name clickable" onClick={handleViewDetails}>{tutorial.name}</h3>
                 
               
 
                 <div className="product-details">
-                    <span className="product-tag" style={{ background: '#fff8e1', color: '#f5a623', padding: '4px 10px', borderRadius: '12px', fontSize: '12px', marginBottom: '5px', display: 'inline-block' }}>
+                    <span className="product-tag">
                         {tutorial.isLiveClass ? "🔴 Live Class" : "📹 Recorded"}
                     </span>
-                    <p className="product-desc" style={{ fontStyle: 'italic', fontSize: '0.9em', color: '#555' }}>
+                    <p className="product-desc instructor-text">
                         Instructor: {tutorial.instructor}
                     </p>
                 </div>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../CSS/ProductDetail.css"; // Reuse ProductDetail styles
-import Popup from "../components/Popup/Popup";
-import { ShopContext } from "../Context/ShopContext";
+import { ENDPOINTS } from "../../config/api";
+import "../shop/ProductDetail.css";
+import "./TutorialDetail.css";
+import Popup from "../../components/Popup/Popup";
+import { ShopContext } from "../../Context/ShopContext";
 
 const TutorialDetail = () => {
     const { id } = useParams();
@@ -10,6 +12,7 @@ const TutorialDetail = () => {
     const { addToCart, addToCartBackend } = useContext(ShopContext);
 
     const [tutorial, setTutorial] = useState(null);
+    const [instructorTutorials, setInstructorTutorials] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
@@ -33,7 +36,7 @@ const TutorialDetail = () => {
         const fetchTutorial = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials");
+                const response = await fetch(ENDPOINTS.TUTORIALS);
                 if (!response.ok) throw new Error("Failed to fetch tutorials");
 
                 const data = await response.json();
@@ -46,6 +49,12 @@ const TutorialDetail = () => {
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         setSelectedDate(tomorrow.toISOString().split('T')[0]);
                     }
+                    
+                    // Get more tutorials by the same instructor
+                    const moreTutorials = data
+                        .filter(t => t.instructor === found.instructor && t.id !== found.id)
+                        .slice(0, 4);
+                    setInstructorTutorials(moreTutorials);
                 } else {
                     setError("Tutorial not found");
                 }
@@ -111,7 +120,7 @@ const TutorialDetail = () => {
             price: tutorial.price,
             quantity: finalQty,
             images: tutorial.images || [],
-            company: tutorial.instructor || "Kulture",
+
             itemType: tutorial.isLiveClass ? "live_class" : "tutorial",
             selectedDate: tutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null
         };
@@ -166,7 +175,7 @@ const TutorialDetail = () => {
                 <div className="detail-images">
                     <div className="main-image-container">
                         {showPreview ? (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', color: '#fff' }}>
+                            <div className="video-preview-container">
                                 {/* Show Video Player if videoUrl exists and user wants to preview or watch */}
                                 {tutorial.videoUrl ? (
                                     youtubeId ? (
@@ -186,7 +195,6 @@ const TutorialDetail = () => {
                                             width="100%"
                                             height="100%"
                                             poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
-                                            style={{ backgroundColor: '#000' }}
                                         >
                                             <source src={tutorial.videoUrl} type="video/mp4" />
                                             Your browser does not support the video tag.
@@ -217,7 +225,7 @@ const TutorialDetail = () => {
                     </div>
 
                     <div className="detail-instructor">
-                        <span style={{ fontSize: '1.1rem', color: '#555' }}>Instructor: {tutorial.instructor}</span>
+                        <span>Instructor: {tutorial.instructor}</span>
                     </div>
 
                     <h2 className="detail-price">RM {tutorial.price.toFixed(2)}</h2>
@@ -240,51 +248,94 @@ const TutorialDetail = () => {
 
             {/* Booking Modal for Live Class Date Selection */}
             {showBookingModal && (
-                <div className="modal-overlay" onClick={() => setShowBookingModal(false)} style={{
-                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000
-                }}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()} style={{
-                        background: 'white', padding: '20px', borderRadius: '8px', width: '400px', maxWidth: '90%'
-                    }}>
+                <div className="booking-modal-overlay" onClick={() => setShowBookingModal(false)}>
+                    <div className="booking-modal" onClick={e => e.stopPropagation()}>
                         <h2>Select Date for Live Class</h2>
-                        <p>{tutorial.name}</p>
+                        <p className="modal-subtitle">{tutorial.name}</p>
 
-                        <div className="datetime-fields" style={{ margin: '15px 0' }}>
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Select Date (Fri-Sun):</label>
-                            <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '10px' }} />
+                        <div className="booking-form-fields">
+                            <label>Select Date (Fri-Sun):</label>
+                            <input 
+                                type="date" 
+                                value={selectedDate} 
+                                onChange={e => setSelectedDate(e.target.value)} 
+                            />
 
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Select Slot:</label>
-                            <select value={selectedTime} onChange={e => setSelectedTime(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '10px' }}>
+                            <label>Select Slot:</label>
+                            <select 
+                                value={selectedTime} 
+                                onChange={e => setSelectedTime(e.target.value)}
+                            >
                                 <option value="08:00-12:00">8:00 AM - 12:00 PM</option>
                                 <option value="16:00-20:00">4:00 PM - 8:00 PM</option>
                             </select>
 
-                            <label style={{ display: 'block', marginBottom: '5px' }}>Number of Sessions:</label>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <button type="button" onClick={() => setQuantity(q => Math.max(1, q - 1))} style={{ padding: '5px 12px', fontSize: '1.2rem', cursor: 'pointer' }}>-</button>
-                                <span style={{ fontSize: '1.2rem', fontWeight: 'bold', minWidth: '30px', textAlign: 'center' }}>{quantity}</span>
-                                <button type="button" onClick={() => setQuantity(q => q + 1)} style={{ padding: '5px 12px', fontSize: '1.2rem', cursor: 'pointer' }}>+</button>
+                            <label>Number of Sessions:</label>
+                            <div className="modal-quantity-wrapper">
+                                <button 
+                                    type="button" 
+                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                                >-</button>
+                                <span>{quantity}</span>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setQuantity(q => q + 1)}
+                                >+</button>
                             </div>
                         </div>
 
-                        <p className={`message ${bookingMessage.type}`} style={{
-                            color: bookingMessage.type === 'error' ? 'red' : 'green', margin: '10px 0'
-                        }}>{bookingMessage.text}</p>
+                        <p className={`booking-message ${bookingMessage.type}`}>{bookingMessage.text}</p>
 
-                        <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                            <button onClick={handleAddToCart} disabled={isAddingToCart} style={{
-                                padding: '10px 20px', background: '#D9944E', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer'
-                            }}>
+                        <div className="modal-actions">
+                            <button 
+                                className="modal-btn-primary"
+                                onClick={handleAddToCart} 
+                                disabled={isAddingToCart}
+                            >
                                 {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                             </button>
-                            <button onClick={() => setShowBookingModal(false)} style={{
-                                padding: '10px 20px', background: '#ccc', color: 'black', border: 'none', borderRadius: '5px', cursor: 'pointer'
-                            }}>
+                            <button 
+                                className="modal-btn-secondary"
+                                onClick={() => setShowBookingModal(false)}
+                            >
                                 Cancel
                             </button>
                         </div>
                     </div>
                 </div>
+            )}
+
+            {instructorTutorials.length > 0 && (
+                <section className="related-products">
+                    <h2>More by {tutorial.instructor}</h2>
+                    <div className="related-grid">
+                        {instructorTutorials.map((item) => (
+                            <div 
+                                key={item.id} 
+                                className="related-card"
+                                onClick={() => {
+                                    window.scrollTo(0, 0);
+                                    navigate(`/tutorial/${item.id}`);
+                                }}
+                            >
+                                <div className="related-image">
+                                    <img 
+                                        src={item.images?.[0] || '/products/Tutorials/default.jpeg'} 
+                                        alt={item.name}
+                                        onError={(e) => { e.target.src = '/products/Tutorials/default.jpeg' }}
+                                    />
+                                    <span className="related-badge">
+                                        {item.isLiveClass ? '🔴 Live' : '📹 Recorded'}
+                                    </span>
+                                </div>
+                                <div className="related-info">
+                                    <p className="related-name">{item.name}</p>
+                                    <p className="related-price">RM {item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
             )}
         </div>
     );

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../CSS/Tutorial.css';
-import TutorialCard from '../components/Tutorial/TutorialCard';
-
-const API_BASE_URL = 'http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api';
+import { ENDPOINTS } from '../../config/api';
+import './Tutorial.css';
+import TutorialCard from '../../components/Tutorial/TutorialCard';
 
 const Tutorial = () => {
     const [tutorials, setTutorials] = useState([]);
@@ -12,7 +11,7 @@ const Tutorial = () => {
     useEffect(() => {
         const fetchTutorials = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/tutorials`);
+                const response = await fetch(ENDPOINTS.TUTORIALS);
                 if (!response.ok) throw new Error('Failed to fetch tutorials');
                 const data = await response.json();
                 setTutorials(data);

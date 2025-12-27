@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/SupplierDashboard.css";
+import { ENDPOINTS } from "../../config/api";
+import "./AdminDashboard.css";
 
-const SupplierDashboard = ({ user }) => {
+const AdminDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);
   const [myTutorials, setMyTutorials] = useState([]);
   const [salesData, setSalesData] = useState({ totalRevenue: 0, sales: [] });
@@ -13,9 +14,9 @@ const SupplierDashboard = ({ user }) => {
     const fetchData = async () => {
       try {
         const [productsRes, tutorialsRes, salesRes] = await Promise.all([
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"),
-          fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales")
+          fetch(ENDPOINTS.PRODUCTS),
+          fetch(ENDPOINTS.TUTORIALS),
+          fetch(ENDPOINTS.SALES)
         ]);
 
         if (productsRes.ok) {
@@ -76,7 +77,7 @@ const SupplierDashboard = ({ user }) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products?id=${productId}`, {
+      const response = await fetch(`${ENDPOINTS.PRODUCTS}?id=${productId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -99,7 +100,7 @@ const SupplierDashboard = ({ user }) => {
     if (!window.confirm('Are you sure you want to delete this tutorial?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials?id=${tutorialId}`, {
+      const response = await fetch(`${ENDPOINTS.TUTORIALS}?id=${tutorialId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -118,7 +119,7 @@ const SupplierDashboard = ({ user }) => {
   };
 
   return (
-    <div className="supplier-dashboard">
+    <div className="admin-dashboard">
       <div className="dashboard-header">
         <div>
           <h1>Welcome, {user?.username || "Admin"}!</h1>
@@ -291,4 +292,4 @@ const SupplierDashboard = ({ user }) => {
   );
 };
 
-export default SupplierDashboard;
+export default AdminDashboard;

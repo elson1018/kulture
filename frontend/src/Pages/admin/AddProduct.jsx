@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "../CSS/AddProduct.css";
+import { ENDPOINTS } from "../../config/api";
+import "./AddProduct.css";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -53,7 +54,7 @@ const AddProduct = () => {
       price: parseFloat(product.price),
       images: [product.images], // Backend expects List<String> - we'll send base64 for now
       rating: 0.0,
-      company: "Kulture",
+
       imageFileName: fileName, // Pass filename separately for backend to use
       instructor: product.instructor,
       isLiveClass: product.isLiveClass,
@@ -61,8 +62,8 @@ const AddProduct = () => {
     };
 
     const endpoint = product.category === "Tutorials"
-      ? "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/tutorials"
-      : "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products";
+      ? ENDPOINTS.TUTORIALS
+      : ENDPOINTS.PRODUCTS;
 
     try {
       const response = await fetch(
@@ -154,19 +155,16 @@ const AddProduct = () => {
         {product.category === "Tutorials" && (
           <>
             <div className="form-group">
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
-                Instructor:
-              </label>
+              <label>Instructor:</label>
               <input
                 type="text"
                 name="instructor"
                 value={product.instructor}
                 onChange={handleChange}
                 required
-                style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
               />
             </div>
-            <div className="form-group" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div className="form-group checkbox-group">
               <input
                 type="checkbox"
                 name="isLiveClass"
@@ -174,23 +172,19 @@ const AddProduct = () => {
                 onChange={handleChange}
                 id="isLiveClass"
               />
-              <label htmlFor="isLiveClass" style={{ fontWeight: "bold", cursor: "pointer" }}>
+              <label htmlFor="isLiveClass">
                 Is this a Live Class?
               </label>
             </div>
-            {/* Video URL Input - only for recorded tutorials */}
             {!product.isLiveClass && (
               <div className="form-group">
-                <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
-                  Video URL:
-                </label>
+                <label>Video URL:</label>
                 <input
                   type="text"
                   name="videoUrl"
                   placeholder="https://example.com/video.mp4 OR https://www.youtube.com/watch?v=..."
                   value={product.videoUrl}
                   onChange={handleChange}
-                  style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
                 />
               </div>
             )}

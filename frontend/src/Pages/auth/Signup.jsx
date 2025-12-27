@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import user_icon from "../assets/user_icon.png";
-import email_icon from "../assets/email.png";
-import padlock_icon from "../assets/padlock.png";
-import eye_closed_icon from "../assets/eye_closed.png";
-import eye_opened_icon from "../assets/eye_opened.png";
-import "../CSS/Signup.css";
+import { ENDPOINTS } from "../../config/api";
+import user_icon from "../../assets/user_icon.png";
+import email_icon from "../../assets/email.png";
+import padlock_icon from "../../assets/padlock.png";
+import eye_closed_icon from "../../assets/eye_closed.png";
+import eye_opened_icon from "../../assets/eye_opened.png";
+import "./Signup.css";
 
 const Signup = ({ onFormSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,8 +48,7 @@ const Signup = ({ onFormSwitch }) => {
     };
 
     try {
-      const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/auth/register",
+      const response = await fetch(ENDPOINTS.AUTH_REGISTER,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

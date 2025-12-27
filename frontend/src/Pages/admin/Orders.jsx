@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/Orders.css";
+import { ENDPOINTS } from "../../config/api";
+import "./Orders.css";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
@@ -20,7 +21,7 @@ const Orders = () => {
                 }
 
                 const response = await fetch(
-                    `http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/sales?email=${encodeURIComponent(user.email)}`,
+                    `${ENDPOINTS.SALES}?email=${encodeURIComponent(user.email)}`,
                     {
                         method: "GET",
                         headers: {
@@ -148,12 +149,7 @@ const Orders = () => {
                                         </ul>
                                     </div>
 
-                                    {order.company && (
-                                        <div className="order-company">
-                                            <span className="company-label">Supplier:</span>
-                                            <span className="company-name">{order.company}</span>
-                                        </div>
-                                    )}
+
                                 </div>
 
                                 <div className="order-card-footer">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../components/Product/ProductCard'
-import '../CSS/Souvenirs.css';
+import { ENDPOINTS } from '../../config/api';
+import ProductCard from '../../components/Product/ProductCard'
+import './Souvenirs.css';
 
 const Souvenirs = () => {
   const [displayProducts, setDisplayProducts] = useState([]);
@@ -9,7 +10,7 @@ const Souvenirs = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products');
+        const response = await fetch(ENDPOINTS.PRODUCTS);
         
         if (!response.ok) {
           throw new Error('Failed to fetch products');
@@ -32,8 +33,8 @@ const Souvenirs = () => {
 
   if (loading) {
     return (
-      <div className='shop-page' style={{paddingTop: '100px'}}>
-        <h2 style={{textAlign: 'center'}}>Loading Products...</h2>
+      <div className='shop-page loading-state'>
+        <h2>Loading Products...</h2>
       </div>
     );
   }

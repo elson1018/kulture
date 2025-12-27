@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../CSS/Settings.css';
+import { ENDPOINTS } from '../../config/api';
+import './Settings.css';
 
 const Settings = () => {
     const [activeTab, setActiveTab] = useState('profile'); // set the active section
@@ -38,7 +39,7 @@ const Settings = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/profile/update', {
+            const response = await fetch(ENDPOINTS.PROFILE_UPDATE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

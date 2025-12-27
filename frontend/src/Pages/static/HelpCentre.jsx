@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/HelpCentre.css";
+import "./HelpCentre.css";
 
 const faqs = [
   // Can put questions here

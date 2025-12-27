@@ -6,8 +6,7 @@
     "password": "admin123",
     "email": "admin@example.com",
     "address": "Admin Street 1",
-    "role": "ADMIN",
-    "companyName": "Kulture"
+    "role": "ADMIN"
   },
   {
     "user_fname": "Test",
@@ -16,7 +15,6 @@
     "password": "customer123",
     "email": "customer@example.com",
     "address": "Customer Road 3",
-    "role": "CUSTOMER",
-    "companyName": ""
+    "role": "CUSTOMER"
   }
 ]

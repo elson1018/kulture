@@ -1,9 +1,10 @@
 .product-detail-page {
     background-color: #F5F5E9;
     min-height: 100vh;
-    padding: 120px 20px 60px 20px;
+    padding: 90px 20px 30px 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     color: #4A3C34;
     position: relative;
 }
@@ -37,15 +38,16 @@
 
 .detail-container {
     position: relative;
-    max-width: 1200px;
+    max-width: 1000px;
     width: 100%;
     background-color: white;
     border-radius: 16px;
-    padding: 40px;
+    padding: 35px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 40px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    align-items: center;
 }
 
 .detail-images {
@@ -56,7 +58,7 @@
 
 .main-image-container {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    max-height: 400px;
     background-color: #f0f0f0;
     border-radius: 12px;
     overflow: hidden;
@@ -68,7 +70,7 @@
 .main-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .thumbnail-list {
@@ -94,11 +96,10 @@
 .detail-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .detail-category {
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #999;
@@ -106,7 +107,7 @@
 }
 
 .detail-info h1 {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 15px;
     color: #4A3C34;
@@ -117,7 +118,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #ffc107;
     font-weight: 600;
 }
@@ -129,25 +130,26 @@
 }
 
 .detail-price {
-    font-size: 32px;
+    font-size: 26px;
     color: #D9944E;
     font-weight: 700;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .detail-description {
-    font-size: 16px;
+    grid-column: 1 / -1;
+    font-size: 14px;
     line-height: 1.6;
-    color: #666;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 30px;
+    color: #555;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
 }
 
 .action-buttons {
     display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 .quantity-wrapper {
     display: flex;
@@ -202,6 +204,91 @@
     margin-bottom: 8px;
 }
 
+.related-products {
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.related-products h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4A3C34;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.related-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.related-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.related-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+}
+
+.related-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.related-card:hover .related-image img {
+    transform: scale(1.05);
+}
+
+.related-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.related-info {
+    padding: 12px;
+}
+
+.related-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #D9944E;
+}
+
 @media (max-width: 900px) {
   .detail-container {
     grid-template-columns: 1fr;
@@ -213,5 +300,9 @@
     right: 20px;
     padding: 6px 14px;
     font-size: 0.85rem;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

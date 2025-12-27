@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ShopContext } from "../Context/ShopContext";
+import { ShopContext } from "../../Context/ShopContext";
+import { ENDPOINTS } from "../../config/api";
 
-import "../CSS/ProductDetail.css";
-import Popup from "../components/Popup/Popup";
+import "./ProductDetail.css";
+import Popup from "../../components/Popup/Popup";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useContext(ShopContext);
+  const { addToCartBackend } = useContext(ShopContext);
 
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,9 +29,7 @@ const ProductDetail = () => {
       try {
         setLoading(true);
         //fetch all products with the matching id
-        const response = await fetch(
-          "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products"
-        );
+        const response = await fetch(ENDPOINTS.PRODUCTS);
 
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -43,10 +43,15 @@ const ProductDetail = () => {
 
         if (foundProduct) {
           setProduct(foundProduct);
-          // Set the first image as the default main image
           if (foundProduct.images && foundProduct.images.length > 0) {
             setSelectedImage(foundProduct.images[0]);
           }
+          
+          // Get related products from the same category
+          const related = data
+            .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+            .slice(0, 4);
+          setRelatedProducts(related);
         } else {
           setError("Product not found");
         }
@@ -61,54 +66,25 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = async () => {
-    // Optional: Check if user is logged in via localStorage before even trying
-    const user = localStorage.getItem("user");
-    if (!user) {
-      setPopup({ isOpen: true, message: "Please log in to add items to cart.", type: "error" });
-      setTimeout(() => navigate("/login"), 1500);
-      return;
-    }
-
     const cartItem = {
       productId: product.id,
       productName: product.name,
       price: product.price,
       quantity: quantity,
       images: product.images || [],
-      company: product.company || "Kulture",
+
     };
 
-    try {
-      const response = await fetch(
-        "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(cartItem),
-        }
-      );
+    // addToCartBackend from ShopContext
+    const result = await addToCartBackend(cartItem);
 
-      if (response.status === 401) {
-        setPopup({ isOpen: true, message: "Session expired. Please log in again.", type: "error" });
+    if (result.success) {
+      setPopup({ isOpen: true, message: result.message, type: "success" });
+    } else {
+      setPopup({ isOpen: true, message: result.message, type: "error" });
+      if (result.type === "auth") {
         setTimeout(() => navigate("/login"), 1500);
-        return;
       }
-
-      const result = await response.json();
-
-      if (response.ok && result.status === "success") {
-        // Update local cart context so navbar and checkout reflect the new quantity
-        addToCart(String(product.id), quantity);
-        setPopup({ isOpen: true, message: `Added ${quantity} x ${product.name} to cart!`, type: "success" });
-      } else {
-        setPopup({ isOpen: true, message: "Failed: " + result.message, type: "error" });
-      }
-    } catch (error) {
-      console.error("Cart Error:", error);
-      setPopup({ isOpen: true, message: "Server connection failed.", type: "error" });
     }
   };
 
@@ -179,10 +155,7 @@ const ProductDetail = () => {
 
           <h2 className="detail-price">RM {product.price.toFixed(2)}</h2>
 
-          <div className="detail-description">
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
+          
 
           <div className="action-buttons">
             <div className="quantity-wrapper">
@@ -206,9 +179,47 @@ const ProductDetail = () => {
           <div className="detail-extras">
             <p>Authentic Local Product</p>
             <p>Delivery within 3-5 days</p>
+
+            
           </div>
+          
+        </div>
+        <div className="detail-description">
+            <h3>Description</h3>
+            <p>{product.description}</p>
         </div>
       </div>
+
+      {relatedProducts.length > 0 && (
+        <section className="related-products">
+          <h2>Related Products</h2>
+          <div className="related-grid">
+            {relatedProducts.map((item) => (
+              <div 
+                key={item.id} 
+                className="related-card"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate(`/product/${item.id}`);
+                }}
+              >
+                <div className="related-image">
+                  <img 
+                    src={item.images?.[0] || '/products/placeholder.jpg'} 
+                    alt={item.name}
+                    onError={(e) => { e.target.src = '/products/placeholder.jpg' }}
+                  />
+                </div>
+                <div className="related-info">
+                  <p className="related-name">{item.name}</p>
+                  <p className="related-price">RM {item.price.toFixed(2)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      
     </div>
   );
 };

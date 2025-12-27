@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../components/Product/ProductCard'
-import '../CSS/Instruments.css';
+import { ENDPOINTS } from '../../config/api';
+import ProductCard from '../../components/Product/ProductCard'
+import './Instruments.css';
 
 const Instruments = () => {
   const [products, setProduct] = useState([]);
@@ -13,7 +14,7 @@ const Instruments = () => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch("http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/products");
+        const response = await fetch(ENDPOINTS.PRODUCTS);
 
         if (!response.ok) {
             throw new Error(`HTTP ERROR Status: ${response.status}`);
@@ -38,16 +39,16 @@ const Instruments = () => {
 
   if (isLoading) {
       return (
-        <div className='shop-page' style={{paddingTop: '100px'}}>
-            <h2 style={{textAlign: 'center'}}>Loading Instruments...</h2>
+        <div className='shop-page loading-state'>
+            <h2>Loading Instruments...</h2>
         </div>
       );
   }
 
   if (error) {
        return (
-        <div className='shop-page' style={{paddingTop: '100px'}}>
-            <h2 style={{textAlign: 'center', color: 'red'}}>Error: {error}</h2>
+        <div className='shop-page error-state'>
+            <h2>Error: {error}</h2>
         </div>
        );
   }
@@ -66,7 +67,7 @@ const Instruments = () => {
         </div>
         
         {!isLoading && products.length === 0 && (
-             <p id='empty-product-message' style={{textAlign: 'center', marginTop: '40px'}}>
+             <p className='empty-product-message'>
                 No instruments found.
              </p>
         )}

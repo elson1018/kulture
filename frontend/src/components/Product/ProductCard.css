@@ -111,3 +111,23 @@
   background-color: #000;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.product-tag {
+  background: #fff8e1;
+  color: #f5a623;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.instructor-text {
+  font-style: italic;
+  font-size: 0.9em;
+  color: #555;
+}
