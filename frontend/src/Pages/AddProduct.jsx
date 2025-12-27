@@ -108,13 +108,14 @@ const AddProduct = () => {
     }
   };
 
-  // Dynamic label for image field
+  // Dynamic check for Tutorials category
+  const isTutorial = product.category === "Tutorials";
 
-  const imageLabel = product.category === "Tutorials" ? "Tutorial Thumbnail:" : "Product Image:";
+  const imageLabel = isTutorial ? "Tutorial Thumbnail:" : "Product Image:";
 
   return (
     <div className="add-product-container">
-      <h1>Add New Product</h1>
+      <h1>{isTutorial ? "Add New Tutorial" : "Add New Product"}</h1>
 
       <form
         onSubmit={handleSubmit}
@@ -122,7 +123,7 @@ const AddProduct = () => {
         {/* Product Name */}
         <div className="form-group">
           <label>
-            Product Name:
+            {isTutorial ? "Tutorial Name:" : "Product Name:"}
           </label>
           <input
             type="text"
@@ -246,8 +247,9 @@ const AddProduct = () => {
 
         <button
           type="submit"
+          className="submit-btn"
         >
-          Add Product
+          {isTutorial ? "Add Tutorial" : "Add Product"}
         </button>
       </form>
     </div>
