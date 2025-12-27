@@ -27,7 +27,7 @@
     "name": "Erhu",
     "category": "Instruments",
     "price": 350.0,
-    "description": "Traditional Chinese string instrument.",
+    "description": "Traditional Chinese string instrument with a beautiful tone, commonly used in Chinese orchestras and traditional music performances.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
     "rating": 4.9,
     "company": "Kulture"
@@ -41,5 +41,115 @@
     "images": ["/products/Food/Murukku.png"],
     "rating": 4.9,
     "company": "Kulture Eats"
+  },
+  {
+    "id": "P-0005",
+    "name": "Red Batik Silk Scarf",
+    "category": "Souvenirs",
+    "price": 35.0,
+    "description": "Elegant red batik silk scarf featuring traditional Malaysian motifs. Hand-printed using traditional wax-resist dyeing technique.",
+    "images": ["/products/Souvenirs/Batik_Slik_Scarf_Green.webp"],
+    "rating": 4.6,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0006",
+    "name": "Congkak Board Set",
+    "category": "Souvenirs",
+    "price": 45.0,
+    "description": "Traditional Malay counting game carved from solid wood. Complete set includes board and marble seeds.",
+    "images": ["/products/Souvenirs/Congkak.jpg"],
+    "rating": 4.8,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0007",
+    "name": "Guzheng",
+    "category": "Instruments",
+    "price": 580.0,
+    "description": "Chinese plucked zither with 21 strings. Creates beautiful, flowing melodies characteristic of traditional Chinese music.",
+    "images": ["/products/Instruments/Erhu_main.jpg"],
+    "rating": 4.7,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0008",
+    "name": "Kompang Drum",
+    "category": "Instruments",
+    "price": 85.0,
+    "description": "Traditional Malay hand drum used in weddings and cultural celebrations. Made with genuine goat skin.",
+    "images": ["/products/Instruments/Erhu_main.jpg"],
+    "rating": 4.5,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0009",
+    "name": "Sape",
+    "category": "Instruments",
+    "price": 420.0,
+    "description": "Traditional Borneo lute instrument from the Orang Ulu people. Known for its soothing and mystical sound.",
+    "images": ["/products/Instruments/Erhu_main.jpg"],
+    "rating": 4.9,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0010",
+    "name": "Kuih Bahulu",
+    "category": "Food",
+    "price": 8.0,
+    "description": "Light and fluffy Malaysian sponge cakes. Traditional festive treat with a subtle egg and vanilla flavor.",
+    "images": ["/products/Food/Murukku.png"],
+    "rating": 4.6,
+    "company": "Kulture Eats"
+  },
+  {
+    "id": "P-0011",
+    "name": "Dodol",
+    "category": "Food",
+    "price": 15.0,
+    "description": "Sweet and chewy Malaysian confection made from coconut milk, palm sugar, and rice flour. A festive favorite.",
+    "images": ["/products/Food/Murukku.png"],
+    "rating": 4.7,
+    "company": "Kulture Eats"
+  },
+  {
+    "id": "P-0012",
+    "name": "Sambal Ikan Bilis",
+    "category": "Food",
+    "price": 10.0,
+    "description": "Crispy anchovies cooked in spicy sambal sauce. Perfect accompaniment to nasi lemak.",
+    "images": ["/products/Food/Murukku.png"],
+    "rating": 4.8,
+    "company": "Kulture Eats"
+  },
+  {
+    "id": "P-0013",
+    "name": "Pewter Photo Frame",
+    "category": "Souvenirs",
+    "price": 65.0,
+    "description": "Handcrafted Malaysian pewter photo frame featuring traditional floral designs. Made with 95% tin.",
+    "images": ["/products/Souvenirs/Congkak.jpg"],
+    "rating": 4.9,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0014",
+    "name": "Wayang Kulit Shadow Puppet",
+    "category": "Souvenirs",
+    "price": 55.0,
+    "description": "Traditional Javanese leather shadow puppet, hand-carved and painted. A unique piece of Southeast Asian art.",
+    "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
+    "rating": 4.6,
+    "company": "Kulture"
+  },
+  {
+    "id": "P-0015",
+    "name": "Dizi Bamboo Flute",
+    "category": "Instruments",
+    "price": 45.0,
+    "description": "Traditional Chinese transverse flute made from bamboo. Includes membrane and carrying case.",
+    "images": ["/products/Instruments/Erhu_main.jpg"],
+    "rating": 4.4,
+    "company": "Kulture"
   }
 ]

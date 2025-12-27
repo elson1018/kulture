@@ -12,6 +12,7 @@ const ProductDetail = () => {
   const { addToCartBackend } = useContext(ShopContext);
 
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -42,10 +43,15 @@ const ProductDetail = () => {
 
         if (foundProduct) {
           setProduct(foundProduct);
-          // Set the first image as the default main image
           if (foundProduct.images && foundProduct.images.length > 0) {
             setSelectedImage(foundProduct.images[0]);
           }
+          
+          // Get related products from the same category
+          const related = data
+            .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+            .slice(0, 4);
+          setRelatedProducts(related);
         } else {
           setError("Product not found");
         }
@@ -149,10 +155,7 @@ const ProductDetail = () => {
 
           <h2 className="detail-price">RM {product.price.toFixed(2)}</h2>
 
-          <div className="detail-description">
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
+          
 
           <div className="action-buttons">
             <div className="quantity-wrapper">
@@ -176,9 +179,47 @@ const ProductDetail = () => {
           <div className="detail-extras">
             <p>Authentic Local Product</p>
             <p>Delivery within 3-5 days</p>
+
+            
           </div>
+          
+        </div>
+        <div className="detail-description">
+            <h3>Description</h3>
+            <p>{product.description}</p>
         </div>
       </div>
+
+      {relatedProducts.length > 0 && (
+        <section className="related-products">
+          <h2>Related Products</h2>
+          <div className="related-grid">
+            {relatedProducts.map((item) => (
+              <div 
+                key={item.id} 
+                className="related-card"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate(`/product/${item.id}`);
+                }}
+              >
+                <div className="related-image">
+                  <img 
+                    src={item.images?.[0] || '/products/placeholder.jpg'} 
+                    alt={item.name}
+                    onError={(e) => { e.target.src = '/products/placeholder.jpg' }}
+                  />
+                </div>
+                <div className="related-info">
+                  <p className="related-name">{item.name}</p>
+                  <p className="related-price">RM {item.price.toFixed(2)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      
     </div>
   );
 };

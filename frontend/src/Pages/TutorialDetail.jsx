@@ -12,6 +12,7 @@ const TutorialDetail = () => {
     const { addToCart, addToCartBackend } = useContext(ShopContext);
 
     const [tutorial, setTutorial] = useState(null);
+    const [instructorTutorials, setInstructorTutorials] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
@@ -48,6 +49,12 @@ const TutorialDetail = () => {
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         setSelectedDate(tomorrow.toISOString().split('T')[0]);
                     }
+                    
+                    // Get more tutorials by the same instructor
+                    const moreTutorials = data
+                        .filter(t => t.instructor === found.instructor && t.id !== found.id)
+                        .slice(0, 4);
+                    setInstructorTutorials(moreTutorials);
                 } else {
                     setError("Tutorial not found");
                 }
@@ -296,6 +303,39 @@ const TutorialDetail = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {instructorTutorials.length > 0 && (
+                <section className="related-products">
+                    <h2>More by {tutorial.instructor}</h2>
+                    <div className="related-grid">
+                        {instructorTutorials.map((item) => (
+                            <div 
+                                key={item.id} 
+                                className="related-card"
+                                onClick={() => {
+                                    window.scrollTo(0, 0);
+                                    navigate(`/tutorial/${item.id}`);
+                                }}
+                            >
+                                <div className="related-image">
+                                    <img 
+                                        src={item.images?.[0] || '/products/Tutorials/default.jpeg'} 
+                                        alt={item.name}
+                                        onError={(e) => { e.target.src = '/products/Tutorials/default.jpeg' }}
+                                    />
+                                    <span className="related-badge">
+                                        {item.isLiveClass ? '🔴 Live' : '📹 Recorded'}
+                                    </span>
+                                </div>
+                                <div className="related-info">
+                                    <p className="related-name">{item.name}</p>
+                                    <p className="related-price">RM {item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
             )}
         </div>
     );

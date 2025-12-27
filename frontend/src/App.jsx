@@ -26,8 +26,9 @@ import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
 import Orders from "./Pages/Orders";
 import HelpCentre from "./Pages/HelpCentre";
-import SupplierDashboard from "./Pages/SupplierDashboard";
+import SupplierDashboard from "./Pages/AdminDashboard";
 import Settings from "./Pages/Settings";
+import ScrollToTop from "./components/ScrollToTop";
 
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
@@ -189,6 +190,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <AppContent user={user} setUser={setUser} />
       </BrowserRouter>
     </>

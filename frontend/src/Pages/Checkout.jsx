@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../config/api";
-import { Popup } from "../Components/Popup";
+import Popup from "../components/Popup/Popup";
 import "../CSS/Checkout.css";
 
 const Checkout = () => {
@@ -58,7 +58,7 @@ const Checkout = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (e.target.name === 'paymentMethod') {
-      setShowQR(false);
+      setShowQR(e.target.value === 'card');
     }
   };
 
@@ -84,14 +84,21 @@ const Checkout = () => {
       if (response.ok) {
         console.log("Order Processed:", result.message);
         clearCart();
-        alert("Order Placed Successfully!");
-        navigate("/");
+        setPopup({ show: true, msg: "Order Placed Successfully!", type: "success" });
       } else {
-        alert("Checkout failed: " + (result.message || "Unknown error"));
+        setPopup({ show: true, msg: "Checkout failed: " + (result.message || "Unknown error"), type: "error" });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again later.");
+      setPopup({ show: true, msg: "An error occurred. Please try again later.", type: "error" });
+    }
+  };
+
+  const handlePopupClose = () => {
+    const wasSuccess = popup.type === "success";
+    setPopup({ show: false, msg: "", type: "success" });
+    if (wasSuccess) {
+      navigate("/");
     }
   };
 
@@ -138,6 +145,12 @@ const Checkout = () => {
 
   return (
     <div className="checkout-page">
+      <Popup
+        isOpen={popup.show}
+        message={popup.msg}
+        type={popup.type}
+        onClose={handlePopupClose}
+      />
       <div className="checkout-header">
         <h1>Checkout</h1>
       </div>
@@ -156,7 +169,7 @@ const Checkout = () => {
                 
                 <label className={`payment-card ${formData.paymentMethod === 'card' ? 'selected' : ''}`}>
                   <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod === "card"} onChange={handleChange} />
-                  <span>Credit / Debit Card</span>
+                  <span>TnG QR</span>
                 </label>
               </div>
 
@@ -164,7 +177,7 @@ const Checkout = () => {
                 <div className="qr-section">
                   <p className="qr-instruction">Scan DuitNow QR to Pay:</p>
                   <img src="/qr-payment.png" alt="Payment QR Code" className="qr-image" />
-                  <p className="qr-note">Please screenshot receipt after payment.</p>
+                  <p className="qr-note">Please screenshot receipt after payment as reference.</p>
                 </div>
               )}
             </section>
@@ -232,7 +245,7 @@ const Checkout = () => {
 
             <div className="checkout-actions">
                <button type="submit" form="checkout-form" className="btn-primary full-width-btn">
-                  {showQR ? "I Have Paid" : "Place Order"}
+                  Place Order
                </button>
                <button type="button" onClick={() => navigate("/cart")} className="btn-secondary full-width-btn">
                   Back to Cart
