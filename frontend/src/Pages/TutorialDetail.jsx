@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../config/api";
-import "../CSS/ProductDetail.css"; // Reuse ProductDetail styles
+import "../CSS/ProductDetail.css";
+import "../CSS/TutorialDetail.css";
 import Popup from "../components/Popup/Popup";
 import { ShopContext } from "../Context/ShopContext";
 
@@ -167,7 +168,7 @@ const TutorialDetail = () => {
                 <div className="detail-images">
                     <div className="main-image-container">
                         {showPreview ? (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', color: '#fff' }}>
+                            <div className="video-preview-container">
                                 {/* Show Video Player if videoUrl exists and user wants to preview or watch */}
                                 {tutorial.videoUrl ? (
                                     youtubeId ? (
@@ -187,7 +188,6 @@ const TutorialDetail = () => {
                                             width="100%"
                                             height="100%"
                                             poster={tutorial.images?.[0] || "/products/Tutorials/default.jpeg"}
-                                            style={{ backgroundColor: '#000' }}
                                         >
                                             <source src={tutorial.videoUrl} type="video/mp4" />
                                             Your browser does not support the video tag.
@@ -218,7 +218,7 @@ const TutorialDetail = () => {
                     </div>
 
                     <div className="detail-instructor">
-                        <span style={{ fontSize: '1.1rem', color: '#555' }}>Instructor: {tutorial.instructor}</span>
+                        <span>Instructor: {tutorial.instructor}</span>
                     </div>
 
                     <h2 className="detail-price">RM {tutorial.price.toFixed(2)}</h2>

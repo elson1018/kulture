@@ -66,3 +66,28 @@
         margin-top: 10px;
     }
 }
+
+.shop-page.loading-state,
+.shop-page.error-state {
+    padding-top: 100px;
+}
+
+.shop-page.loading-state h2,
+.shop-page.error-state h2 {
+    text-align: center;
+}
+
+.shop-page.error-state h2 {
+    color: #e74c3c;
+}
+
+.empty-product-message {
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+}
+
+.loading-text {
+    text-align: center;
+    width: 100%;
+}

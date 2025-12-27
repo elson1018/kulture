@@ -1,6 +1,3 @@
-
-
-/* ===== MODAL OVERLAY ===== */
 .booking-modal-overlay {
     position: fixed;
     top: 0;
@@ -14,7 +11,6 @@
     z-index: 1000;
 }
 
-/* ===== MODAL CONTENT ===== */
 .booking-modal {
     background: white;
     padding: 30px;
@@ -35,7 +31,6 @@
     margin-bottom: 20px;
 }
 
-/* ===== FORM FIELDS ===== */
 .booking-form-fields {
     margin: 15px 0;
 }
@@ -67,7 +62,6 @@
     border-color: #D9944E;
 }
 
-/* Custom select dropdown arrow */
 .booking-form-fields select {
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A3C34' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -76,7 +70,6 @@
     background-size: 16px;
 }
 
-/* ===== QUANTITY SELECTOR ===== */
 .modal-quantity-wrapper {
     display: flex;
     align-items: center;
@@ -106,7 +99,6 @@
     text-align: center;
 }
 
-/* ===== MODAL BUTTONS ===== */
 .modal-actions {
     display: flex;
     gap: 12px;
@@ -153,7 +145,6 @@
     color: white;
 }
 
-/* ===== MESSAGE STATES ===== */
 .booking-message {
     margin: 10px 0;
 }
@@ -166,7 +157,6 @@
     color: #27ae60;
 }
 
-/* ===== VIDEO PREVIEW ===== */
 .video-preview-container {
     width: 100%;
     height: 100%;
@@ -177,27 +167,13 @@
     color: #fff;
 }
 
-.video-preview-container video {
-    background-color: #000;
-}
-
-/* ===== INSTRUCTOR INFO ===== */
-.detail-instructor {
-    margin-bottom: 15px;
-}
-
 .detail-instructor span {
     font-size: 1.1rem;
     color: #555;
 }
 
-/* ===== UTILITY CLASSES (Reusable) ===== */
 .loading-state {
     padding-top: 100px;
-    text-align: center;
-}
-
-.loading-state h2 {
     text-align: center;
 }
 
@@ -207,7 +183,6 @@
 }
 
 .error-state h2 {
-    text-align: center;
     color: #e74c3c;
 }
 

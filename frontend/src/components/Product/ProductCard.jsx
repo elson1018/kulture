@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
         type={popup.type}
         onClose={() => setPopup({ ...popup, isOpen: false })}
       />
-      <div className="product-image-container" onClick={handleViewDetails} style={{ cursor: 'pointer' }}>
+      <div className="product-image-container clickable" onClick={handleViewDetails}>
         <img
           src={imageSrc}
           alt={product.name}
@@ -62,7 +62,7 @@ const ProductCard = ({ product }) => {
 
       <div className="product-info">
         {/* The class here must match the CSS (.product-name) */}
-        <h3 className="product-name" onClick={handleViewDetails} style={{cursor: 'pointer'}}>
+        <h3 className="product-name clickable" onClick={handleViewDetails}>
           {product.name}
         </h3>
 

@@ -33,8 +33,8 @@ const Souvenirs = () => {
 
   if (loading) {
     return (
-      <div className='shop-page' style={{paddingTop: '100px'}}>
-        <h2 style={{textAlign: 'center'}}>Loading Products...</h2>
+      <div className='shop-page loading-state'>
+        <h2>Loading Products...</h2>
       </div>
     );
   }

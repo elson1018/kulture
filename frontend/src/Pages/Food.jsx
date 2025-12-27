@@ -39,16 +39,16 @@ const Food = () => {
 
     if (isLoading) {
         return (
-            <div className='shop-page' style={{ paddingTop: '100px' }}>
-                <h2 style={{ textAlign: 'center' }}>Loading Delicious Eats...</h2>
+            <div className='shop-page loading-state'>
+                <h2>Loading Delicious Eats...</h2>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className='shop-page' style={{ paddingTop: '100px' }}>
-                <h2 style={{ textAlign: 'center', color: 'red' }}>Error: {error}</h2>
+            <div className='shop-page error-state'>
+                <h2>Error: {error}</h2>
             </div>
         );
     }
@@ -67,7 +67,7 @@ const Food = () => {
             </div>
 
             {!isLoading && products.length === 0 && (
-                <p id='empty-product-message' style={{ textAlign: 'center', marginTop: '40px' }}>
+                <p className='empty-product-message'>
                     No food items found.
                 </p>
             )}

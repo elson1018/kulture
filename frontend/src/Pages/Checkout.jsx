@@ -10,6 +10,8 @@ const Checkout = () => {
   const [cartData, setCartData] = useState({ items: [] });
   const [products, setProducts] = useState([]); // this used to check product category
   const [loading, setLoading] = useState(true);
+   const [popup, setPopup] = useState({ show: false, msg: "", type: "success" });
+   
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

@@ -66,17 +66,16 @@ const Shop = () => {
   // Loading
   if (isLoading) {
     return (
-      <div className='shop-page' style={{ paddingTop: '100px' }}>
-        <h2 style={{ textAlign: 'center' }}>Searching Products...</h2>
+      <div className='shop-page loading-state'>
+        <h2>Searching Products...</h2>
       </div>
     );
   }
 
-  // Show error
   if (error) {
     return (
-      <div className='shop-page' style={{ paddingTop: '100px' }}>
-        <h2 style={{ textAlign: 'center', color: 'red' }}>Error: {error}</h2>
+      <div className='shop-page error-state'>
+        <h2>Error: {error}</h2>
       </div>
     );
   }
@@ -107,7 +106,7 @@ const Shop = () => {
       </div>
 
       {!isLoading && products.length === 0 && (
-        <p id='empty-product-message' style={{ textAlign: 'center', marginTop: '40px' }}>
+        <p className='empty-product-message'>
           No products found matching "{searchTerm}".
         </p>
       )}

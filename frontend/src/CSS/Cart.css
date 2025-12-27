@@ -82,6 +82,12 @@
     font-weight: 700;
 }
 
+.cart-item-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 4px;
+}
+
 .quantity-wrapper {
     display: flex;
     align-items: center;

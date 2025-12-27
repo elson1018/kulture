@@ -129,7 +129,7 @@ const Home = () => {
               </div>
             ))
           ) : (
-            <p style={{textAlign: 'center', width: '100%'}}>Loading trending items...</p>
+            <p className="loading-text">Loading trending items...</p>
           )}
         </div>
       </section>

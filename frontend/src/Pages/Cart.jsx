@@ -142,15 +142,14 @@ const Cart = () => {
                                         <b>{item.productName}</b>
                                     </p>
                                     <p className="cart-product-price">RM {item.price.toFixed(2)}</p>
-                                    
-                                    {/* Display Metadata */}
+                                   
                                     {isLiveClass && (
-                                        <p className="cart-item-meta" style={{ fontSize: '0.85rem', color: '#666', marginTop: '4px' }}>
+                                        <p className="cart-item-meta">
                                             📅 Date: {item.selectedDate}
                                         </p>
                                     )}
                                     {item.itemType === 'tutorial' && (
-                                        <p className="cart-item-meta" style={{ fontSize: '0.85rem', color: '#666', marginTop: '4px' }}>
+                                        <p className="cart-item-meta">
                                             📹 Recorded Course
                                         </p>
                                     )}
