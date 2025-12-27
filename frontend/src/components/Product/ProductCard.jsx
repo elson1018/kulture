@@ -42,7 +42,6 @@ const ProductCard = ({ product }) => {
       else setPopup({ isOpen: true, message: result.message, type: "error" });
     }
   };
-  { console.log("Current Product Image:", imageSrc); }
 
   return (
     <div className="product-card">
@@ -56,7 +55,7 @@ const ProductCard = ({ product }) => {
         <img
           src={imageSrc}
           alt={product.name}
-          onError={(e) => {e.target.src = "/products/placeholder.jpg"}} 
+          onError={(e) => { e.target.src = "/products/placeholder.jpg" }}
         />
       </div>
 

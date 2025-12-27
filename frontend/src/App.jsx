@@ -20,6 +20,7 @@ import Home from "./Pages/static/Home";
 import Team from "./Pages/static/Team";
 import Contact from "./Pages/static/Contact";
 import HelpCentre from "./Pages/static/HelpCentre";
+import About from "./Pages/static/About";
 
 // Shop pages
 import Shop from "./Pages/shop/Shop";
@@ -129,6 +130,7 @@ const AppContent = ({ user, setUser }) => {
           <Route path="/team" element={<Team />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/help-centre" element={<HelpCentre />} />
+          <Route path="/about" element={<About />} />
 
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/food" element={<Food />} />
@@ -193,14 +195,14 @@ function App() {
     const isNewSession = !sessionStorage.getItem("app_session_active");
 
     if (isNewSession) {
-    
+
       localStorage.removeItem("user");
       localStorage.removeItem("role");
       setUser(null);
-     
+
       sessionStorage.setItem("app_session_active", "true");
     } else {
-   //Restore user state
+      //Restore user state
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
