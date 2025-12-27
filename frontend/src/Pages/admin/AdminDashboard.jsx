@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../config/api";
-import "./SupplierDashboard.css";
+import "./AdminDashboard.css";
 
-const SupplierDashboard = ({ user }) => {
+const AdminDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);
   const [myTutorials, setMyTutorials] = useState([]);
   const [salesData, setSalesData] = useState({ totalRevenue: 0, sales: [] });
@@ -119,7 +119,7 @@ const SupplierDashboard = ({ user }) => {
   };
 
   return (
-    <div className="supplier-dashboard">
+    <div className="admin-dashboard">
       <div className="dashboard-header">
         <div>
           <h1>Welcome, {user?.username || "Admin"}!</h1>
@@ -292,4 +292,4 @@ const SupplierDashboard = ({ user }) => {
   );
 };
 
-export default SupplierDashboard;
+export default AdminDashboard;

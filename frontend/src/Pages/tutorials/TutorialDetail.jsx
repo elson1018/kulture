@@ -120,7 +120,7 @@ const TutorialDetail = () => {
             price: tutorial.price,
             quantity: finalQty,
             images: tutorial.images || [],
-            company: tutorial.instructor || "Kulture",
+
             itemType: tutorial.isLiveClass ? "live_class" : "tutorial",
             selectedDate: tutorial.isLiveClass ? `${selectedDate} (${selectedTime})` : null
         };

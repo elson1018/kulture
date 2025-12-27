@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
       price: product.price,
       quantity: 1,
       images: product.images || [],
-      company: product.company || "Kulture",
+
     };
 
     const result = await addToCartBackend(cartItem);

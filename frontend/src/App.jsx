@@ -189,14 +189,21 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      try {
-        // Restore the user object into state
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error("Failed to parse user from localStorage", error);
-        localStorage.removeItem("user"); // Clean up if data is corrupted
+    // Check if this is a new browser session 
+    const isNewSession = !sessionStorage.getItem("app_session_active");
+
+    if (isNewSession) {
+    
+      localStorage.removeItem("user");
+      localStorage.removeItem("role");
+      setUser(null);
+     
+      sessionStorage.setItem("app_session_active", "true");
+    } else {
+   //Restore user state
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
       }
     }
   }, []);

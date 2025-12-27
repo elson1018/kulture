@@ -54,7 +54,7 @@ const AddProduct = () => {
       price: parseFloat(product.price),
       images: [product.images], // Backend expects List<String> - we'll send base64 for now
       rating: 0.0,
-      company: "Kulture",
+
       imageFileName: fileName, // Pass filename separately for backend to use
       instructor: product.instructor,
       isLiveClass: product.isLiveClass,

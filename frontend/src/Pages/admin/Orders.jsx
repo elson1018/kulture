@@ -149,12 +149,7 @@ const Orders = () => {
                                         </ul>
                                     </div>
 
-                                    {order.company && (
-                                        <div className="order-company">
-                                            <span className="company-label">Supplier:</span>
-                                            <span className="company-name">{order.company}</span>
-                                        </div>
-                                    )}
+
                                 </div>
 
                                 <div className="order-card-footer">

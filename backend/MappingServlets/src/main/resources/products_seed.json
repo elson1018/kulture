@@ -9,8 +9,7 @@
       "/products/Souvenirs/Batik_Slik_Scarf_Green.webp",
       "/products/Souvenirs/Batik_Slik_Scarf_Green_2.webp"
     ],
-    "rating": 4.8,
-    "company": "Kulture"
+    "rating": 4.8
   },
   {
     "id": "P-0002",
@@ -19,8 +18,7 @@
     "price": 25.0,
     "description": "Traditional Malaysian kite souvenir.",
     "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
-    "rating": 4.7,
-    "company": "Kulture"
+    "rating": 4.7
   },
   {
     "id": "P-0003",
@@ -29,8 +27,7 @@
     "price": 350.0,
     "description": "Traditional Chinese string instrument with a beautiful tone, commonly used in Chinese orchestras and traditional music performances.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.9,
-    "company": "Kulture"
+    "rating": 4.9
   },
   {
     "id": "P-0004",
@@ -39,8 +36,7 @@
     "price": 12.0,
     "description": "Crunchy and savory traditional Indian-Malaysian snack made from rice flour",
     "images": ["/products/Food/Murukku.png"],
-    "rating": 4.9,
-    "company": "Kulture Eats"
+    "rating": 4.9
   },
   {
     "id": "P-0005",
@@ -49,8 +45,7 @@
     "price": 35.0,
     "description": "Elegant red batik silk scarf featuring traditional Malaysian motifs. Hand-printed using traditional wax-resist dyeing technique.",
     "images": ["/products/Souvenirs/Batik_Slik_Scarf_Green.webp"],
-    "rating": 4.6,
-    "company": "Kulture"
+    "rating": 4.6
   },
   {
     "id": "P-0006",
@@ -59,8 +54,7 @@
     "price": 45.0,
     "description": "Traditional Malay counting game carved from solid wood. Complete set includes board and marble seeds.",
     "images": ["/products/Souvenirs/Congkak.jpg"],
-    "rating": 4.8,
-    "company": "Kulture"
+    "rating": 4.8
   },
   {
     "id": "P-0007",
@@ -69,8 +63,7 @@
     "price": 580.0,
     "description": "Chinese plucked zither with 21 strings. Creates beautiful, flowing melodies characteristic of traditional Chinese music.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.7,
-    "company": "Kulture"
+    "rating": 4.7
   },
   {
     "id": "P-0008",
@@ -79,8 +72,7 @@
     "price": 85.0,
     "description": "Traditional Malay hand drum used in weddings and cultural celebrations. Made with genuine goat skin.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.5,
-    "company": "Kulture"
+    "rating": 4.5
   },
   {
     "id": "P-0009",
@@ -89,8 +81,7 @@
     "price": 420.0,
     "description": "Traditional Borneo lute instrument from the Orang Ulu people. Known for its soothing and mystical sound.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.9,
-    "company": "Kulture"
+    "rating": 4.9
   },
   {
     "id": "P-0010",
@@ -99,8 +90,7 @@
     "price": 8.0,
     "description": "Light and fluffy Malaysian sponge cakes. Traditional festive treat with a subtle egg and vanilla flavor.",
     "images": ["/products/Food/Murukku.png"],
-    "rating": 4.6,
-    "company": "Kulture Eats"
+    "rating": 4.6
   },
   {
     "id": "P-0011",
@@ -109,8 +99,7 @@
     "price": 15.0,
     "description": "Sweet and chewy Malaysian confection made from coconut milk, palm sugar, and rice flour. A festive favorite.",
     "images": ["/products/Food/Murukku.png"],
-    "rating": 4.7,
-    "company": "Kulture Eats"
+    "rating": 4.7
   },
   {
     "id": "P-0012",
@@ -119,8 +108,7 @@
     "price": 10.0,
     "description": "Crispy anchovies cooked in spicy sambal sauce. Perfect accompaniment to nasi lemak.",
     "images": ["/products/Food/Murukku.png"],
-    "rating": 4.8,
-    "company": "Kulture Eats"
+    "rating": 4.8
   },
   {
     "id": "P-0013",
@@ -129,8 +117,7 @@
     "price": 65.0,
     "description": "Handcrafted Malaysian pewter photo frame featuring traditional floral designs. Made with 95% tin.",
     "images": ["/products/Souvenirs/Congkak.jpg"],
-    "rating": 4.9,
-    "company": "Kulture"
+    "rating": 4.9
   },
   {
     "id": "P-0014",
@@ -139,8 +126,7 @@
     "price": 55.0,
     "description": "Traditional Javanese leather shadow puppet, hand-carved and painted. A unique piece of Southeast Asian art.",
     "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
-    "rating": 4.6,
-    "company": "Kulture"
+    "rating": 4.6
   },
   {
     "id": "P-0015",
@@ -149,7 +135,6 @@
     "price": 45.0,
     "description": "Traditional Chinese transverse flute made from bamboo. Includes membrane and carrying case.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.4,
-    "company": "Kulture"
+    "rating": 4.4
   }
 ]

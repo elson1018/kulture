@@ -194,26 +194,7 @@
   flex: 1;
 }
 
-.order-company {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
-.company-label {
-  color: #666;
-  font-weight: 600;
-}
-
-.company-name {
-  color: #D9944E;
-  font-weight: 600;
-  font-size: 1.05rem;
-}
 
 .order-card-footer {
   padding: 20px 25px;
