@@ -1,8 +1,10 @@
 import React from 'react';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import './Contact.css';
 
-const Contact =()=>{
-  return(
+const Contact = () => {
+  useDocumentTitle('Contact Us | Kulture');
+  return (
     <div className='contact-page'>
       <header className="contact-header">
         <h1>Connect With Kulture</h1>
@@ -13,9 +15,9 @@ const Contact =()=>{
         <section className="contact-form-section">
           <h2>Send Us a Message</h2>
           <form className="contact-form">
-            <input type="text" placeholder= "Full Name" required/>
-            <input type="email" placeholder= "Email Address" required/>
-            <input type="text" placeholder= "Subject(e.g., Order Inquiry, Partnership)" required/>
+            <input type="text" placeholder="Full Name" required />
+            <input type="email" placeholder="Email Address" required />
+            <input type="text" placeholder="Subject(e.g., Order Inquiry, Partnership)" required />
             <textarea placeholder="Your Message" rows="5" required></textarea>
             <button type="submit" className="submit-btn">Send Message</button>
           </form>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import missionIcon from '../../assets/mission.png';
 import visionIcon from '../../assets/vision.png';
 import './About.css';
 
 const About = () => {
+  useDocumentTitle('About Us | Kulture');
   const navigate = useNavigate();
 
   const offerings = [

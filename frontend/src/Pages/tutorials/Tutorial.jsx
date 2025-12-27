@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import './Tutorial.css';
 import TutorialCard from '../../components/Tutorial/TutorialCard';
 
 const Tutorial = () => {
+    useDocumentTitle('Tutorials & Classes | Kulture');
     const [tutorials, setTutorials] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);

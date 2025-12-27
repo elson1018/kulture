@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard';
 import './Instruments.css'; // Re-using the style from Instruments as requested
 
 const Food = () => {
+    useDocumentTitle('Traditional Food | Kulture');
     const [products, setProducts] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,7 +23,7 @@ const Food = () => {
                 }
 
                 const data = await response.json();
-                
+
                 // Filter only Food category
                 const foodItems = data.filter(item => item.category === 'Food');
 

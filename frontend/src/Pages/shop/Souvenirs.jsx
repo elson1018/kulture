@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard'
 import './Souvenirs.css';
 
 const Souvenirs = () => {
+  useDocumentTitle('Souvenirs | Kulture');
   const [displayProducts, setDisplayProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,7 +13,7 @@ const Souvenirs = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(ENDPOINTS.PRODUCTS);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
@@ -19,7 +21,7 @@ const Souvenirs = () => {
         const data = await response.json();
         // show only souvenirs product
         const souvenirItems = data.filter(item => item.category === 'Souvenirs');
-        
+
         setDisplayProducts(souvenirItems);
         setLoading(false);
       } catch (error) {
@@ -45,7 +47,7 @@ const Souvenirs = () => {
         <h1>Souvenirs Marketplace</h1>
         <p>Discover hand-printed textiles and crafts from local Malaysian artisans.</p>
       </div>
-        
+
       <div className="product-grid">
         {displayProducts.map((product) => (
           <ProductCard key={product.id} product={product} />

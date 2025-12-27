@@ -1,49 +1,51 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { ENDPOINTS } from "../../config/api";
 import bin_icon from "../../assets/bin.png";
 import "./Cart.css";
 
 const Cart = () => {
-   
+    useDocumentTitle('Shopping Cart | Kulture');
+
     const { addToCart, removeFromCart: contextRemove, updateCartItemCount } = useContext(ShopContext);
 
     const [cartData, setCartData] = useState({ items: [] });
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    
+
 
     useEffect(() => {
-      const fetchCart = async () => {
-        try {
-            setLoading(true);
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) {
-                // Not logged in or handled by context redirect usually
+        const fetchCart = async () => {
+            try {
+                setLoading(true);
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) {
+                    // Not logged in or handled by context redirect usually
+                    setLoading(false);
+                    return;
+                }
+
+                const response = await fetch(ENDPOINTS.CART, {
+                    method: "GET",
+                    credentials: "include"
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setCartData(data);
+
+                } else {
+                    console.error("Failed to fetch cart");
+                }
+            } catch (err) {
+                console.error("Error fetching cart:", err);
+            } finally {
                 setLoading(false);
-                return;
             }
-
-            const response = await fetch(ENDPOINTS.CART, {
-                method: "GET",
-                credentials: "include"
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                setCartData(data);
-
-            } else {
-                console.error("Failed to fetch cart");
-            }
-        } catch (err) {
-            console.error("Error fetching cart:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
+        };
         fetchCart();
     }, []);
 
@@ -53,7 +55,7 @@ const Cart = () => {
                 method: "DELETE",
                 credentials: "include"
             });
-            
+
             if (response.ok) {
                 // Remove from local state immediately for UI responsiveness
                 setCartData(prev => ({
@@ -74,35 +76,35 @@ const Cart = () => {
     const handleQuantityChange = async (item, change) => {
         const newQuantity = item.quantity + change;
         if (newQuantity < 1) return;
-        
+
         const itemKey = getItemKey(item);
-        const updatedItems = cartData.items.map(i => 
+        const updatedItems = cartData.items.map(i =>
             getItemKey(i) === itemKey ? { ...i, quantity: newQuantity } : i
         );
         setCartData({ ...cartData, items: updatedItems });
-        
-        
-        
+
+
+
         const delta = change;
-        
+
         try {
-             const payload = {
-                 ...item,
-                 quantity: delta
-             };
-             
-             const response = await fetch(ENDPOINTS.CART, {
+            const payload = {
+                ...item,
+                quantity: delta
+            };
+
+            const response = await fetch(ENDPOINTS.CART, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify(payload)
             });
-            
+
             if (response.ok) {
-                 updateCartItemCount(newQuantity, item.productId); // Update context
+                updateCartItemCount(newQuantity, item.productId); // Update context
             } else {
                 // Revert if failed
-                fetchCart(); 
+                fetchCart();
             }
         } catch (e) {
             fetchCart();
@@ -124,10 +126,10 @@ const Cart = () => {
                     cartData.items.map((item) => {
                         const rawImage = (item.images && item.images.length > 0) ? item.images[0] : "/products/placeholder.jpg";
                         const imageSrc = rawImage.startsWith("http") ? rawImage : `${rawImage}`;
-                        
+
                         // Metadata Display
                         const isLiveClass = item.itemType === 'live_class';
-                        
+
                         return (
                             <div key={`${item.productId}-${item.selectedDate || 'def'}`} className="cart-item">
                                 <img
@@ -142,7 +144,7 @@ const Cart = () => {
                                         <b>{item.productName}</b>
                                     </p>
                                     <p className="cart-product-price">RM {item.price.toFixed(2)}</p>
-                                   
+
                                     {isLiveClass && (
                                         <p className="cart-item-meta">
                                             📅 Date: {item.selectedDate}

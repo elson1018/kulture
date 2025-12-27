@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard';
 import TutorialCard from '../../components/Tutorial/TutorialCard';
@@ -13,6 +14,9 @@ const Shop = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const searchTerm = searchParams.get('search');
+
+  // Dynamic title based on search
+  useDocumentTitle(searchTerm ? `Search: ${searchTerm} | Kulture` : 'Shop | Kulture');
 
   useEffect(() => {
     const fetchFilterProducts = async () => {

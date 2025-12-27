@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import './Home.css'
 
 const Home = () => {
+  useDocumentTitle('Kulture | The Tradition Hub');
 
   const navigate = useNavigate();
 
@@ -37,11 +39,11 @@ const Home = () => {
     fetch(ENDPOINTS.PRODUCTS) // fetch products from backend
       .then(res => res.json())
       .then(data => {
-        
+
         // this takes 4 random products from backend
         const shuffled = data.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 4);
-        
+
         setTrendingProducts(selected);
       })
       .catch(err => console.error("Error fetching trending:", err));
@@ -72,10 +74,11 @@ const Home = () => {
           <button className='primary-button' onClick={scrollToCategories}>Explore Now</button>
           <button className='secondary-button' onClick={() => {
             return (navigate('/shop')
-          )}}>Start Your Journey</button>
+            )
+          }}>Start Your Journey</button>
         </div>
       </section>
-        
+
       {/* --- PROMOTION SECTION --- */}
       <section className="promotion">
         <div className="promotion-content">
@@ -83,7 +86,8 @@ const Home = () => {
           <h1>10% OFF all traditional instruments!</h1>
           <button onClick={() => {
             return (navigate('/shop/instruments')
-          )}}>Shop Now</button>
+            )
+          }}>Shop Now</button>
         </div>
       </section>
 
@@ -115,9 +119,9 @@ const Home = () => {
             trendingProducts.map((item) => (
               <div key={item.id} className="trending-card" onClick={() => navigate(`/product/${item.id}`)}>
                 <div className="trend-image">
-                  <img 
-                    src={item.images && item.images.length > 0 ? item.images[0] : item.image || '/products/placeholder.jpg'} 
-                    alt={item.name} 
+                  <img
+                    src={item.images && item.images.length > 0 ? item.images[0] : item.image || '/products/placeholder.jpg'}
+                    alt={item.name}
                   />
                   <span className="badge">Hot</span>
                 </div>
