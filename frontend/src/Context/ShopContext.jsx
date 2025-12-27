@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { ENDPOINTS } from '../config/api';
 
 export const ShopContext = createContext(null);
 
@@ -15,7 +16,7 @@ export const ShopContextProvider = (props) => {
                     return;
                 }
 
-                const response = await fetch('http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart', {
+                const response = await fetch(ENDPOINTS.CART, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -66,8 +67,7 @@ export const ShopContextProvider = (props) => {
                 return { success: false, message: "Please log in to add items to cart.", type: "auth" };
             }
 
-            const response = await fetch(
-                "http://localhost:8082/MappingServlets-1.0-SNAPSHOT/api/cart",
+            const response = await fetch(ENDPOINTS.CART,
                 {
                     method: "POST",
                     headers: {

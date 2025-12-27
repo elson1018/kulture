@@ -20,5 +20,93 @@
     "rating": 4.9,
     "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
     "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
+  },
+  {
+    "id": "T-0003",
+    "name": "Traditional Malay Dance - Joget",
+    "instructor": "John Doe",
+    "price": 39.99,
+    "description": "Learn the graceful movements of Joget, a traditional Malay folk dance performed at celebrations and social events.",
+    "isLiveClass": false,
+    "rating": 4.7,
+    "images": ["/products/Tutorials/traditionaldance.jpeg"],
+    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "T-0004",
+    "name": "Zapin Dance Masterclass",
+    "instructor": "John Doe",
+    "price": 55.00,
+    "description": "Explore the elegant Zapin dance with its Arabic influences. Includes live feedback sessions.",
+    "isLiveClass": true,
+    "rating": 4.9,
+    "images": ["/products/Tutorials/traditionaldance.jpeg"],
+    "videoUrl": ""
+  },
+  {
+    "id": "T-0005",
+    "name": "Erhu for Beginners",
+    "instructor": "Jane Smith",
+    "price": 45.00,
+    "description": "Start your journey with the Chinese two-stringed violin. Learn proper bowing technique and basic melodies.",
+    "isLiveClass": false,
+    "rating": 4.6,
+    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
+    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
+  },
+  {
+    "id": "T-0006",
+    "name": "Chinese Classical Piano",
+    "instructor": "Jane Smith",
+    "price": 65.00,
+    "description": "Learn beautiful Chinese classical pieces on piano. From River Flows in You to traditional folk adaptations.",
+    "isLiveClass": true,
+    "rating": 4.8,
+    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
+    "videoUrl": ""
+  },
+  {
+    "id": "T-0007",
+    "name": "Kompang Drumming Workshop",
+    "instructor": "Ahmad Hassan",
+    "price": 35.00,
+    "description": "Master the rhythmic patterns of Kompang drumming used in Malay weddings and celebrations.",
+    "isLiveClass": true,
+    "rating": 4.5,
+    "images": ["/products/Tutorials/traditionaldance.jpeg"],
+    "videoUrl": ""
+  },
+  {
+    "id": "T-0008",
+    "name": "Traditional Dikir Barat",
+    "instructor": "Ahmad Hassan",
+    "price": 40.00,
+    "description": "Learn the call-and-response singing tradition from Kelantan. Includes rhythm, vocals, and hand movements.",
+    "isLiveClass": false,
+    "rating": 4.7,
+    "images": ["/products/Tutorials/traditionaldance.jpeg"],
+    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "T-0009",
+    "name": "Guzheng Fundamentals",
+    "instructor": "Mei Lin Chen",
+    "price": 55.00,
+    "description": "Introduction to the Chinese zither. Learn finger techniques, basic scales, and your first traditional piece.",
+    "isLiveClass": false,
+    "rating": 4.8,
+    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
+    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
+  },
+  {
+    "id": "T-0010",
+    "name": "Bharatanatyam Basics",
+    "instructor": "Priya Sharma",
+    "price": 50.00,
+    "description": "Classical Indian dance from Tamil Nadu. Learn basic postures, hand gestures (mudras), and footwork.",
+    "isLiveClass": true,
+    "rating": 4.9,
+    "images": ["/products/Tutorials/traditionaldance.jpeg"],
+    "videoUrl": ""
   }
 ]
