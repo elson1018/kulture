@@ -1,11 +1,56 @@
-# Default ignored files
+# --- General ---
+.DS_Store
+*.log
+logs/
+.env
+.env.local
+
+# --- IDEs ---
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
 /shelf/
 /workspace.xml
-# Editor-based HTTP Client requests
 /httpRequests/
-# Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
 
-# IntelliJ/JetBrains IDE folder
-/.idea/
+# VS Code
+.vscode/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# --- Frontend (Node.js/React) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.eslintcache
+
+# --- Backend (Java/Maven) ---
+target/
+build/
+!**/src/main/**/target/
+!**/src/test/**/target/
+!.mvn/wrapper/maven-wrapper.jar
+.kotlin
