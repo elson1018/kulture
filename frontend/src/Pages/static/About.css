@@ -5,13 +5,12 @@
 
 /* Hero Section */
 .about-hero {
-    background-image: url('../../assets/about_hero_bg.png');
-    background: linear-gradient(135deg, rgba(74, 60, 52, 0.85) 0%, rgba(61, 50, 43, 0.9) 100%), linear-gradient(135deg, #4A3C34 0%, #3d322b 100%);
+    background-image: linear-gradient(135deg, rgba(217, 148, 78, 0.1) 0%, rgba(74, 60, 52, 0.2) 100%), url('../../assets/about_hero_bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: #F5F5E9;
-    padding: 100px 20px;
+    padding: 120px 20px;
     text-align: center;
     position: relative;
 }

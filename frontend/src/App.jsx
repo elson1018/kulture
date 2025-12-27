@@ -21,6 +21,7 @@ import Team from "./Pages/static/Team";
 import Contact from "./Pages/static/Contact";
 import HelpCentre from "./Pages/static/HelpCentre";
 import About from "./Pages/static/About";
+import Policy from "./Pages/static/Policy";
 
 // Shop pages
 import Shop from "./Pages/shop/Shop";
@@ -131,6 +132,7 @@ const AppContent = ({ user, setUser }) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/help-centre" element={<HelpCentre />} />
           <Route path="/about" element={<About />} />
+          <Route path="/policy" element={<Policy />} />
 
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/food" element={<Food />} />

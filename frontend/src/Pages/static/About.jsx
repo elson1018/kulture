@@ -80,7 +80,7 @@ const About = () => {
             <h2>Our Story</h2>
             <p>
               In a world of mass production, Kulture stands as a beacon for authentic Malaysian heritage.
-              Founded in 2024, we recognized that traditional crafts, instruments, and cultural practices
+              Founded in 2025, we recognized that traditional crafts, instruments, and cultural practices
               were slowly fading from daily life.
             </p>
             <p>
