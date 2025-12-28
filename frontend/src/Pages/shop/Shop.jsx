@@ -4,6 +4,7 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard';
 import TutorialCard from '../../components/Tutorial/TutorialCard';
+import ScrollTopButton from '../../components/ScrollTopButton';
 import './Shop.css';
 
 const Shop = () => {
@@ -114,6 +115,7 @@ const Shop = () => {
           No products found matching "{searchTerm}".
         </p>
       )}
+      <ScrollTopButton />
     </div>
   );
 };

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard';
-import './Instruments.css'; // Re-using the style from Instruments as requested
+import ScrollTopButton from '../../components/ScrollTopButton';
+import './ShopCategory.css';
 
 const Food = () => {
     useDocumentTitle('Traditional Food | Kulture');
@@ -73,6 +74,7 @@ const Food = () => {
                     No food items found.
                 </p>
             )}
+            <ScrollTopButton />
         </div>
     );
 };

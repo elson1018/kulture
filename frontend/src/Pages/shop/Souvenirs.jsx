@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard'
-import './Souvenirs.css';
+import ScrollTopButton from '../../components/ScrollTopButton';
+import './ShopCategory.css';
 
 const Souvenirs = () => {
   useDocumentTitle('Souvenirs | Kulture');
@@ -53,6 +54,7 @@ const Souvenirs = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      <ScrollTopButton />
     </div>
   );
 };

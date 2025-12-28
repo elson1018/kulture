@@ -1,7 +1,7 @@
 .shop-page {
     background-color: #F5F5E9;
     color: #4A3C34;
-    padding: 40px 60px;
+    padding: 120px 60px 60px 60px;
     min-height: 100vh;
 }
 
@@ -29,12 +29,13 @@
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Product Card Styles (some pages might rely on these if not using component styles) */
 .product-card {
     background-color: white;
     border-radius: 12px;
@@ -84,7 +85,7 @@
     color: #4A3C34;
     margin-bottom: 8px;
     overflow: hidden;
-    min-height: 44px; 
+    min-height: 44px;
 }
 
 .product-price {
@@ -96,7 +97,7 @@
 
 .product-details {
     display: flex;
-    flex-direction: column-reverse; 
+    flex-direction: column-reverse;
     align-items: center;
     width: 100%;
     margin-bottom: 20px;
@@ -124,6 +125,32 @@
     border-radius: 4px;
 }
 
+/* Quantity Selector Styles (from Food.css) */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.quantity-btn {
+    background: #9E5E4E;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #4A3C34;
+    border-radius: 4px;
+}
+
 .add-to-cart-btn {
     width: 100%;
     padding: 12px;
@@ -140,4 +167,31 @@
 
 .add-to-cart-btn:hover {
     background-color: #C7813C;
+}
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-header h1 {
+        font-size: 32px;
+    }
+
+    .shop-page {
+        padding: 100px 20px 40px 20px;
+    }
 }

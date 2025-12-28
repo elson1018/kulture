@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard'
-import './Instruments.css';
+import ScrollTopButton from '../../components/ScrollTopButton';
+import './ShopCategory.css';
 
 const Instruments = () => {
   useDocumentTitle('Instruments | Kulture');
@@ -73,6 +74,7 @@ const Instruments = () => {
           No instruments found.
         </p>
       )}
+      <ScrollTopButton />
     </div>
   );
 };

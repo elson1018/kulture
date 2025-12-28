@@ -5,6 +5,7 @@ import "../shop/ProductDetail.css";
 import "./TutorialDetail.css";
 import Popup from "../../components/Popup/Popup";
 import { ShopContext } from "../../Context/ShopContext";
+import ScrollTopButton from "../../components/ScrollTopButton";
 
 const TutorialDetail = () => {
     const { id } = useParams();
@@ -49,7 +50,7 @@ const TutorialDetail = () => {
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         setSelectedDate(tomorrow.toISOString().split('T')[0]);
                     }
-                    
+
                     // Get more tutorials by the same instructor
                     const moreTutorials = data
                         .filter(t => t.instructor === found.instructor && t.id !== found.id)
@@ -255,15 +256,15 @@ const TutorialDetail = () => {
 
                         <div className="booking-form-fields">
                             <label>Select Date (Fri-Sun):</label>
-                            <input 
-                                type="date" 
-                                value={selectedDate} 
-                                onChange={e => setSelectedDate(e.target.value)} 
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={e => setSelectedDate(e.target.value)}
                             />
 
                             <label>Select Slot:</label>
-                            <select 
-                                value={selectedTime} 
+                            <select
+                                value={selectedTime}
                                 onChange={e => setSelectedTime(e.target.value)}
                             >
                                 <option value="08:00-12:00">8:00 AM - 12:00 PM</option>
@@ -272,13 +273,13 @@ const TutorialDetail = () => {
 
                             <label>Number of Sessions:</label>
                             <div className="modal-quantity-wrapper">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
                                 >-</button>
                                 <span>{quantity}</span>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => setQuantity(q => q + 1)}
                                 >+</button>
                             </div>
@@ -287,14 +288,14 @@ const TutorialDetail = () => {
                         <p className={`booking-message ${bookingMessage.type}`}>{bookingMessage.text}</p>
 
                         <div className="modal-actions">
-                            <button 
+                            <button
                                 className="modal-btn-primary"
-                                onClick={handleAddToCart} 
+                                onClick={handleAddToCart}
                                 disabled={isAddingToCart}
                             >
                                 {isAddingToCart ? 'Adding...' : 'Add to Cart'}
                             </button>
-                            <button 
+                            <button
                                 className="modal-btn-secondary"
                                 onClick={() => setShowBookingModal(false)}
                             >
@@ -310,8 +311,8 @@ const TutorialDetail = () => {
                     <h2>More by {tutorial.instructor}</h2>
                     <div className="related-grid">
                         {instructorTutorials.map((item) => (
-                            <div 
-                                key={item.id} 
+                            <div
+                                key={item.id}
                                 className="related-card"
                                 onClick={() => {
                                     window.scrollTo(0, 0);
@@ -319,8 +320,8 @@ const TutorialDetail = () => {
                                 }}
                             >
                                 <div className="related-image">
-                                    <img 
-                                        src={item.images?.[0] || '/products/Tutorials/default.jpeg'} 
+                                    <img
+                                        src={item.images?.[0] || '/products/Tutorials/default.jpeg'}
                                         alt={item.name}
                                         onError={(e) => { e.target.src = '/products/Tutorials/default.jpeg' }}
                                     />
@@ -337,6 +338,7 @@ const TutorialDetail = () => {
                     </div>
                 </section>
             )}
+            <ScrollTopButton />
         </div>
     );
 };

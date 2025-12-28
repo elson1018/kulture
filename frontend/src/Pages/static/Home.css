@@ -32,7 +32,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
     z-index: 1;
 }
 
@@ -50,7 +50,7 @@
     font-size: clamp(40px, 5vw, 70px);
     margin-bottom: 20px;
     font-weight: 800;
-    text-shadow: 0px 4px 15px rgba(0,0,0,0.3); 
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
     line-height: 1.1;
     letter-spacing: -2px;
 }
@@ -61,7 +61,7 @@
     max-width: 90%;
     margin-bottom: 40px;
     font-weight: 400;
-    text-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -79,7 +79,7 @@
 }
 
 .primary-button {
-    background-color: #D9944E; 
+    background-color: #D9944E;
     color: white;
 }
 
@@ -104,7 +104,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 85%;
     max-width: 800px;
     padding: 40px 30px;
@@ -138,7 +138,7 @@
 }
 
 .promotion button {
-    background-color: white; 
+    background-color: white;
     padding: 12px 35px;
     border: none;
     border-radius: 50px;
@@ -154,7 +154,8 @@
 }
 
 /* SECTION HEADERS */
-.featured-categories, .trending-products {
+.featured-categories,
+.trending-products {
     padding: 0 5%;
     margin-bottom: 80px;
 }
@@ -182,14 +183,14 @@
     background: white;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .cat-image-container {
@@ -253,7 +254,7 @@
 
 .trending-card:hover {
     border-color: #D9944E;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     transform: translateY(-5px);
 }
 
@@ -283,7 +284,7 @@
     font-size: 12px;
     font-weight: bold;
     border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .trend-info h3 {
@@ -309,56 +310,40 @@
     font-weight: 700;
 }
 
-.scroll-top-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: #D9944E;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1000;
-}
 
-.scroll-top-btn:hover {
-  background-color: #cd7c2b;
-}
 
-@media(max-height: 700px){
-    .hero-section{
+@media(max-height: 700px) {
+    .hero-section {
         min-height: 600px;
         height: auto;
         padding: 100px 0;
     }
 
-    .promotion{
+    .promotion {
         margin-top: -50px;
     }
 }
 
-@media(max-width: 768px){
-    .hero-section{
+@media(max-width: 768px) {
+    .hero-section {
         background-position: 60% center;
         text-align: center;
         height: auto;
         min-height: 100vh;
     }
-    .hero-section .content{
+
+    .hero-section .content {
         transform: translateY(0);
         padding-top: 100px;
     }
 
-    .promotion{
+    .promotion {
         width: 95%;
         margin: -40px auto 40px auto;
         padding: 30px 20px;
     }
 
-    .promotion h1{
+    .promotion h1 {
         font-size: 24px;
     }
 }
