@@ -25,9 +25,9 @@
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     justify-content: center;
-    gap: 30px; 
+    gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0;
@@ -37,9 +37,9 @@
     background-color: white;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
-    width: 230px;
+    width: 280px;
     flex-shrink: 0;
 }
 
@@ -78,7 +78,28 @@
     color: #9E5E4E;
 }
 
-.team-info p {
-    font-size: 15px;
-    line-height: 1.6;
+.linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #0077B5;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.linkedin-link:hover {
+    background-color: #005582;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 119, 181, 0.3);
+}
+
+.linkedin-icon {
+    width: 18px;
+    height: 18px;
 }
