@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
 import { ENDPOINTS } from "../../config/api";
-
+import ScrollTopButton from "../../components/ScrollTopButton";
 import "./ProductDetail.css";
 import Popup from "../../components/Popup/Popup";
 
@@ -46,7 +46,7 @@ const ProductDetail = () => {
           if (foundProduct.images && foundProduct.images.length > 0) {
             setSelectedImage(foundProduct.images[0]);
           }
-          
+
           // Get related products from the same category
           const related = data
             .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
@@ -155,7 +155,7 @@ const ProductDetail = () => {
 
           <h2 className="detail-price">RM {product.price.toFixed(2)}</h2>
 
-          
+
 
           <div className="action-buttons">
             <div className="quantity-wrapper">
@@ -180,13 +180,13 @@ const ProductDetail = () => {
             <p>Authentic Local Product</p>
             <p>Delivery within 3-5 days</p>
 
-            
+
           </div>
-          
+
         </div>
         <div className="detail-description">
-            <h3>Description</h3>
-            <p>{product.description}</p>
+          <h3>Description</h3>
+          <p>{product.description}</p>
         </div>
       </div>
 
@@ -195,8 +195,8 @@ const ProductDetail = () => {
           <h2>Related Products</h2>
           <div className="related-grid">
             {relatedProducts.map((item) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="related-card"
                 onClick={() => {
                   window.scrollTo(0, 0);
@@ -204,8 +204,8 @@ const ProductDetail = () => {
                 }}
               >
                 <div className="related-image">
-                  <img 
-                    src={item.images?.[0] || '/products/placeholder.jpg'} 
+                  <img
+                    src={item.images?.[0] || '/products/placeholder.jpg'}
                     alt={item.name}
                     onError={(e) => { e.target.src = '/products/placeholder.jpg' }}
                   />
@@ -219,7 +219,8 @@ const ProductDetail = () => {
           </div>
         </section>
       )}
-      
+      <ScrollTopButton />
+
     </div>
   );
 };

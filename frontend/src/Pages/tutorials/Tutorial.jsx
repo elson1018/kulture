@@ -3,6 +3,7 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ENDPOINTS } from '../../config/api';
 import './Tutorial.css';
 import TutorialCard from '../../components/Tutorial/TutorialCard';
+import ScrollTopButton from '../../components/ScrollTopButton';
 
 const Tutorial = () => {
     useDocumentTitle('Tutorials & Classes | Kulture');
@@ -40,6 +41,7 @@ const Tutorial = () => {
                     <TutorialCard key={tutorial.id} tutorial={tutorial} />
                 ))}
             </div>
+            <ScrollTopButton />
         </div>
     );
 };
