@@ -139,23 +139,29 @@ public class CartServlet extends HttpServlet {
 
                         // Create Booking for tutorials
                         if ("tutorial".equals(item.getItemType()) || "live_class".equals(item.getItemType())) {
-                             String status = "Confirmed";
-                             Booking booking = new Booking(
-                                     email,
-                                     item.getProductId(),
-                                     new Date(),
-                                     status,
-                                     item.getProductName(),
-                                     item.getPrice(),
-                                     item.getSelectedDate()
-                             );
-                             bookingDAO.createBooking(booking);
+                            String status = "Confirmed";
+                            Booking booking = new Booking(
+                                    email,
+                                    item.getProductId(),
+                                    new Date(),
+                                    status,
+                                    item.getProductName(),
+                                    item.getPrice(),
+                                    item.getSelectedDate()
+                                );
+                            bookingDAO.createBooking(booking);
                         }
                     }
 
                     Sale newSale = new Sale();
                     newSale.setCustomerEmail(email);
                     newSale.setProductNames(productNames);
+                    // collect product id
+                    List<String> productIds = companyItems.stream()
+                            .map(CartItem::getProductId)
+                            .collect(Collectors.toList());
+                    newSale.setProductIds(productIds);
+
                     newSale.setTotalAmount(totalAmount);
                     newSale.setCompany(company);
 
