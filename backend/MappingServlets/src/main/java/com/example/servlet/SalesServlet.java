@@ -3,6 +3,7 @@ package com.example.servlet;
 import com.google.gson.Gson;
 import com.example.dao.SalesDAO;
 import com.example.model.Sale;
+import com.example.util.CorsConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,7 @@ public class SalesServlet extends HttpServlet {
     }
 
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     @Override
@@ -42,7 +40,6 @@ public class SalesServlet extends HttpServlet {
         setupCORS(resp);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-
 
         try {
             String email = req.getParameter("email");

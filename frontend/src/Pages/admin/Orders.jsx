@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../config/api";
+import ReviewPopup from "../../components/ReviewPopup/ReviewPopup";
+import Popup from "../../components/Popup/Popup";
 import "./Orders.css";
 
 const Orders = () => {
@@ -8,6 +10,32 @@ const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    // Review popup state
+    const [reviewPopup, setReviewPopup] = useState({
+        isOpen: false,
+        productId: null,
+        productName: null
+    });
+
+    const openReviewPopup = (productId, productName) => {
+        setReviewPopup({ isOpen: true, productId, productName });
+    };
+
+    const closeReviewPopup = () => {
+        setReviewPopup({ isOpen: false, productId: null, productName: null });
+    };
+
+    // Success popup state
+    const [successPopup, setSuccessPopup] = useState(false);
+
+    const handleReviewSuccess = () => {
+        setSuccessPopup(true);
+    };
+
+    const closeSuccessPopup = () => {
+        setSuccessPopup(false);
+    };
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -94,6 +122,23 @@ const Orders = () => {
 
     return (
         <div className="orders-page">
+            {/* Review Popup */}
+            <ReviewPopup
+                isOpen={reviewPopup.isOpen}
+                onClose={closeReviewPopup}
+                productId={reviewPopup.productId}
+                productName={reviewPopup.productName}
+                onSuccess={handleReviewSuccess}
+            />
+
+            {/* Success Popup */}
+            <Popup
+                isOpen={successPopup}
+                message="Review submitted successfully!"
+                type="success"
+                onClose={closeSuccessPopup}
+            />
+
             <div className="orders-header">
                 <h1>My Orders</h1>
                 <p className="orders-subtitle">
@@ -140,12 +185,25 @@ const Orders = () => {
                                     <div className="order-items">
                                         <h4>Items Ordered:</h4>
                                         <ul className="items-list">
-                                            {order.productNames.map((productName, idx) => (
-                                                <li key={idx}>
-                                                    <span className="item-bullet">•</span>
-                                                    <span className="item-name">{productName}</span>
-                                                </li>
-                                            ))}
+                                            {order.productNames.map((productName, idx) => {
+                                                const productId = order.productIds ? order.productIds[idx] : null;
+                                                return (
+                                                    <li key={idx} className="order-item-row">
+                                                        <div>
+                                                            <span className="item-bullet">•</span>
+                                                            <span className="item-name">{productName}</span>
+                                                        </div>
+                                                        {productId && (
+                                                            <button
+                                                                className="give-review-btn"
+                                                                onClick={() => openReviewPopup(productId, productName)}
+                                                            >
+                                                                Give Review
+                                                            </button>
+                                                        )}
+                                                    </li>
+                                                );
+                                            })}
                                         </ul>
                                     </div>
 

@@ -258,6 +258,7 @@
     font-size: 3rem;
   }
 
+
   .order-card-header {
     flex-direction: column;
     gap: 15px;
@@ -282,4 +283,28 @@
   .empty-orders h2 {
     font-size: 1.6rem;
   }
+}
+
+/* Order item row with review button */
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.give-review-btn {
+  background-color: #D9944E;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.give-review-btn:hover {
+  background-color: #c7813c;
 }

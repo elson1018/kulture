@@ -6,6 +6,7 @@ import com.example.model.Product;
 import com.example.model.Review;
 import com.example.model.Sale;
 import com.example.util.JsonUtil;
+import com.example.util.CorsConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -35,10 +36,7 @@ public class ReviewServlet extends HttpServlet {
 
     // helper method to setup CORS headers for all responses
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     @Override

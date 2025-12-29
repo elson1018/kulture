@@ -34,9 +34,30 @@ public class ProductDAO {
     }
 
     public void addReviewToProduct(String productId, com.example.model.Review review) {
-        // add user review into product review object
-        productCollection.updateOne(
-                Filters.eq("_id", productId),
-                com.mongodb.client.model.Updates.push("reviews", review));
+        // Fetch product to get current reviews and recalculate rating
+        Product product = productCollection.find(Filters.eq("_id", productId)).first();
+        if (product != null) {
+            List<com.example.model.Review> reviews = product.getReviews();
+            if (reviews == null) {
+                reviews = new ArrayList<>();
+            }
+            reviews.add(review);
+
+            // Recalculate rating
+            double totalRating = 0;
+            for (com.example.model.Review r : reviews) {
+                totalRating += r.getRating();
+            }
+            double newRating = reviews.isEmpty() ? 0 : totalRating / reviews.size();
+            // Round to 1 decimal place
+            newRating = Math.round(newRating * 10.0) / 10.0;
+
+            // Update product with new reviews list and new rating
+            productCollection.updateOne(
+                    Filters.eq("_id", productId),
+                    com.mongodb.client.model.Updates.combine(
+                            com.mongodb.client.model.Updates.set("reviews", reviews),
+                            com.mongodb.client.model.Updates.set("rating", newRating)));
+        }
     }
 }

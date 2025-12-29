@@ -1,0 +1,128 @@
+.review-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.review-popup-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-popup-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+}
+
+.close-popup-btn:hover {
+    color: #333;
+}
+
+.review-popup-content h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 24px;
+}
+
+.popup-product-name {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.popup-error {
+    background-color: #fee;
+    color: #c33;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.popup-form-group {
+    margin-bottom: 20px;
+}
+
+.popup-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.star-rating-input {
+    display: flex;
+    gap: 5px;
+}
+
+.star-rating-input .star {
+    font-size: 32px;
+    cursor: pointer;
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.star-rating-input .star.active {
+    color: #ffc107;
+}
+
+.star-rating-input .star:hover {
+    color: #ffb300;
+}
+
+.popup-form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.popup-form-group textarea:focus {
+    outline: none;
+    border-color: #D9944E;
+}
+
+.popup-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #D9944E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.popup-submit-btn:hover:not(:disabled) {
+    background-color: #c7813c;
+}
+
+.popup-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

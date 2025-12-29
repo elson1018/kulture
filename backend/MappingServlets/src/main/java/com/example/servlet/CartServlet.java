@@ -11,6 +11,7 @@ import com.example.model.Cart;
 import com.example.model.CartItem;
 import com.example.model.Sale;
 import com.example.model.User;
+import com.example.util.CorsConfig;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,10 +46,7 @@ public class CartServlet extends HttpServlet {
     }
 
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     @Override
@@ -147,8 +145,7 @@ public class CartServlet extends HttpServlet {
                                     status,
                                     item.getProductName(),
                                     item.getPrice(),
-                                    item.getSelectedDate()
-                                );
+                                    item.getSelectedDate());
                             bookingDAO.createBooking(booking);
                         }
                     }
