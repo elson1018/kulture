@@ -151,8 +151,8 @@ const Signup = ({ onFormSwitch }) => {
             required
           />
           <label htmlFor="terms-agree">
-            I agree to Kulture's <a href="#">Terms of Service</a> and{" "}
-            <a href="#">Privacy Policy</a>.
+            I agree to Kulture's <a href="/terms">Terms of Service</a> and{" "}
+            <a href="/policy">Privacy Policy</a>.
           </label>
         </div>
 

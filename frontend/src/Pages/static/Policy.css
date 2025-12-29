@@ -3,6 +3,40 @@
     min-height: 100vh;
     background-color: #F5F5E9;
     padding: 80px 20px;
+    position: relative;
+}
+
+.policy-title-header {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.policy-page .back-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: 2px solid #4A3C34;
+    color: #4A3C34;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.policy-page .back-btn:hover {
+    background-color: #4A3C34;
+    color: #F5F5E9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 60, 52, 0.2);
 }
 
 .policy-container {
