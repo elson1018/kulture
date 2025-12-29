@@ -3,6 +3,7 @@ package com.example.servlet;
 import com.google.gson.Gson;
 import com.example.dao.TutorialDAO;
 import com.example.model.Tutorial;
+import com.example.util.CorsConfig;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,10 +25,7 @@ public class TutorialServlet extends HttpServlet {
     }
 
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // Aligned with your frontend port
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     @Override
@@ -68,18 +66,19 @@ public class TutorialServlet extends HttpServlet {
                 }
             }
 
-
             String jsonString = jsonBuilder.toString();
-            // Parse as Map to handle potential manual processing if needed, though direct POJO works
+            // Parse as Map to handle potential manual processing if needed, though direct
+            // POJO works
             // But strict GSON might fail if we have extra fields, mapping helps cleaning
             Map<String, Object> jsonMap = gson.fromJson(jsonString, Map.class);
-            
+
             // Convert modified map back to JSON then to Tutorial object
             String modifiedJson = gson.toJson(jsonMap);
             Tutorial newTutorial = gson.fromJson(modifiedJson, Tutorial.class);
 
             // Log for debugging
-            System.out.println("Saving Tutorial: " + newTutorial.getName() + ", Video URL: " + newTutorial.getVideoUrl());
+            System.out
+                    .println("Saving Tutorial: " + newTutorial.getName() + ", Video URL: " + newTutorial.getVideoUrl());
 
             tutorialDAO.saveTutorial(newTutorial);
 

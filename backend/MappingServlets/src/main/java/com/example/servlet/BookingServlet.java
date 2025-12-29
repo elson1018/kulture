@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.example.util.MongoDBUtil;
+import com.example.util.CorsConfig;
 import com.example.model.Booking;
 import com.example.model.Tutorial;
 
@@ -23,10 +24,7 @@ public class BookingServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     @Override

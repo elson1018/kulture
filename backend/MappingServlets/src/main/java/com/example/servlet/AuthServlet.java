@@ -1,11 +1,11 @@
 
-
 package com.example.servlet;
 
 import com.google.gson.Gson;
 
 import com.example.dao.UserDAO;
 import com.example.model.User;
+import com.example.util.CorsConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 @WebServlet("/api/auth/*")
 public class AuthServlet extends HttpServlet {
@@ -35,10 +33,7 @@ public class AuthServlet extends HttpServlet {
     // CORS Setup
 
     private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        CorsConfig.setupCORS(resp);
     }
 
     // Override available doOptions to set the CORS headers for preflight requests

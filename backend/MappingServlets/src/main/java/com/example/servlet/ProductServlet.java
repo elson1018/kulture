@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.example.dao.ProductDAO;
 import com.example.dao.SalesDAO;
 import com.example.model.Product;
+import com.example.util.CorsConfig;
 
 import java.io.*;
 import java.nio.file.Path;
