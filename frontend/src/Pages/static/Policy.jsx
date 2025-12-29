@@ -1,14 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import './Policy.css';
 
 const Policy = () => {
     useDocumentTitle('Privacy Policy | Kulture');
+    const navigate = useNavigate();
 
     return (
         <div className='policy-page'>
             <div className='policy-container'>
-                <h1>Privacy Policy</h1>
+                <div className="policy-title-header">
+                    <button className="back-btn" onClick={() => navigate(-1)}>
+                        ← Back
+                    </button>
+                    <h1>Privacy Policy</h1>
+                </div>
                 <p className='last-updated'>Last Updated: December, 2025</p>
 
                 <section>
