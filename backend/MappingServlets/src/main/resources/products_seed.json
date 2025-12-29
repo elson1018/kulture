@@ -89,7 +89,7 @@
     "category": "Food",
     "price": 8.0,
     "description": "Light and fluffy Malaysian sponge cakes. Traditional festive treat with a subtle egg and vanilla flavor.",
-    "images": ["/products/Food/Murukku.png"],
+    "images": ["/products/Food/KuihBahulu.png"],
     "rating": 4.6
   },
   {
@@ -98,7 +98,7 @@
     "category": "Food",
     "price": 15.0,
     "description": "Sweet and chewy Malaysian confection made from coconut milk, palm sugar, and rice flour. A festive favorite.",
-    "images": ["/products/Food/Murukku.png"],
+    "images": ["/products/Food/Dodol.png"],
     "rating": 4.7
   },
   {
@@ -107,7 +107,7 @@
     "category": "Food",
     "price": 10.0,
     "description": "Crispy anchovies cooked in spicy sambal sauce. Perfect accompaniment to nasi lemak.",
-    "images": ["/products/Food/Murukku.png"],
+    "images": ["/products/Food/SambalIkanBilis.png"],
     "rating": 4.8
   },
   {
@@ -136,5 +136,77 @@
     "description": "Traditional Chinese transverse flute made from bamboo. Includes membrane and carrying case.",
     "images": ["/products/Instruments/Erhu_main.jpg"],
     "rating": 4.4
+  },
+  {
+    "id": "P-0016",
+    "name": "Kek Lapis Sarawak",
+    "category": "Food",
+    "price": 45.00,
+    "description": "Premium layered cake with intricate patterns. Vacuum sealed to retain moisture.",
+    "images": ["/products/Food/KekLapis.png"],
+    "rating": 4.9
+  },
+  {
+    "id": "P-0017",
+    "name": "Ipoh White Coffee (3-in-1)",
+    "category": "Food",
+    "price": 16.00,
+    "description": "Authentic charcoal-roasted white coffee instant packs. 15 sachets per pack.",
+    "images": ["/products/Food/WhiteCoffee.png"],
+    "rating": 4.8
+  },
+  {
+    "id": "P-0018",
+    "name": "Gula Melaka",
+    "category": "Food",
+    "price": 9.50,
+    "description": "Pure palm sugar blocks. Essential ingredient for traditional desserts.",
+    "images": ["/products/Food/GulaMelaka.png"],
+    "rating": 4.8
+  },
+  {
+    "id": "P-0019",
+    "name": "Biskut Tambun",
+    "category": "Food",
+    "price": 22.00,
+    "description": "Famous Penang mung bean biscuits. Boxed with individual wrapping.",
+    "images": ["/products/Food/BiscuitTambun.png"],
+    "rating": 4.7
+  },
+  {
+    "id": "P-0020",
+    "name": "Acar Buah",
+    "category": "Food",
+    "price": 14.00,
+    "description": "Traditional pickled fruits with spices and dried chilies. Preserved in a jar.",
+    "images": ["/products/Food/AcarBuah.png"],
+    "rating": 4.4
+  },
+  {
+    "id": "P-0021",
+    "name": "Keropok Keping",
+    "category": "Food",
+    "price": 20.00,
+    "description": "Dried fish crackers from Terengganu. Ready to be fried at home.",
+    "images": ["/products/Food/KeropokKeping.png"],
+    "rating": 4.6
+  },
+  {
+    "id": "P-0022",
+    "name": "Kuih Tart Nanas",
+    "category": "Food",
+    "price": 28.00,
+    "description": "Buttery pastry topped with sweet and tangy pineapple jam. Comes in a sealed plastic jar.",
+    "images": ["/products/Food/PineappleTart.png"],
+    "rating": 4.8
+  },
+  {
+    "id": "P-0023",
+    "name": "Biskut Bangkit",
+    "category": "Food",
+    "price": 16.00,
+    "description": "Traditional tapioca cookies that melt in your mouth. Fragrant with coconut milk.",
+    "images": ["/products/Food/KuihBangkit.png"],
+    "rating": 4.6
   }
 ]
