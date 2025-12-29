@@ -12,4 +12,5 @@ export const ENDPOINTS = {
     AUTH_REGISTER: `${API_BASE}/auth/register`,
     SALES: `${API_BASE}/sales`,
     PROFILE_UPDATE: `${API_BASE}/profile/update`,
+    REVIEWS: `${API_BASE}/reviews`,
 };

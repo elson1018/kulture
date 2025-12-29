@@ -6,7 +6,6 @@ import com.mongodb.client.model.Filters;
 import com.example.model.Product;
 import com.example.util.MongoDBUtil;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,4 +33,10 @@ public class ProductDAO {
         return productCollection.deleteOne(Filters.eq("_id", productId)).getDeletedCount() > 0;
     }
 
+    public void addReviewToProduct(String productId, com.example.model.Review review) {
+        // add user review into product review object
+        productCollection.updateOne(
+                Filters.eq("_id", productId),
+                com.mongodb.client.model.Updates.push("reviews", review));
+    }
 }

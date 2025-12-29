@@ -1,0 +1,124 @@
+.review-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #f5f5f5;
+    padding: 15px 0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.review-rating {
+    color: #ffc107;
+}
+
+.review-date {
+    color: #888;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.review-comment {
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Form */
+.review-form-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.review-form-group {
+    margin-bottom: 15px;
+}
+
+.review-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.review-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.star-rating-input span {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ddd;
+}
+
+.star-rating-input span.active {
+    color: #ffc107;
+}
+
+.submit-review-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.submit-review-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.no-reviews {
+    color: #777;
+    font-style: italic;
+}
+
+.review-action-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.write-review-btn {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.review-form-wrapper {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.cancel-review-btn {
+    background: none;
+    border: none;
+    color: #888;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}

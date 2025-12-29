@@ -10,6 +10,7 @@ public class Sale {
     private ObjectId id;
     private String customerEmail;
     private List<String> productNames;
+    private List<String> productIds;
     private double totalAmount;
     private Date saleDate;
     private String company;
@@ -41,6 +42,14 @@ public class Sale {
 
     public void setProductNames(List<String> names) {
         this.productNames = names;
+    }
+
+    public List<String> getProductIds() {
+        return productIds;
+    }
+
+    public void setProductIds(List<String> productIds) {
+        this.productIds = productIds;
     }
 
     public double getTotalAmount() {
