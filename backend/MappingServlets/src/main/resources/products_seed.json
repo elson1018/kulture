@@ -38,14 +38,14 @@
     "images": ["/products/Food/Murukku.png"],
     "rating": 4.9
   },
-  {
+    {
     "id": "P-0005",
-    "name": "Red Batik Silk Scarf",
+    "name": "Ornamental Keris",
     "category": "Souvenirs",
-    "price": 35.0,
-    "description": "Elegant red batik silk scarf featuring traditional Malaysian motifs. Hand-printed using traditional wax-resist dyeing technique.",
-    "images": ["/products/Souvenirs/Batik_Slik_Scarf_Green.webp"],
-    "rating": 4.6
+    "price": 350.0,
+    "description": "A decorative replica of the traditional Malay dagger with a wavy blade and intricately carved wooden sheath.",
+    "images": ["/products/Souvenirs/Keris.png"],
+    "rating": 4.8
   },
   {
     "id": "P-0006",
@@ -116,7 +116,7 @@
     "category": "Souvenirs",
     "price": 65.0,
     "description": "Handcrafted Malaysian pewter photo frame featuring traditional floral designs. Made with 95% tin.",
-    "images": ["/products/Souvenirs/Congkak.jpg"],
+    "images": ["/products/Souvenirs/PhotoFrame.png"],
     "rating": 4.9
   },
   {
@@ -208,5 +208,59 @@
     "description": "Traditional tapioca cookies that melt in your mouth. Fragrant with coconut milk.",
     "images": ["/products/Food/KuihBangkit.png"],
     "rating": 4.6
+  },
+  {
+    "id": "P-0024",
+    "name": "Handwoven Songket Sampin",
+    "category": "Souvenirs",
+    "price": 120.0,
+    "description": "Luxurious traditional Malay fabric woven with gold and silver threads. Perfect for formal occasions and weddings.",
+    "images": ["/products/Souvenirs/Songket_Blue.png"],
+    "rating": 4.9
+  },
+  {
+    "id": "P-0025",
+    "name": "Labu Sayong Clay Pitcher",
+    "category": "Souvenirs",
+    "price": 45.0,
+    "description": "Authentic gourd-shaped clay water pitcher from Kuala Kangsar, Perak. Traditionally used to keep water cool.",
+    "images": ["/products/Souvenirs/LabuSayong.png"],
+    "rating": 4.7
+  },
+  {
+    "id": "P-0026",
+    "name": "Sarawak Ceramic Beads Necklace (Green)",
+    "category": "Souvenirs",
+    "price": 35.0,
+    "description": "Hand-painted ceramic beads featuring traditional Orang Ulu motifs. A colorful accessory representing Borneo heritage.",
+    "images": ["/products/Souvenirs/SarawakBeads.png"],
+    "rating": 4.8
+  },
+  {
+    "id": "P-0027",
+    "name": "Vintage Nyonya Tiffin Carrier",
+    "category": "Souvenirs",
+    "price": 85.0,
+    "description": "Traditional enamel food carrier (Mangkuk Tingkat) adorned with colorful floral Peranakan designs.",
+    "images": ["/products/Souvenirs/TiffinCarrier.png"],
+    "rating": 4.9
+  },
+  {
+    "id": "P-0028",
+    "name": "Handmade Rattan Basket Bag",
+    "category": "Souvenirs",
+    "price": 65.0,
+    "description": "Eco-friendly fashion statement woven from natural rattan vines. Durable and stylish for daily use.",
+    "images": ["/products/Souvenirs/RattanBag.png"],
+    "rating": 4.6
+  },
+  {
+    "id": "P-0029",
+    "name": "Mengkuang Woven Mat",
+    "category": "Souvenirs",
+    "price": 28.0,
+    "description": "Traditionally woven floor mat made from Mengkuang leaves. Cool to the touch and perfect for picnics or home decor.",
+    "images": ["/products/Souvenirs/MengkuangMat.png"],
+    "rating": 4.5
   }
 ]
