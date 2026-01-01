@@ -181,6 +181,11 @@ const ProductDetail = () => {
           <p className="detail-category">{product.category || "General"}</p>
           <h1>{product.name}</h1>
 
+          <div className="detail-description">
+            <h3>Description</h3>
+            <p>{product.description}</p>
+          </div>
+
           <div className="detail-rating">
             <span>{product.rating || "New"} ⭐</span>
             <span className="review-count">(Based on user reviews)</span>
@@ -190,36 +195,33 @@ const ProductDetail = () => {
 
 
 
-          <div className="action-buttons">
-            <div className="quantity-wrapper">
-              <button onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
-                -
-              </button>
-              <span>{quantity}</span>
-              <button onClick={() => setQuantity((q) => q + 1)}>+</button>
-            </div>
-            <button className="add-cart-btn" onClick={handleAddToCart}>
-              Add to Cart
-            </button>
-            <button
-              className="buy-now-btn"
-              onClick={() => navigate("/checkout")}
-            >
-              Go to Checkout
-            </button>
-          </div>
+
 
           <div className="detail-extras">
             <p>Authentic Local Product</p>
             <p>Delivery within 3-5 days</p>
-
-
           </div>
 
+
+
         </div>
-        <div className="detail-description">
-          <h3>Description</h3>
-          <p>{product.description}</p>
+        <div className="action-buttons">
+          <div className="quantity-wrapper">
+            <button onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
+              -
+            </button>
+            <span>{quantity}</span>
+            <button onClick={() => setQuantity((q) => q + 1)}>+</button>
+          </div>
+          <button className="add-cart-btn" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+          <button
+            className="buy-now-btn"
+            onClick={() => navigate("/checkout")}
+          >
+            Go to Checkout
+          </button>
         </div>
       </div>
 

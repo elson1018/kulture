@@ -10,30 +10,30 @@
 }
 
 .back-btn {
-  position: absolute;
-  top: 20px; 
-  right: 20px;
-  background-color: transparent;
-  border: 2px solid #4A3C34;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #4A3C34;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  text-transform: uppercase;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: 2px solid #4A3C34;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #4A3C34;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
 }
 
 .back-btn:hover {
-  background-color: #4A3C34;
-  color: #F5F5E9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(74, 60, 52, 0.2);
+    background-color: #4A3C34;
+    color: #F5F5E9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 60, 52, 0.2);
 }
 
 .detail-container {
@@ -46,7 +46,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     align-items: center;
 }
 
@@ -137,26 +137,32 @@
 }
 
 .detail-description {
-    grid-column: 1 / -1;
     font-size: 14px;
     line-height: 1.6;
     color: #555;
-    margin-top: 20px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .action-buttons {
+    grid-column: 1 / -1;
     display: flex;
     gap: 12px;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    justify-content: flex-end;
 }
+
 .quantity-wrapper {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-right: auto;
+    /* Push buttons to right while keeping quantity left, or remove this if we want all centered */
 }
+
 .quantity-wrapper button {
     background: none;
     border: none;
@@ -164,11 +170,14 @@
     cursor: pointer;
     font-size: 1.2rem;
 }
+
 .quantity-wrapper span {
     padding: 0 10px;
     font-weight: bold;
 }
-.add-cart-btn, .buy-now-btn {
+
+.add-cart-btn,
+.buy-now-btn {
     flex: 1;
     padding: 15px;
     border-radius: 8px;
@@ -231,12 +240,12 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .related-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .related-image {
@@ -262,7 +271,7 @@
     position: absolute;
     bottom: 8px;
     left: 8px;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     font-size: 11px;
     padding: 4px 8px;
@@ -290,19 +299,19 @@
 }
 
 @media (max-width: 900px) {
-  .detail-container {
-    grid-template-columns: 1fr;
-    padding: 30px;
-  }
-  
-  .back-btn {
-    top: 90px;
-    right: 20px;
-    padding: 6px 14px;
-    font-size: 0.85rem;
-  }
+    .detail-container {
+        grid-template-columns: 1fr;
+        padding: 30px;
+    }
 
-  .related-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .back-btn {
+        top: 90px;
+        right: 20px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+    }
+
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
