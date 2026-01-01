@@ -123,6 +123,10 @@
 
     font-size: 16px;
 
+    font: inherit;
+
+    resize: none;
+
 }
 
 
