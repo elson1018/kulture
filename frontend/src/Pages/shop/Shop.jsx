@@ -5,12 +5,19 @@ import { ENDPOINTS } from '../../config/api';
 import ProductCard from '../../components/Product/ProductCard';
 import TutorialCard from '../../components/Tutorial/TutorialCard';
 import ScrollTopButton from '../../components/ScrollTopButton';
+import ProductFilter from '../../components/ProductFilter/ProductFilter';
 import './Shop.css';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({
+    categories: [],
+    priceRange: { min: 0, max: 10000 },
+    sortBy: 'default'
+  });
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -20,12 +27,11 @@ const Shop = () => {
   useDocumentTitle(searchTerm ? `Search: ${searchTerm} | Kulture` : 'Shop | Kulture');
 
   useEffect(() => {
-    const fetchFilterProducts = async () => {
+    const fetchProducts = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        // Fetch products from backed
         // Fetch products and tutorials in parallel
         const [productsParam, tutorialsParam] = await Promise.all([
           fetch(ENDPOINTS.PRODUCTS),
@@ -33,7 +39,7 @@ const Shop = () => {
         ]);
 
         if (!productsParam.ok || !tutorialsParam.ok) {
-          throw new Error(`HTTP ERROR Status: ${response.status}`);
+          throw new Error(`HTTP ERROR Status: ${productsParam.status || tutorialsParam.status}`);
         }
 
         const productsData = await productsParam.json();
@@ -42,20 +48,8 @@ const Shop = () => {
         // Combine them
         const allData = [...productsData, ...tutorialsData];
 
-        // Filter logic
-        let filteredData = allData;
-
-        // If there is a search term, filter by name
-        if (searchTerm) {
-          const lowerTerm = searchTerm.toLowerCase();
-          filteredData = allData.filter(item =>
-            item.name.toLowerCase().includes(lowerTerm) ||
-            (item.description && item.description.toLowerCase().includes(lowerTerm))
-          );
-        }
-
-        // 3. Update state
-        setProducts(filteredData);
+        // Store all products
+        setProducts(allData);
 
       } catch (error) {
         console.log("Error fetching " + error.message);
@@ -63,10 +57,66 @@ const Shop = () => {
       } finally {
         setLoading(false);
       }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Apply filters and search whenever products or filters change
+  useEffect(() => {
+    let result = [...products];
+
+    // 1. Apply search filter if there's a search term
+    if (searchTerm) {
+      const lowerTerm = searchTerm.toLowerCase();
+      result = result.filter(item =>
+        item.name.toLowerCase().includes(lowerTerm) ||
+        (item.description && item.description.toLowerCase().includes(lowerTerm))
+      );
     }
 
-    fetchFilterProducts();
-  }, [searchTerm]);
+    // 2. Apply category filter
+    if (filters.categories.length > 0) {
+      result = result.filter(item => {
+        // Check if item matches selected categories
+        if (filters.categories.includes(item.category)) {
+          return true;
+        }
+        // Special case: Tutorials can be identified by having an instructor property
+        if (filters.categories.includes('Tutorials') && item.instructor) {
+          return true;
+        }
+        return false;
+      });
+    }
+
+    // 3. Apply price filter
+    result = result.filter(item => {
+      const price = parseFloat(item.price) || 0;
+      return price >= filters.priceRange.min && price <= filters.priceRange.max;
+    });
+
+    // 4. Apply sorting
+    switch (filters.sortBy) {
+      case 'price-low':
+        result.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+        break;
+      case 'price-high':
+        result.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+        break;
+      case 'rating':
+        result.sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0));
+        break;
+      case 'name':
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      default:
+        // Keep original order
+        break;
+    }
+
+    setFilteredProducts(result);
+  }, [products, filters, searchTerm]);
 
   // Loading
   if (isLoading) {
@@ -85,6 +135,19 @@ const Shop = () => {
     );
   }
 
+  // Filter change handlers
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const handleClearFilters = () => {
+    setFilters({
+      categories: [],
+      priceRange: { min: 0, max: 10000 },
+      sortBy: 'default'
+    });
+  };
+
   return (
     <div className='shop-page'>
       <div className="shop-header">
@@ -100,21 +163,43 @@ const Shop = () => {
         )}
       </div>
 
-      <div className="product-grid">
-        {products.map((item) => (
-          (item.category === "Tutorials" || item.instructor) ? (
-            <TutorialCard key={item.id} tutorial={item} />
-          ) : (
-            <ProductCard key={item.id} product={item} />
-          )
-        ))}
+      <div className="shop-content">
+        {/* Filter Sidebar */}
+        <aside className="filter-sidebar">
+          <ProductFilter
+            filters={filters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+          />
+        </aside>
+
+        {/* Products Grid */}
+        <main className="products-main">
+          <div className="products-count">
+            <p>{filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found</p>
+          </div>
+
+          <div className="product-grid">
+            {filteredProducts.map((item) => (
+              (item.category === "Tutorials" || item.instructor) ? (
+                <TutorialCard key={item.id} tutorial={item} />
+              ) : (
+                <ProductCard key={item.id} product={item} />
+              )
+            ))}
+          </div>
+
+          {!isLoading && filteredProducts.length === 0 && (
+            <p className='empty-product-message'>
+              {searchTerm
+                ? `No products found matching "${searchTerm}".`
+                : "No products match your filters. Try adjusting your criteria."
+              }
+            </p>
+          )}
+        </main>
       </div>
 
-      {!isLoading && products.length === 0 && (
-        <p className='empty-product-message'>
-          No products found matching "{searchTerm}".
-        </p>
-      )}
       <ScrollTopButton />
     </div>
   );
