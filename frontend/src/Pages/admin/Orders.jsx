@@ -9,6 +9,7 @@ const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [reviewedProducts, setReviewedProducts] = useState(new Set()); // Track reviewed products
     const navigate = useNavigate();
 
     // Review popup state
@@ -30,11 +31,44 @@ const Orders = () => {
     const [successPopup, setSuccessPopup] = useState(false);
 
     const handleReviewSuccess = () => {
+        // Add the reviewed product to the set
+        if (reviewPopup.productId) {
+            setReviewedProducts(prev => new Set([...prev, reviewPopup.productId]));
+        }
         setSuccessPopup(true);
+        closeReviewPopup();
     };
 
     const closeSuccessPopup = () => {
         setSuccessPopup(false);
+    };
+
+    // Fetch which products the user has already reviewed
+    const fetchUserReviews = async (userEmail) => {
+        try {
+            // Fetch all products to check which ones have reviews from this user
+            const response = await fetch(ENDPOINTS.PRODUCTS);
+            if (!response.ok) return;
+
+            const products = await response.json();
+            const reviewed = new Set();
+
+            // Check each product's reviews for this user's email
+            products.forEach(product => {
+                if (product.reviews && Array.isArray(product.reviews)) {
+                    const hasUserReview = product.reviews.some(
+                        review => review.userEmail === userEmail
+                    );
+                    if (hasUserReview) {
+                        reviewed.add(product.id);
+                    }
+                }
+            });
+
+            setReviewedProducts(reviewed);
+        } catch (err) {
+            console.error("Error fetching user reviews:", err);
+        }
     };
 
     useEffect(() => {
@@ -47,6 +81,9 @@ const Orders = () => {
                     setLoading(false);
                     return;
                 }
+
+                // Fetch user's reviews first
+                await fetchUserReviews(user.email);
 
                 const response = await fetch(
                     `${ENDPOINTS.SALES}?email=${encodeURIComponent(user.email)}`,
@@ -134,7 +171,7 @@ const Orders = () => {
             {/* Success Popup */}
             <Popup
                 isOpen={successPopup}
-                message="Review submitted successfully!"
+                message="Review submitted successfully! Thank you for your feedback."
                 type="success"
                 onClose={closeSuccessPopup}
             />
@@ -187,19 +224,24 @@ const Orders = () => {
                                         <ul className="items-list">
                                             {order.productNames.map((productName, idx) => {
                                                 const productId = order.productIds ? order.productIds[idx] : null;
+                                                const hasReviewed = productId && reviewedProducts.has(productId);
+
                                                 return (
                                                     <li key={idx} className="order-item-row">
                                                         <div>
                                                             <span className="item-bullet">•</span>
                                                             <span className="item-name">{productName}</span>
                                                         </div>
-                                                        {productId && (
+                                                        {productId && !hasReviewed && (
                                                             <button
                                                                 className="give-review-btn"
                                                                 onClick={() => openReviewPopup(productId, productName)}
                                                             >
                                                                 Give Review
                                                             </button>
+                                                        )}
+                                                        {hasReviewed && (
+                                                            <span className="reviewed-badge">Reviewed</span>
                                                         )}
                                                     </li>
                                                 );

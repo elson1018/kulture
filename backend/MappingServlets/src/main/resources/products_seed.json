@@ -101,19 +101,79 @@
       {
         "userName": "Priya Kumar",
         "rating": 5,
-        "comment": "Reminds me of my grandmother\u0027s homemade muruku! Perfectly crunchy and not too oily.",
+        "comment": "Reminds me of my grandmother's homemade muruku! Perfectly crunchy and not too oily.",
         "timestamp": 1767249616185
       },
       {
         "userName": "Raj Patel",
         "rating": 5,
-        "comment": "Best muruku I\u0027ve bought online! Fresh and crispy. Will order again.",
+        "comment": "Best muruku I've bought online! Fresh and crispy. Will order again.",
         "timestamp": 1767249616185
       },
       {
         "userName": "Siti Aminah",
         "rating": 4,
         "comment": "Delicious snack! Great with tea. Came well packaged.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Deepak Krishnan",
+        "rating": 5,
+        "comment": "Authentic taste! Better than most shops. Highly recommend!",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Mei Ling Tan",
+        "rating": 4,
+        "comment": "Very crispy and flavorful. A bit spicy for me but still enjoyable.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Ahmad Razak",
+        "rating": 5,
+        "comment": "Perfect for Deepavali celebrations! My family loves it.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Lakshmi Devi",
+        "rating": 5,
+        "comment": "Traditional recipe done right! Tastes just like from Little India.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Chen Wei",
+        "rating": 4,
+        "comment": "Great snack for parties. Everyone loved it!",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Fatimah Zahra",
+        "rating": 5,
+        "comment": "My kids can't stop eating these! Will definitely reorder.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Kumar Suresh",
+        "rating": 5,
+        "comment": "Excellent quality! Fresh and crunchy, not stale at all.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Nurul Izzah",
+        "rating": 4,
+        "comment": "Good muruku. Slightly oily but still tasty.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Ravi Shankar",
+        "rating": 5,
+        "comment": "Brings back memories of home! Worth every cent.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Jessica Wong",
+        "rating": 5,
+        "comment": "Addictive! Can't stop munching. Perfect tea time snack.",
         "timestamp": 1767249616185
       }
     ]
