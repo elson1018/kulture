@@ -308,3 +308,13 @@
 .give-review-btn:hover {
   background-color: #c7813c;
 }
+
+.reviewed-badge {
+  color: #27ae60;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  background-color: #d4edda;
+  border-radius: 4px;
+  white-space: nowrap;
+}
