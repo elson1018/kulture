@@ -62,7 +62,8 @@
 }
 
 .contact-form textarea{
-  resize: vertical;
+  font-family: inherit;
+  resize: none;
 }
 
 .submit-btn{
