@@ -9,7 +9,27 @@
       "/products/Souvenirs/Batik_Slik_Scarf_Green.webp",
       "/products/Souvenirs/Batik_Slik_Scarf_Green_2.webp"
     ],
-    "rating": 4.8
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Sarah Lee",
+        "rating": 5,
+        "comment": "Absolutely beautiful! The silk quality is amazing and the batik print is so vibrant. Perfect gift for my mother.",
+        "timestamp": 1767249616182
+      },
+      {
+        "userName": "Ahmad Rahman",
+        "rating": 5,
+        "comment": "Authentic Malaysian batik. The craftsmanship is top-notch. Highly recommend!",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Michelle Tan",
+        "rating": 4,
+        "comment": "Very nice scarf, though slightly smaller than expected. Still love it!",
+        "timestamp": 1767249616185
+      }
+    ]
   },
   {
     "id": "P-0002",
@@ -17,8 +37,24 @@
     "category": "Souvenirs",
     "price": 25.0,
     "description": "Traditional Malaysian kite souvenir.",
-    "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
-    "rating": 4.7
+    "images": [
+      "/products/Souvenirs/Wau_Bulan_Yellow.jpg"
+    ],
+    "rating": 4.5,
+    "reviews": [
+      {
+        "userName": "David Wong",
+        "rating": 5,
+        "comment": "Perfect souvenir! The colors are bright and it looks amazing on my wall. Great Malaysian heritage piece.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Nadia Hassan",
+        "rating": 4,
+        "comment": "Beautiful traditional kite. Good quality for the price.",
+        "timestamp": 1767249616185
+      }
+    ]
   },
   {
     "id": "P-0003",
@@ -26,8 +62,30 @@
     "category": "Instruments",
     "price": 350.0,
     "description": "Traditional Chinese string instrument with a beautiful tone, commonly used in Chinese orchestras and traditional music performances.",
-    "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.9
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Lim Wei Jie",
+        "rating": 5,
+        "comment": "Excellent instrument! The sound quality is superb. My music teacher was impressed with the craftsmanship.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Chen Mei Ling",
+        "rating": 5,
+        "comment": "Authentic erhu with rich, warm tones. Perfect for traditional Chinese music practice.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Jason Koh",
+        "rating": 4,
+        "comment": "Great quality erhu. Takes some time to tune but worth it!",
+        "timestamp": 1767249616185
+      }
+    ]
   },
   {
     "id": "P-0004",
@@ -35,17 +93,61 @@
     "category": "Food",
     "price": 12.0,
     "description": "Crunchy and savory traditional Indian-Malaysian snack made from rice flour",
-    "images": ["/products/Food/Murukku.png"],
-    "rating": 4.9
+    "images": [
+      "/products/Food/Murukku.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Priya Kumar",
+        "rating": 5,
+        "comment": "Reminds me of my grandmother\u0027s homemade muruku! Perfectly crunchy and not too oily.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Raj Patel",
+        "rating": 5,
+        "comment": "Best muruku I\u0027ve bought online! Fresh and crispy. Will order again.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Siti Aminah",
+        "rating": 4,
+        "comment": "Delicious snack! Great with tea. Came well packaged.",
+        "timestamp": 1767249616185
+      }
+    ]
   },
-    {
+  {
     "id": "P-0005",
     "name": "Ornamental Keris",
     "category": "Souvenirs",
     "price": 350.0,
     "description": "A decorative replica of the traditional Malay dagger with a wavy blade and intricately carved wooden sheath.",
-    "images": ["/products/Souvenirs/Keris.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Souvenirs/Keris.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Ibrahim Abdullah",
+        "rating": 5,
+        "comment": "Beautiful piece! The carving on the sheath is incredibly detailed. Makes a stunning wall display.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Marcus Tan",
+        "rating": 5,
+        "comment": "Impressed by the craftsmanship. This is a true work of art representing Malay heritage.",
+        "timestamp": 1767249616185
+      },
+      {
+        "userName": "Farah Aisyah",
+        "rating": 4,
+        "comment": "Gorgeous keris! Slightly pricey but worth it for the quality.",
+        "timestamp": 1767249616185
+      }
+    ]
   },
   {
     "id": "P-0006",
@@ -53,8 +155,24 @@
     "category": "Souvenirs",
     "price": 45.0,
     "description": "Traditional Malay counting game carved from solid wood. Complete set includes board and marble seeds.",
-    "images": ["/products/Souvenirs/Congkak.jpg"],
-    "rating": 4.8
+    "images": [
+      "/products/Souvenirs/Congkak.jpg"
+    ],
+    "rating": 4.5,
+    "reviews": [
+      {
+        "userName": "Nurul Huda",
+        "rating": 5,
+        "comment": "My kids love playing congkak! The wood quality is excellent and smooth. Great way to teach traditional games.",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Azman Yusof",
+        "rating": 4,
+        "comment": "Nice traditional game set. Brings back childhood memories!",
+        "timestamp": 1767249616186
+      }
+    ]
   },
   {
     "id": "P-0007",
@@ -62,8 +180,11 @@
     "category": "Instruments",
     "price": 580.0,
     "description": "Chinese plucked zither with 21 strings. Creates beautiful, flowing melodies characteristic of traditional Chinese music.",
-    "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.7
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.7,
+    "reviews": []
   },
   {
     "id": "P-0008",
@@ -71,8 +192,11 @@
     "category": "Instruments",
     "price": 85.0,
     "description": "Traditional Malay hand drum used in weddings and cultural celebrations. Made with genuine goat skin.",
-    "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.5
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.5,
+    "reviews": []
   },
   {
     "id": "P-0009",
@@ -80,8 +204,11 @@
     "category": "Instruments",
     "price": 420.0,
     "description": "Traditional Borneo lute instrument from the Orang Ulu people. Known for its soothing and mystical sound.",
-    "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.9
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.9,
+    "reviews": []
   },
   {
     "id": "P-0010",
@@ -89,8 +216,24 @@
     "category": "Food",
     "price": 8.0,
     "description": "Light and fluffy Malaysian sponge cakes. Traditional festive treat with a subtle egg and vanilla flavor.",
-    "images": ["/products/Food/KuihBahulu.png"],
-    "rating": 4.6
+    "images": [
+      "/products/Food/KuihBahulu.png"
+    ],
+    "rating": 4.5,
+    "reviews": [
+      {
+        "userName": "Aisha Mahmud",
+        "rating": 5,
+        "comment": "Tastes just like what my mom makes during Raya! Soft and fluffy, not too sweet. Love it!",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Tan Hui Ling",
+        "rating": 4,
+        "comment": "Fresh and delicious! Perfect with afternoon tea.",
+        "timestamp": 1767249616186
+      }
+    ]
   },
   {
     "id": "P-0011",
@@ -98,8 +241,24 @@
     "category": "Food",
     "price": 15.0,
     "description": "Sweet and chewy Malaysian confection made from coconut milk, palm sugar, and rice flour. A festive favorite.",
-    "images": ["/products/Food/Dodol.png"],
-    "rating": 4.7
+    "images": [
+      "/products/Food/Dodol.png"
+    ],
+    "rating": 4.5,
+    "reviews": [
+      {
+        "userName": "Rizal Ismail",
+        "rating": 5,
+        "comment": "Authentic dodol! Rich coconut flavor and perfect chewy texture. Highly recommended!",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Kavitha Devi",
+        "rating": 4,
+        "comment": "Sweet and delicious! Reminds me of festive seasons at home.",
+        "timestamp": 1767249616186
+      }
+    ]
   },
   {
     "id": "P-0012",
@@ -107,8 +266,11 @@
     "category": "Food",
     "price": 10.0,
     "description": "Crispy anchovies cooked in spicy sambal sauce. Perfect accompaniment to nasi lemak.",
-    "images": ["/products/Food/SambalIkanBilis.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Food/SambalIkanBilis.png"
+    ],
+    "rating": 4.8,
+    "reviews": []
   },
   {
     "id": "P-0013",
@@ -116,8 +278,30 @@
     "category": "Souvenirs",
     "price": 65.0,
     "description": "Handcrafted Malaysian pewter photo frame featuring traditional floral designs. Made with 95% tin.",
-    "images": ["/products/Souvenirs/PhotoFrame.png"],
-    "rating": 4.9
+    "images": [
+      "/products/Souvenirs/PhotoFrame.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Patricia Lee",
+        "rating": 5,
+        "comment": "Elegant and beautifully crafted! Makes a wonderful gift. The pewter quality is exceptional.",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Kumar Subramaniam",
+        "rating": 5,
+        "comment": "Excellent Malaysian craftsmanship! Heavy and solid, not flimsy at all.",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Rachel Wong",
+        "rating": 4,
+        "comment": "Beautiful frame! The floral design is intricate and unique.",
+        "timestamp": 1767249616186
+      }
+    ]
   },
   {
     "id": "P-0014",
@@ -125,8 +309,11 @@
     "category": "Souvenirs",
     "price": 55.0,
     "description": "Traditional Javanese leather shadow puppet, hand-carved and painted. A unique piece of Southeast Asian art.",
-    "images": ["/products/Souvenirs/Wau_Bulan_Yellow.jpg"],
-    "rating": 4.6
+    "images": [
+      "/products/Souvenirs/Wau_Bulan_Yellow.jpg"
+    ],
+    "rating": 4.6,
+    "reviews": []
   },
   {
     "id": "P-0015",
@@ -134,80 +321,145 @@
     "category": "Instruments",
     "price": 45.0,
     "description": "Traditional Chinese transverse flute made from bamboo. Includes membrane and carrying case.",
-    "images": ["/products/Instruments/Erhu_main.jpg"],
-    "rating": 4.4
+    "images": [
+      "/products/Instruments/Erhu_main.jpg"
+    ],
+    "rating": 4.4,
+    "reviews": []
   },
   {
     "id": "P-0016",
     "name": "Kek Lapis Sarawak",
     "category": "Food",
-    "price": 45.00,
+    "price": 45.0,
     "description": "Premium layered cake with intricate patterns. Vacuum sealed to retain moisture.",
-    "images": ["/products/Food/KekLapis.png"],
-    "rating": 4.9
+    "images": [
+      "/products/Food/KekLapis.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Emily Chong",
+        "rating": 5,
+        "comment": "Absolutely delicious! The layers are so beautiful and the taste is amazing. Worth every penny!",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Hassan Ali",
+        "rating": 5,
+        "comment": "Best kek lapis I\u0027ve ever had! Moist, flavorful, and beautifully packaged.",
+        "timestamp": 1767249616186
+      },
+      {
+        "userName": "Vivian Lim",
+        "rating": 4,
+        "comment": "Beautiful cake! The intricate layers are impressive. Great for gifting.",
+        "timestamp": 1767249616186
+      }
+    ]
   },
   {
     "id": "P-0017",
     "name": "Ipoh White Coffee (3-in-1)",
     "category": "Food",
-    "price": 16.00,
+    "price": 16.0,
     "description": "Authentic charcoal-roasted white coffee instant packs. 15 sachets per pack.",
-    "images": ["/products/Food/WhiteCoffee.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Food/WhiteCoffee.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Kenny Tan",
+        "rating": 5,
+        "comment": "Best white coffee! Smooth, aromatic, and not too sweet. I buy this every month!",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Melissa Ng",
+        "rating": 5,
+        "comment": "Authentic Ipoh white coffee taste! Perfect for breakfast. Love it!",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Ahmad Faisal",
+        "rating": 4,
+        "comment": "Good coffee, rich flavor. Convenient instant packs for the office.",
+        "timestamp": 1767249616187
+      }
+    ]
   },
   {
     "id": "P-0018",
     "name": "Gula Melaka",
     "category": "Food",
-    "price": 9.50,
+    "price": 9.5,
     "description": "Pure palm sugar blocks. Essential ingredient for traditional desserts.",
-    "images": ["/products/Food/GulaMelaka.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Food/GulaMelaka.png"
+    ],
+    "rating": 4.8,
+    "reviews": []
   },
   {
     "id": "P-0019",
     "name": "Biskut Tambun",
     "category": "Food",
-    "price": 22.00,
+    "price": 22.0,
     "description": "Famous Penang mung bean biscuits. Boxed with individual wrapping.",
-    "images": ["/products/Food/BiscuitTambun.png"],
-    "rating": 4.7
+    "images": [
+      "/products/Food/BiscuitTambun.png"
+    ],
+    "rating": 4.7,
+    "reviews": []
   },
   {
     "id": "P-0020",
     "name": "Acar Buah",
     "category": "Food",
-    "price": 14.00,
+    "price": 14.0,
     "description": "Traditional pickled fruits with spices and dried chilies. Preserved in a jar.",
-    "images": ["/products/Food/AcarBuah.png"],
-    "rating": 4.4
+    "images": [
+      "/products/Food/AcarBuah.png"
+    ],
+    "rating": 4.4,
+    "reviews": []
   },
   {
     "id": "P-0021",
     "name": "Keropok Keping",
     "category": "Food",
-    "price": 20.00,
+    "price": 20.0,
     "description": "Dried fish crackers from Terengganu. Ready to be fried at home.",
-    "images": ["/products/Food/KeropokKeping.png"],
-    "rating": 4.6
+    "images": [
+      "/products/Food/KeropokKeping.png"
+    ],
+    "rating": 4.6,
+    "reviews": []
   },
   {
     "id": "P-0022",
     "name": "Kuih Tart Nanas",
     "category": "Food",
-    "price": 28.00,
+    "price": 28.0,
     "description": "Buttery pastry topped with sweet and tangy pineapple jam. Comes in a sealed plastic jar.",
-    "images": ["/products/Food/PineappleTart.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Food/PineappleTart.png"
+    ],
+    "rating": 4.8,
+    "reviews": []
   },
   {
     "id": "P-0023",
     "name": "Biskut Bangkit",
     "category": "Food",
-    "price": 16.00,
+    "price": 16.0,
     "description": "Traditional tapioca cookies that melt in your mouth. Fragrant with coconut milk.",
-    "images": ["/products/Food/KuihBangkit.png"],
-    "rating": 4.6
+    "images": [
+      "/products/Food/KuihBangkit.png"
+    ],
+    "rating": 4.6,
+    "reviews": []
   },
   {
     "id": "P-0024",
@@ -215,8 +467,30 @@
     "category": "Souvenirs",
     "price": 120.0,
     "description": "Luxurious traditional Malay fabric woven with gold and silver threads. Perfect for formal occasions and weddings.",
-    "images": ["/products/Souvenirs/Songket_Blue.png"],
-    "rating": 4.9
+    "images": [
+      "/products/Souvenirs/Songket_Blue.png"
+    ],
+    "rating": 4.7,
+    "reviews": [
+      {
+        "userName": "Zainab Mohd",
+        "rating": 5,
+        "comment": "Stunning songket! The gold threading is exquisite. Perfect for my son\u0027s wedding.",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Rahman Shah",
+        "rating": 5,
+        "comment": "Excellent quality! Traditional craftsmanship at its finest.",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Diana Osman",
+        "rating": 4,
+        "comment": "Beautiful fabric, though quite expensive. But worth it for special occasions!",
+        "timestamp": 1767249616187
+      }
+    ]
   },
   {
     "id": "P-0025",
@@ -224,8 +498,11 @@
     "category": "Souvenirs",
     "price": 45.0,
     "description": "Authentic gourd-shaped clay water pitcher from Kuala Kangsar, Perak. Traditionally used to keep water cool.",
-    "images": ["/products/Souvenirs/LabuSayong.png"],
-    "rating": 4.7
+    "images": [
+      "/products/Souvenirs/LabuSayong.png"
+    ],
+    "rating": 4.7,
+    "reviews": []
   },
   {
     "id": "P-0026",
@@ -233,8 +510,11 @@
     "category": "Souvenirs",
     "price": 35.0,
     "description": "Hand-painted ceramic beads featuring traditional Orang Ulu motifs. A colorful accessory representing Borneo heritage.",
-    "images": ["/products/Souvenirs/SarawakBeads.png"],
-    "rating": 4.8
+    "images": [
+      "/products/Souvenirs/SarawakBeads.png"
+    ],
+    "rating": 4.8,
+    "reviews": []
   },
   {
     "id": "P-0027",
@@ -242,8 +522,11 @@
     "category": "Souvenirs",
     "price": 85.0,
     "description": "Traditional enamel food carrier (Mangkuk Tingkat) adorned with colorful floral Peranakan designs.",
-    "images": ["/products/Souvenirs/TiffinCarrier.png"],
-    "rating": 4.9
+    "images": [
+      "/products/Souvenirs/TiffinCarrier.png"
+    ],
+    "rating": 4.9,
+    "reviews": []
   },
   {
     "id": "P-0028",
@@ -251,8 +534,11 @@
     "category": "Souvenirs",
     "price": 65.0,
     "description": "Eco-friendly fashion statement woven from natural rattan vines. Durable and stylish for daily use.",
-    "images": ["/products/Souvenirs/RattanBag.png"],
-    "rating": 4.6
+    "images": [
+      "/products/Souvenirs/RattanBag.png"
+    ],
+    "rating": 4.6,
+    "reviews": []
   },
   {
     "id": "P-0029",
@@ -260,7 +546,10 @@
     "category": "Souvenirs",
     "price": 28.0,
     "description": "Traditionally woven floor mat made from Mengkuang leaves. Cool to the touch and perfect for picnics or home decor.",
-    "images": ["/products/Souvenirs/MengkuangMat.png"],
-    "rating": 4.5
+    "images": [
+      "/products/Souvenirs/MengkuangMat.png"
+    ],
+    "rating": 4.5,
+    "reviews": []
   }
 ]
