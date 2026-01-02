@@ -1,13 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kulture | The Tradition Hub</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link id="favicon" rel="icon" type="image/png" href="/kulture.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kulture | The Tradition Hub</title>
+  <script> // the logo will cahnge to white if the user switch to dark mode
+    const favicon = document.getElementById('favicon');
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function updateFavicon(e) {
+      favicon.href = e.matches ? '/white_kulture.png' : '/kulture.png';
+    }
+
+    updateFavicon(darkModeMediaQuery);
+
+    darkModeMediaQuery.addEventListener('change', updateFavicon);
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
