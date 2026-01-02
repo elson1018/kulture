@@ -24,9 +24,9 @@ This project is a web application with a React frontend and a Java (Maven) backe
    ```
 
 ### Backend
-1. Navigate to `backend/MappingServlets/`:
+1. Navigate to `backend`:
    ```bash
-   cd backend/MappingServlets
+   cd backend
    ```
 2. Use Maven to build and run the project:
    ```bash
