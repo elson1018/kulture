@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import Popup from '../../components/Popup/Popup';
 import './Contact.css';
 
 const Contact = () => {
   useDocumentTitle('Contact Us | Kulture');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPopupMessage("Your message has been sent successfully!");
+    setPopupType("success");
+    setIsPopupOpen(true);
+    e.target.reset();
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
     <div className='contact-page'>
       <header className="contact-header">
@@ -14,7 +31,7 @@ const Contact = () => {
       <main className="contact-content-wrapper">
         <section className="contact-form-section">
           <h2>Send Us a Message</h2>
-          <form className="contact-form">
+          <form className="contact-form" onSubmit={handleSubmit}>
             <input type="text" placeholder="Full Name" required />
             <input type="email" placeholder="Email Address" required />
             <input type="text" placeholder="Subject(e.g., Order Inquiry, Partnership)" required />
@@ -31,6 +48,12 @@ const Contact = () => {
           </div>
         </aside>
       </main>
+      <Popup
+        isOpen={isPopupOpen}
+        message={popupMessage}
+        type={popupType}
+        onClose={closePopup}
+      />
     </div>
   );
 };
