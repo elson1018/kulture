@@ -9,8 +9,15 @@ public class AppContextListener implements ServletContextListener {
   @Override
 
   public void contextInitialized(ServletContextEvent sce) {
-    // Trigger the Seeder logic
-    DatabaseSeeder.seedAll();
+    try {
+      System.out.println("Starting Database Seeding...");
+      // Trigger the Seeder logic
+      DatabaseSeeder.seedAll();
+      System.out.println("Database Seeding Completed.");
+    } catch (Exception e) {
+      System.err.println("FATAL: Database Seeding Failed!");
+      e.printStackTrace();
+    }
   }
 
   @Override
