@@ -11,7 +11,8 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDBUtil {
-    private static final String CONNECTION_STRING = "mongodb://localhost:27017";
+    private static final String CONNECTION_STRING = System.getenv("DB_URI") != null ? System.getenv("DB_URI")
+            : "mongodb://localhost:27017";
     private static final String DATABASE_NAME = "kultureDB";
 
     private static MongoClient mongoClient = null;
