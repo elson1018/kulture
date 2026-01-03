@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../config/api";
 import "./AdminDashboard.css";
+import Popup from "../../components/Popup/Popup";
 
 const AdminDashboard = ({ user }) => {
   const [myProducts, setMyProducts] = useState([]);
@@ -72,10 +73,19 @@ const AdminDashboard = ({ user }) => {
 
   const totalRevenue = salesData.totalRevenue;
 
-  // Delete product handler
-  const handleDeleteProduct = async (productId) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
+  // Popup state
+  const [popup, setPopup] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+    onConfirm: null
+  });
 
+  const closePopup = () => {
+    setPopup({ ...popup, isOpen: false });
+  };
+
+  const confirmDeleteProduct = async (productId) => {
     try {
       const response = await fetch(`${ENDPOINTS.PRODUCTS}?id=${productId}`, {
         method: 'DELETE',
@@ -84,21 +94,33 @@ const AdminDashboard = ({ user }) => {
 
       if (response.ok) {
         setMyProducts(prev => prev.filter(p => p.id !== productId));
-        alert('Product deleted successfully!');
+        setPopup({
+          isOpen: true,
+          message: 'Product deleted successfully!',
+          type: 'success',
+          onConfirm: null
+        });
       } else {
         const result = await response.json();
-        alert('Failed to delete: ' + (result.error || 'Unknown error'));
+        setPopup({
+          isOpen: true,
+          message: 'Failed to delete: ' + (result.error || 'Unknown error'),
+          type: 'error',
+          onConfirm: null
+        });
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Failed to delete product');
+      setPopup({
+        isOpen: true,
+        message: 'Failed to delete product',
+        type: 'error',
+        onConfirm: null
+      });
     }
-  };
+  }
 
-  // Delete tutorial handler
-  const handleDeleteTutorial = async (tutorialId) => {
-    if (!window.confirm('Are you sure you want to delete this tutorial?')) return;
-
+  const confirmDeleteTutorial = async (tutorialId) => {
     try {
       const response = await fetch(`${ENDPOINTS.TUTORIALS}?id=${tutorialId}`, {
         method: 'DELETE',
@@ -107,15 +129,51 @@ const AdminDashboard = ({ user }) => {
 
       if (response.ok) {
         setMyTutorials(prev => prev.filter(t => t.id !== tutorialId));
-        alert('Tutorial deleted successfully!');
+        setPopup({
+          isOpen: true,
+          message: 'Tutorial deleted successfully!',
+          type: 'success',
+          onConfirm: null
+        });
       } else {
         const result = await response.json();
-        alert('Failed to delete: ' + (result.error || 'Unknown error'));
+        setPopup({
+          isOpen: true,
+          message: 'Failed to delete: ' + (result.error || 'Unknown error'),
+          type: 'error',
+          onConfirm: null
+        });
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Failed to delete tutorial');
+      setPopup({
+        isOpen: true,
+        message: 'Failed to delete tutorial',
+        type: 'error',
+        onConfirm: null
+      });
     }
+  }
+
+
+  // Delete product handler
+  const handleDeleteProduct = (productId) => {
+    setPopup({
+      isOpen: true,
+      message: 'Are you sure you want to delete this product?',
+      type: 'warning',
+      onConfirm: () => confirmDeleteProduct(productId)
+    });
+  };
+
+  // Delete tutorial handler
+  const handleDeleteTutorial = (tutorialId) => {
+    setPopup({
+      isOpen: true,
+      message: 'Are you sure you want to delete this tutorial?',
+      type: 'warning',
+      onConfirm: () => confirmDeleteTutorial(tutorialId)
+    });
   };
 
   return (
@@ -288,6 +346,14 @@ const AdminDashboard = ({ user }) => {
           <p>No tutorials available.</p>
         )}
       </div>
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={closePopup}
+        onConfirm={popup.onConfirm}
+        confirmText="Yes, Delete"
+      />
     </div>
   );
 };
