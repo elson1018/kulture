@@ -24,19 +24,19 @@ public class TutorialServlet extends HttpServlet {
         this.tutorialDAO = new TutorialDAO();
     }
 
-    private void setupCORS(HttpServletResponse resp) {
-        CorsConfig.setupCORS(resp);
+    private void setupCORS(HttpServletResponse resp, HttpServletRequest req) {
+        CorsConfig.setupCORS(resp, req);
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
@@ -51,7 +51,7 @@ public class TutorialServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
@@ -92,7 +92,7 @@ public class TutorialServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 

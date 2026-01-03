@@ -25,19 +25,19 @@ public class SalesServlet extends HttpServlet {
         this.gson = new Gson();
     }
 
-    private void setupCORS(HttpServletResponse resp) {
-        CorsConfig.setupCORS(resp);
+    private void setupCORS(HttpServletResponse resp, HttpServletRequest req) {
+        CorsConfig.setupCORS(resp, req);
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 

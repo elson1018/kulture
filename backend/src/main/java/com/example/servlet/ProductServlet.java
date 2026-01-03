@@ -12,6 +12,8 @@ import com.example.dao.SalesDAO;
 import com.example.model.Product;
 import com.example.util.CorsConfig;
 
+import com.example.service.CloudinaryService;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,15 +25,11 @@ public class ProductServlet extends HttpServlet { // Product Servlet
 
     private ProductDAO productDAO;
     private Gson gson;
+    private CloudinaryService cloudinaryService;
 
     // Setup necessary CORS Headers
-    private void setupCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");// Allows all to access this server
-        resp.setHeader("Access-Control-Allow-Methods", "GET , POST , OPTIONS , DELETE"); // Specifiying which method is
-                                                                                         // allowed to access the
-                                                                                         // resource
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");// Specify allowed headers for each request
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+    private void setupCORS(HttpServletResponse resp, HttpServletRequest req) {
+        CorsConfig.setupCORS(resp, req);
     }
 
     @Override
@@ -39,17 +37,18 @@ public class ProductServlet extends HttpServlet { // Product Servlet
         super.init();
         this.productDAO = new ProductDAO();
         this.gson = new Gson();
+        this.cloudinaryService = new CloudinaryService();
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp); // Setting the cors headers
+        setupCORS(resp, req); // Setting the cors headers
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");// Setting the Content Type to JSON for the client
         resp.setStatus(HttpServletResponse.SC_OK);// Send back a successful response
 
@@ -77,7 +76,7 @@ public class ProductServlet extends HttpServlet { // Product Servlet
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        setupCORS(resp); // Check if the necessary headers are correct
+        setupCORS(resp, req); // Check if the necessary headers are correct
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
@@ -157,8 +156,15 @@ public class ProductServlet extends HttpServlet { // Product Servlet
                 return;
             }
 
-            // Save image to file system and get path
-            String imagePath = saveImageToFileSystem(base64Image, newProduct.getCategory(), imageFileName);
+            // Hybrid Image Storage Strategy
+            String imagePath;
+            if (cloudinaryService.isConfigured()) {
+                // Cloud Mode: Upload to Cloudinary
+                imagePath = cloudinaryService.uploadImage(base64Image);
+            } else {
+                // Local Mode: Save to local file system (Development)
+                imagePath = saveImageToFileSystem(base64Image, newProduct.getCategory(), imageFileName);
+            }
 
             // Set image path in product (as List<String>)
             List<String> imagePaths = new ArrayList<>();
@@ -273,7 +279,7 @@ public class ProductServlet extends HttpServlet { // Product Servlet
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 

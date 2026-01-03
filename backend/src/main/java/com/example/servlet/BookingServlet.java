@@ -23,19 +23,19 @@ import java.util.stream.Collectors;
 public class BookingServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
-    private void setupCORS(HttpServletResponse resp) {
-        CorsConfig.setupCORS(resp);
+    private void setupCORS(HttpServletResponse resp, HttpServletRequest req) {
+        CorsConfig.setupCORS(resp, req);
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         String email = req.getParameter("email");
 
         try {
@@ -56,7 +56,7 @@ public class BookingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         try {
             // Read JSON body and fetch tutorial details before saving
             String body = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));

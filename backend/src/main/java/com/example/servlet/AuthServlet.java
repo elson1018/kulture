@@ -32,21 +32,21 @@ public class AuthServlet extends HttpServlet {
     }
     // CORS Setup
 
-    private void setupCORS(HttpServletResponse resp) {
-        CorsConfig.setupCORS(resp);
+    private void setupCORS(HttpServletResponse resp, HttpServletRequest req) {
+        CorsConfig.setupCORS(resp, req);
     }
 
     // Override available doOptions to set the CORS headers for preflight requests
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     // Handle different authentication requests
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        setupCORS(resp);
+        setupCORS(resp, req);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
