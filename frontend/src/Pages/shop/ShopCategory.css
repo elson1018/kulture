@@ -47,7 +47,6 @@
 }
 
 .product-card:hover {
-    transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
@@ -165,9 +164,7 @@
     margin-top: auto;
 }
 
-.add-to-cart-btn:hover {
-    background-color: #C7813C;
-}
+
 
 /* Responsive Grid */
 @media (max-width: 480px) {

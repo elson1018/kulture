@@ -57,7 +57,7 @@ export const ShopContextProvider = (props) => {
             ...prev,
             [itemId]: (prev[itemId] || 0) + quantity,
         }));
-        console.log(`Added item ${itemId} with quantity ${quantity}`);
+
     };
 
     const addToCartBackend = async (cartItem) => {

@@ -219,33 +219,41 @@ public class ProductServlet extends HttpServlet { // Product Servlet
         }
 
         // Get the path to frontend public folder
-        // Resolve path relative to backend project root
         String userDir = System.getProperty("user.dir");
-        File categoryDir;
 
-        // Navigate from backend/MappingServlets to frontend/public/products/{category}
-        // Structure: kulture/backend/MappingServlets ->
-        // kulture/frontend/public/products/{category}
-        Path categoryPath = Paths.get(userDir).getParent().getParent()
-                .resolve("frontend")
-                .resolve("public")
+        Path startPath = Paths.get(userDir);
+        Path frontendPath = null;
+
+        // 1. Try resolving "frontend" in current dir (e.g. running from project root)
+        if (startPath.resolve("frontend").toFile().exists()) {
+            frontendPath = startPath.resolve("frontend");
+        }
+        // 2. Try resolving "frontend" in parent dir (e.g. running from "backend" dir)
+        else if (startPath.getParent() != null && startPath.getParent().resolve("frontend").toFile().exists()) {
+            frontendPath = startPath.getParent().resolve("frontend");
+        }
+        // 3. Try resolving "frontend" in 2 levels up (legacy deep nesting)
+        else if (startPath.getParent() != null && startPath.getParent().getParent() != null
+                && startPath.getParent().getParent().resolve("frontend").toFile().exists()) {
+            frontendPath = startPath.getParent().getParent().resolve("frontend");
+        }
+
+        // Default to assuming sibling to backend if not found (or just root/frontend)
+        if (frontendPath == null) {
+            // Best guess fallback: assume we are in backend or root.
+            // If we are in backend (common case), parent sibling is frontend.
+            if (startPath.endsWith("backend")) {
+                frontendPath = startPath.getParent().resolve("frontend");
+            } else {
+                frontendPath = startPath.resolve("frontend");
+            }
+        }
+
+        Path categoryPath = frontendPath.resolve("public")
                 .resolve("products")
                 .resolve(category);
 
-        categoryDir = categoryPath.normalize().toFile();
-
-        System.out.println("SAVING IMAGE TO: " + categoryPath.toAbsolutePath());
-
-        // If that path doesn't exist, try alternative (in case structure is different)
-        if (!categoryDir.getParentFile().exists()) {
-            // Try going up one more level
-            categoryPath = Paths.get(userDir).getParent().getParent().getParent()
-                    .resolve("frontend")
-                    .resolve("public")
-                    .resolve("products")
-                    .resolve(category);
-            categoryDir = categoryPath.normalize().toFile();
-        }
+        File categoryDir = categoryPath.normalize().toFile();
 
         // Create directory if it doesn't exist
         if (!categoryDir.exists()) {

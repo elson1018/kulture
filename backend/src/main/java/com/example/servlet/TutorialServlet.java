@@ -77,8 +77,6 @@ public class TutorialServlet extends HttpServlet {
             Tutorial newTutorial = gson.fromJson(modifiedJson, Tutorial.class);
 
             // Log for debugging
-            System.out
-                    .println("Saving Tutorial: " + newTutorial.getName() + ", Video URL: " + newTutorial.getVideoUrl());
 
             tutorialDAO.saveTutorial(newTutorial);
 
