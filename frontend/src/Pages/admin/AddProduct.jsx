@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ENDPOINTS } from "../../config/api";
 import "./AddProduct.css";
+import Popup from "../../components/Popup/Popup";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -14,6 +15,18 @@ const AddProduct = () => {
     isLiveClass: false,
     videoUrl: ""
   });
+
+  // Popup state
+  const [popup, setPopup] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+    onConfirm: null
+  });
+
+  const closePopup = () => {
+    setPopup({ ...popup, isOpen: false });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -81,7 +94,13 @@ const AddProduct = () => {
       const result = await response.json();
 
       if (response.ok && result.status === "success") {
-        alert("Product Added Successfully!");
+        setPopup({
+          isOpen: true,
+          message: "Product Added Successfully!",
+          type: "success",
+          onConfirm: null
+        });
+
         // Reset form
         setProduct({
           name: "",
@@ -98,14 +117,21 @@ const AddProduct = () => {
         const fileInput = document.querySelector('input[type="file"]');
         if (fileInput) fileInput.value = "";
       } else {
-        alert(
-          "Error adding product: " +
-          (result.message || result.error || "Unknown error")
-        );
+        setPopup({
+          isOpen: true,
+          message: "Error adding product: " + (result.message || result.error || "Unknown error"),
+          type: "error",
+          onConfirm: null
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to connect to the server. Is Tomcat running?");
+      setPopup({
+        isOpen: true,
+        message: "Failed to connect to the server. Is Tomcat running?",
+        type: "error",
+        onConfirm: null
+      });
     }
   };
 
@@ -246,6 +272,13 @@ const AddProduct = () => {
           {isTutorial ? "Add Tutorial" : "Add Product"}
         </button>
       </form>
+
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={closePopup}
+      />
     </div>
   );
 };

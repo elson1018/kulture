@@ -29,8 +29,8 @@ const TutorialCard = ({ tutorial }) => {
 
             <div className="product-info">
                 <h3 className="product-name clickable" onClick={handleViewDetails}>{tutorial.name}</h3>
-                
-              
+
+
 
                 <div className="product-details">
                     <span className="product-tag">
@@ -41,7 +41,7 @@ const TutorialCard = ({ tutorial }) => {
                     </p>
                 </div>
 
-                <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
+                <button className="add-to-cart-btn" onClick={handleViewDetails}>
                     View Details
                 </button>
             </div>

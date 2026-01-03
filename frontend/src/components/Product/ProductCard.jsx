@@ -73,7 +73,7 @@ const ProductCard = ({ product }) => {
           </p>
         </div>
 
-        <button className="add-to-cart-btn primary-button" onClick={handleViewDetails}>
+        <button className="add-to-cart-btn" onClick={handleViewDetails}>
           View Details
         </button>
       </div>
