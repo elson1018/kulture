@@ -17,35 +17,36 @@ const Cart = () => {
 
 
 
-    useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                setLoading(true);
-                const user = JSON.parse(localStorage.getItem('user'));
-                if (!user) {
-                    // Not logged in or handled by context redirect usually
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await fetch(ENDPOINTS.CART, {
-                    method: "GET",
-                    credentials: "include"
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setCartData(data);
-
-                } else {
-                    console.error("Failed to fetch cart");
-                }
-            } catch (err) {
-                console.error("Error fetching cart:", err);
-            } finally {
+    const fetchCart = async () => {
+        try {
+            setLoading(true);
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                // Not logged in or handled by context redirect usually
                 setLoading(false);
+                return;
             }
-        };
+
+            const response = await fetch(ENDPOINTS.CART, {
+                method: "GET",
+                credentials: "include"
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setCartData(data);
+
+            } else {
+                console.error("Failed to fetch cart");
+            }
+        } catch (err) {
+            console.error("Error fetching cart:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchCart();
     }, []);
 
