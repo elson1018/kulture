@@ -29,44 +29,46 @@ const ProductDetail = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        //fetch all products with the matching id
-        const response = await fetch(ENDPOINTS.PRODUCTS);
+  const fetchProduct = async (silent = false) => {
+    try {
+      if (!silent) setLoading(true);
+      //fetch all products with the matching id
+      const response = await fetch(ENDPOINTS.PRODUCTS);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        const data = await response.json();
-
-        //Find the specific product that matches the id
-
-        const foundProduct = data.find((p) => String(p.id) === id);
-
-        if (foundProduct) {
-          setProduct(foundProduct);
-          if (foundProduct.images && foundProduct.images.length > 0) {
-            setSelectedImage(foundProduct.images[0]);
-          }
-
-          // Get related products from the same category
-          const related = data
-            .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
-            .slice(0, 4);
-          setRelatedProducts(related);
-        } else {
-          setError("Product not found");
-        }
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
       }
-    };
 
+      const data = await response.json();
+
+      //Find the specific product that matches the id
+
+      const foundProduct = data.find((p) => String(p.id) === id);
+
+      if (foundProduct) {
+        setProduct(foundProduct);
+        if (foundProduct.images && foundProduct.images.length > 0) {
+          // Preserve existing selection if it exists, otherwise set default
+          setSelectedImage(prev => prev || foundProduct.images[0]);
+        }
+
+        // Get related products from the same category
+        const related = data
+          .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+          .slice(0, 4);
+        setRelatedProducts(related);
+      } else {
+        setError("Product not found");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      if (!silent) setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedImage(null);
     fetchProduct();
   }, [id]);
 
@@ -113,6 +115,27 @@ const ProductDetail = () => {
 
     if (result.success) {
       setPopup({ isOpen: true, message: result.message, type: "success" });
+    } else {
+      setPopup({ isOpen: true, message: result.message, type: "error" });
+      if (result.type === "auth") {
+        setTimeout(() => navigate("/login"), 1500);
+      }
+    }
+  };
+
+  const handleBuyNow = async () => {
+    const cartItem = {
+      productId: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: quantity,
+      images: product.images || [],
+    };
+
+    const result = await addToCartBackend(cartItem);
+
+    if (result.success) {
+      navigate("/checkout");
     } else {
       setPopup({ isOpen: true, message: result.message, type: "error" });
       if (result.type === "auth") {
@@ -218,7 +241,7 @@ const ProductDetail = () => {
           </button>
           <button
             className="buy-now-btn"
-            onClick={() => navigate("/checkout")}
+            onClick={handleBuyNow}
           >
             Go to Checkout
           </button>
@@ -267,7 +290,7 @@ const ProductDetail = () => {
             ) : (
               <div className="review-form-wrapper">
                 <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
-                <ReviewForm productId={product.id} onReviewSubmitted={() => window.location.reload()} />
+                <ReviewForm productId={product.id} onReviewSubmitted={() => fetchProduct(true)} />
               </div>
             )}
           </div>

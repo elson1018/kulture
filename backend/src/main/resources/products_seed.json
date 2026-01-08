@@ -241,7 +241,7 @@
     "price": 580.0,
     "description": "Chinese plucked zither with 21 strings. Creates beautiful, flowing melodies characteristic of traditional Chinese music.",
     "images": [
-      "/products/Instruments/Erhu_main.jpg"
+      "/products/Instruments/Guzheng.png"
     ],
     "rating": 4.7,
     "reviews": []
@@ -253,7 +253,7 @@
     "price": 85.0,
     "description": "Traditional Malay hand drum used in weddings and cultural celebrations. Made with genuine goat skin.",
     "images": [
-      "/products/Instruments/Erhu_main.jpg"
+      "/products/Instruments/Kompang.png"
     ],
     "rating": 4.5,
     "reviews": []
@@ -265,7 +265,7 @@
     "price": 420.0,
     "description": "Traditional Borneo lute instrument from the Orang Ulu people. Known for its soothing and mystical sound.",
     "images": [
-      "/products/Instruments/Erhu_main.jpg"
+      "/products/Instruments/Sape.png"
     ],
     "rating": 4.9,
     "reviews": []
@@ -382,7 +382,7 @@
     "price": 45.0,
     "description": "Traditional Chinese transverse flute made from bamboo. Includes membrane and carrying case.",
     "images": [
-      "/products/Instruments/Erhu_main.jpg"
+      "/products/Instruments/Dizi.png"
     ],
     "rating": 4.4,
     "reviews": []
@@ -611,5 +611,105 @@
     ],
     "rating": 4.5,
     "reviews": []
+  },
+  {
+    "id": "P-0030",
+    "name": "Angklung Set",
+    "category": "Instruments",
+    "price": 180.0,
+    "description": "Traditional musical instrument made of bamboo tubes attached to a bamboo frame. Creates a resonant pitch when shaken. Standard diatonic scale.",
+    "images": [
+      "/products/Instruments/Angklung.jpg"
+    ],
+    "rating": 4.8,
+    "reviews": [
+      {
+        "userName": "Cikgu Siti",
+        "rating": 5,
+        "comment": "Bought this for my music class. The students love it! Good quality bamboo and accurate tuning.",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Robert Tan",
+        "rating": 4,
+        "comment": "Nice sound, but one tube was slightly loose. Easily fixed with glue though.",
+        "timestamp": 1767249616187
+      }
+    ]
+  },
+  {
+    "id": "P-0031",
+    "name": "Gambus (Malay Oud)",
+    "category": "Instruments",
+    "price": 450.0,
+    "description": "Short-necked lute popular in Malay folk music like Ghazal. Handcrafted from hardwood with a pear-shaped body.",
+    "images": [
+      "/products/Instruments/Gambus.png"
+    ],
+    "rating": 4.9,
+    "reviews": [
+      {
+        "userName": "Rizal Ahmad",
+        "rating": 5,
+        "comment": "Excellent craftsmanship. The tone is deep and resonant. A beautiful instrument for Ghazal performance.",
+        "timestamp": 1767249616187
+      }
+    ]
+  },
+  {
+    "id": "P-0032",
+    "name": "Rebana Ubi",
+    "category": "Instruments",
+    "price": 280.0,
+    "description": "Large traditional Malay drum famously used in harvest festivals in Kelantan. produces a deep, booming bass sound.",
+    "images": [
+      "/products/Instruments/RebanaUbi.png"
+    ],
+    "rating": 4.7,
+    "reviews": []
+  },
+  {
+    "id": "P-0033",
+    "name": "Sompoton",
+    "category": "Instruments",
+    "price": 65.0,
+    "description": "Traditional wind instrument from Sabah, made from a dried gourd and bamboo pipes. Unique to the Kadazandusun culture.",
+    "images": [
+      "/products/Instruments/Sompoton.png"
+    ],
+    "rating": 4.6,
+    "reviews": [
+      {
+        "userName": "Jerry L.",
+        "rating": 5,
+        "comment": "Authentic Sabahan souvenir! It actually plays well, not just for decoration.",
+        "timestamp": 1767249616187
+      }
+    ]
+  },
+  {
+    "id": "P-0034",
+    "name": "Indian Tabla Set",
+    "category": "Instruments",
+    "price": 780.0,
+    "description": "Pair of twin hand drums from the Indian subcontinent. Essential for Hindustani classical music. Includes cushions and tuning hammer.",
+    "images": [
+      "/products/Instruments/Tabla.png"
+    ],
+    "rating": 4.8,
+    "reviews": [
+      {
+        "userName": "Viknesh Rao",
+        "rating": 5,
+        "comment": "High quality skins and heavy weight copper bayan. Sounds professional.",
+        "timestamp": 1767249616187
+      },
+      {
+        "userName": "Sanjay M.",
+        "rating": 4,
+        "comment": "Good starter set for beginners. Fast delivery.",
+        "timestamp": 1767249616187
+      }
+    ]
   }
 ]
