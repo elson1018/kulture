@@ -10,9 +10,29 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class MongoDBUtil {
-    private static final String CONNECTION_STRING = System.getenv("DB_URI") != null ? System.getenv("DB_URI")
-            : "mongodb://localhost:27017";
+    private static final String CONNECTION_STRING;
+    static {
+        String dbUri = null;
+        try {
+            // Try loading from .env file
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+            dbUri = dotenv.get("DB_URI");
+        } catch (Exception e) {
+            // Ignore if .env is missing (production environment)
+        }
+
+        // Fallback to System environment variable
+        if (dbUri == null) {
+            dbUri = System.getenv("DB_URI");
+        }
+
+        // Default to localhost if nothing else is found
+        CONNECTION_STRING = dbUri != null ? dbUri : "mongodb://localhost:27017";
+    }
+
     private static final String DATABASE_NAME = "kultureDB";
 
     private static MongoClient mongoClient = null;
