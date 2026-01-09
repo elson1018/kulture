@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -10,42 +10,43 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import Loading from "./components/Loading/Loading"; // Using the Loading component we created earlier
 
 // Auth pages
-import Login from "./Pages/auth/Login";
-import Signup from "./Pages/auth/Signup";
+const Login = lazy(() => import("./Pages/auth/Login"));
+const Signup = lazy(() => import("./Pages/auth/Signup"));
 
 // Static pages
-import Home from "./Pages/static/Home";
-import Team from "./Pages/static/Team";
-import Contact from "./Pages/static/Contact";
-import HelpCentre from "./Pages/static/HelpCentre";
-import About from "./Pages/static/About";
-import Policy from "./Pages/static/Policy";
-import Terms from "./Pages/static/Terms";
+const Home = lazy(() => import("./Pages/static/Home"));
+const Team = lazy(() => import("./Pages/static/Team"));
+const Contact = lazy(() => import("./Pages/static/Contact"));
+const HelpCentre = lazy(() => import("./Pages/static/HelpCentre"));
+const About = lazy(() => import("./Pages/static/About"));
+const Policy = lazy(() => import("./Pages/static/Policy"));
+const Terms = lazy(() => import("./Pages/static/Terms"));
 
 // Shop pages
-import Shop from "./Pages/shop/Shop";
-import Food from "./Pages/shop/Food";
-import Souvenirs from "./Pages/shop/Souvenirs";
-import Instruments from "./Pages/shop/Instruments";
-import ProductDetail from "./Pages/shop/ProductDetail";
+const Shop = lazy(() => import("./Pages/shop/Shop"));
+const Food = lazy(() => import("./Pages/shop/Food"));
+const Souvenirs = lazy(() => import("./Pages/shop/Souvenirs"));
+const Instruments = lazy(() => import("./Pages/shop/Instruments"));
+const ProductDetail = lazy(() => import("./Pages/shop/ProductDetail"));
 
 // Tutorial pages
-import Tutorial from "./Pages/tutorials/Tutorial";
-import TutorialDetail from "./Pages/tutorials/TutorialDetail";
+const Tutorial = lazy(() => import("./Pages/tutorials/Tutorial"));
+const TutorialDetail = lazy(() => import("./Pages/tutorials/TutorialDetail"));
 
 // Cart pages
-import Cart from "./Pages/cart/Cart";
-import Checkout from "./Pages/cart/Checkout";
+const Cart = lazy(() => import("./Pages/cart/Cart"));
+const Checkout = lazy(() => import("./Pages/cart/Checkout"));
 
 // Admin pages
-import AdminDashboard from "./Pages/admin/AdminDashboard";
-import AddProduct from "./Pages/admin/AddProduct";
-import Orders from "./Pages/admin/Orders";
+const AdminDashboard = lazy(() => import("./Pages/admin/AdminDashboard"));
+const AddProduct = lazy(() => import("./Pages/admin/AddProduct"));
+const Orders = lazy(() => import("./Pages/admin/Orders"));
 
 // User pages
-import Settings from "./Pages/user/Settings";
+const Settings = lazy(() => import("./Pages/user/Settings"));
 
 const ProtectedRoute = ({ user, allowedRoles, children }) => {
   // If user is not logged in, the user will redirect to login page
@@ -106,85 +107,87 @@ const AppContent = ({ user, setUser }) => {
         onLogout={handleLogout}
       />
       <div className="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route
-            path="/login"
-            element={
-              <Login onFormSwitch={handleAuthFormSwitch} setUser={setUser} />
-            }
-          />
-          <Route
-            path="/signup"
-            element={<Signup onFormSwitch={handleAuthFormSwitch} />}
-          />
+            <Route
+              path="/login"
+              element={
+                <Login onFormSwitch={handleAuthFormSwitch} setUser={setUser} />
+              }
+            />
+            <Route
+              path="/signup"
+              element={<Signup onFormSwitch={handleAuthFormSwitch} />}
+            />
 
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute user={user}>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute user={user}>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="/team" element={<Team />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/help-centre" element={<HelpCentre />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/policy" element={<Policy />} />
-          <Route path="/terms" element={<Terms />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/help-centre" element={<HelpCentre />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/policy" element={<Policy />} />
+            <Route path="/terms" element={<Terms />} />
 
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/food" element={<Food />} />
-          <Route path="/shop/souvenirs" element={<Souvenirs />} />
-          <Route path="/shop/instruments" element={<Instruments />} />
-          <Route path="/shop/tutorial" element={<Tutorial user={user} />} />
-          <Route path="/tutorial/:id" element={<TutorialDetail />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/food" element={<Food />} />
+            <Route path="/shop/souvenirs" element={<Souvenirs />} />
+            <Route path="/shop/instruments" element={<Instruments />} />
+            <Route path="/shop/tutorial" element={<Tutorial user={user} />} />
+            <Route path="/tutorial/:id" element={<TutorialDetail />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
 
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
-                <AdminDashboard user={user}></AdminDashboard>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/add-product"
-            element={
-              <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
-                <AddProduct />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <ProtectedRoute user={user}>
-                <Cart />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/checkout"
-            element={
-              <ProtectedRoute user={user}>
-                <Checkout />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/orders"
-            element={
-              <ProtectedRoute user={user}>
-                <Orders />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
+                  <AdminDashboard user={user}></AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-product"
+              element={
+                <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
+                  <AddProduct />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute user={user}>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute user={user}>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <ProtectedRoute user={user}>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
       </div>
       <Footer />
     </div>

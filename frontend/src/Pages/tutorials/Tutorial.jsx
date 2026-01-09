@@ -9,7 +9,6 @@ const Tutorial = () => {
     useDocumentTitle('Tutorials & Classes | Kulture');
     const [tutorials, setTutorials] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchTutorials = async () => {
@@ -19,7 +18,7 @@ const Tutorial = () => {
                 const data = await response.json();
                 setTutorials(data);
             } catch (err) {
-                setError(err.message);
+                console.error(err.message);
             } finally {
                 setIsLoading(false);
             }

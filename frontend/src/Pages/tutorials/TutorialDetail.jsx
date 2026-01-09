@@ -10,7 +10,7 @@ import ScrollTopButton from "../../components/ScrollTopButton";
 const TutorialDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { addToCart, addToCartBackend } = useContext(ShopContext);
+    const { addToCartBackend } = useContext(ShopContext);
 
     const [tutorial, setTutorial] = useState(null);
     const [instructorTutorials, setInstructorTutorials] = useState([]);
