@@ -157,14 +157,50 @@
     color: #27ae60;
 }
 
+.product-detail-page .main-image-container {
+    aspect-ratio: 1 / 1;
+
+    height: auto;
+
+    max-height: unset;
+
+    width: 100%;
+    background-color: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .video-preview-container {
     width: 100%;
     height: 100%;
+    /* Fill the container */
     display: flex;
     align-items: center;
     justify-content: center;
     background: #000;
     color: #fff;
+    overflow: hidden;
+}
+
+.product-detail-page .main-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tutorial-video-frame,
+.video-preview-container iframe,
+.video-preview-container video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+    display: block;
 }
 
 .detail-instructor span {
@@ -172,11 +208,7 @@
     color: #555;
 }
 
-.loading-state {
-    padding-top: 100px;
-    text-align: center;
-}
-
+.loading-state,
 .error-state {
     padding-top: 100px;
     text-align: center;
@@ -190,4 +222,10 @@
     text-align: center;
     margin-top: 40px;
     color: #666;
+}
+
+@media (max-width: 768px) {
+    .product-detail-page .main-image-container {
+        aspect-ratio: 1 / 1;
+    }
 }
