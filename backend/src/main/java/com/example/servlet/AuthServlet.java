@@ -102,6 +102,12 @@ public class AuthServlet extends HttpServlet {
             session.setAttribute("email", user.getEmail());
             session.setAttribute("role", user.getRole());
 
+            // MANUAL COOKIE FIX FOR CROSS-ORIGIN (VERCEL <-> RAILWAY)
+            // Tomcat by default doesn't set SameSite=None, which is required for cross-site
+            // cookies.
+            String sessionCookie = "JSESSIONID=" + session.getId() + "; Path=/; HttpOnly; Secure; SameSite=None";
+            resp.addHeader("Set-Cookie", sessionCookie);
+
             // Send success JSON
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("status", "success");
