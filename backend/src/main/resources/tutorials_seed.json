@@ -2,111 +2,131 @@
   {
     "id": "T-0001",
     "name": "Tanko Bushi Bon Odori Dance",
-    "instructor": "John Doe",
+    "instructor": "Hiroshi Tanaka",
     "price": 49.99,
-    "description": "Japanese Traditional Dance. Learn the basic movement of Tanko Bushi Bon Odori Dance",
+    "description": "Japanese Traditional Dance. Learn the basic movement of Tanko Bushi Bon Odori Dance.",
     "isLiveClass": false,
     "rating": 4.8,
-    "images": ["/products/Tutorials/TankoBushiBonOdoriDance.webp"],
+    "images": [
+      "/products/Tutorials/TankoBushiBonOdoriDance.webp"
+    ],
     "videoUrl": "https://youtu.be/FcmwzdqfB9E"
   },
   {
     "id": "T-0002",
-    "name": "Advanced Piano Techniques",
-    "instructor": "Jane Smith",
-    "price": 49.99,
-    "description": "Master complex piano compositions.",
-    "isLiveClass": true,
-    "rating": 4.9,
-    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
-    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
-  },
-  {
-    "id": "T-0003",
-    "name": "Traditional Malay Dance - Joget",
-    "instructor": "John Doe",
-    "price": 39.99,
-    "description": "Learn the graceful movements of Joget, a traditional Malay folk dance performed at celebrations and social events.",
-    "isLiveClass": false,
-    "rating": 4.7,
-    "images": ["/products/Tutorials/traditionaldance.jpeg"],
-    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-  },
-  {
-    "id": "T-0004",
-    "name": "Zapin Dance Masterclass",
-    "instructor": "John Doe",
-    "price": 55.00,
-    "description": "Explore the elegant Zapin dance with its Arabic influences. Includes live feedback sessions.",
-    "isLiveClass": true,
-    "rating": 4.9,
-    "images": ["/products/Tutorials/traditionaldance.jpeg"],
-    "videoUrl": ""
-  },
-  {
-    "id": "T-0005",
-    "name": "Erhu for Beginners",
-    "instructor": "Jane Smith",
-    "price": 45.00,
-    "description": "Start your journey with the Chinese two-stringed violin. Learn proper bowing technique and basic melodies.",
-    "isLiveClass": false,
-    "rating": 4.6,
-    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
-    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
-  },
-  {
-    "id": "T-0006",
-    "name": "Chinese Classical Piano",
-    "instructor": "Jane Smith",
-    "price": 65.00,
-    "description": "Learn beautiful Chinese classical pieces on piano. From River Flows in You to traditional folk adaptations.",
-    "isLiveClass": true,
-    "rating": 4.8,
-    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
-    "videoUrl": ""
-  },
-  {
-    "id": "T-0007",
-    "name": "Kompang Drumming Workshop",
-    "instructor": "Ahmad Hassan",
-    "price": 35.00,
-    "description": "Master the rhythmic patterns of Kompang drumming used in Malay weddings and celebrations.",
-    "isLiveClass": true,
-    "rating": 4.5,
-    "images": ["/products/Tutorials/traditionaldance.jpeg"],
-    "videoUrl": ""
-  },
-  {
-    "id": "T-0008",
-    "name": "Traditional Dikir Barat",
-    "instructor": "Ahmad Hassan",
-    "price": 40.00,
-    "description": "Learn the call-and-response singing tradition from Kelantan. Includes rhythm, vocals, and hand movements.",
-    "isLiveClass": false,
-    "rating": 4.7,
-    "images": ["/products/Tutorials/traditionaldance.jpeg"],
-    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-  },
-  {
-    "id": "T-0009",
-    "name": "Guzheng Fundamentals",
-    "instructor": "Mei Lin Chen",
-    "price": 55.00,
-    "description": "Introduction to the Chinese zither. Learn finger techniques, basic scales, and your first traditional piece.",
-    "isLiveClass": false,
-    "rating": 4.8,
-    "images": ["/products/Tutorials/Beethoven_Piano.jpg"],
-    "videoUrl": "https://www.youtube.com/watch?v=4Tr0otuiQuU"
-  },
-  {
-    "id": "T-0010",
     "name": "Bharatanatyam Basics",
     "instructor": "Priya Sharma",
     "price": 50.00,
     "description": "Classical Indian dance from Tamil Nadu. Learn basic postures, hand gestures (mudras), and footwork.",
     "isLiveClass": true,
     "rating": 4.9,
-    "images": ["/products/Tutorials/traditionaldance.jpeg"],
-    "videoUrl": ""
+    "images": [
+      "/products/Tutorials/traditionaldance.jpeg"
+    ],
+    "videoUrl": "https://youtu.be/OIKOHzePJCA"
+  },
+  {
+    "id": "T-0003",
+    "name": "Buchaechum Korean Fan Dance",
+    "instructor": "Kim Ji A",
+    "price": 52.00,
+    "description": "Learn the beautiful Buchaechum, a traditional Korean dance using peony-painted fans to create graceful shapes.",
+    "isLiveClass": false,
+    "rating": 4.8,
+    "images": [
+      "/products/Tutorials/Buchaechum.jpg"
+    ],
+    "videoUrl": "https://youtu.be/uaMl1w38wcc"
+  },
+  {
+    "id": "T-0004",
+    "name": "Flamenco Fundamentals",
+    "instructor": "Maria Benitez",
+    "price": 60.00,
+    "description": "Master the passion of Flamenco. Covers rhythm (compás), footwork, and expressive arm movements.",
+    "isLiveClass": true,
+    "rating": 4.9,
+    "images": [
+      "/products/Tutorials/Flamenco.jpg"
+    ],
+    "videoUrl": "https://youtu.be/kyXWqsWqFBc?list=PL6az2PdpXovt-srWw3yfRPeFyqpXU5oop"
+  },
+  {
+    "id": "T-0005",
+    "name": "Ukrainian Hopak Dance",
+    "instructor": "Pavlo Virsky",
+    "price": 55.00,
+    "description": "An energetic Ukrainian folk dance. Learn the basic squats, kicks, and spirited jumps.",
+    "isLiveClass": false,
+    "rating": 4.7,
+    "images": [
+      "/products/Tutorials/Hopak.jpg"
+    ],
+    "videoUrl": "https://youtu.be/p4MDkNvJvnQ"
+  },
+  {
+    "id": "T-0006",
+    "name": "Irish Stepdance Beginner",
+    "instructor": "Sean O'Connor",
+    "price": 55.00,
+    "description": "Learn the traditional footwork and rhythm of Irish Stepdance, including the Reel and Jig steps.",
+    "isLiveClass": true,
+    "rating": 4.8,
+    "images": [
+      "/products/Tutorials/IrishStepdance.webp"
+    ],
+    "videoUrl": "https://youtu.be/TLhNKcA1i4c"
+  },
+  {
+    "id": "T-0007",
+    "name": "Brazilian Samba",
+    "instructor": "Ana Silva",
+    "price": 45.00,
+    "description": "Experience the vibrant rhythm of Brazilian Samba. Learn the basic bounce, footwork, and styling.",
+    "isLiveClass": false,
+    "rating": 4.6,
+    "images": [
+      "/products/Tutorials/Samba.jpg"
+    ],
+    "videoUrl": "https://youtu.be/4kzDB3NItJM?list=PLWkl9T8LFyChwTczi3tPi3Id92RWPjRlb"
+  },
+  {
+    "id": "T-0008",
+    "name": "Italian Tarantella",
+    "instructor": "Luigi Rossi",
+    "price": 40.00,
+    "description": "A fast-paced, cheerful Italian folk dance. Learn the characteristic light steps and tambourine rhythms.",
+    "isLiveClass": false,
+    "rating": 4.7,
+    "images": [
+      "/products/Tutorials/Tarantella.webp"
+    ],
+    "videoUrl": "https://youtu.be/LdJIdJz-jbo?list=RDLdJIdJz-jbo"
+  },
+  {
+    "id": "T-0009",
+    "name": "Maori Haka Workshop",
+    "instructor": "Tama Iti",
+    "price": 30.00,
+    "description": "Learn the powerful movements and chants of the Haka, a traditional Māori ancestral war cry and challenge.",
+    "isLiveClass": false,
+    "rating": 5.0,
+    "images": [
+      "/products/Tutorials/haka.jpg"
+    ],
+    "videoUrl": "https://youtu.be/H2deYzImsT0"
+  },
+  {
+    "id": "T-0010",
+    "name": "Tinikling Bamboo Dance",
+    "instructor": "Maria Santos",
+    "price": 50.00,
+    "description": "Master the Tinikling, the Philippine National Dance involving rhythmic stepping between bamboo poles.",
+    "isLiveClass": true,
+    "rating": 4.9,
+    "images": [
+      "/products/Tutorials/tinkling.jpg"
+    ],
+    "videoUrl": "https://youtu.be/kckR6wf5xe8"
   }
 ]
