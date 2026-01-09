@@ -147,7 +147,13 @@ const Login = ({ onFormSwitch, setUser }) => {
           />
         </div>
 
-
+        <div
+          className="forgot-password"
+          onClick={() => navigate("/forgot-password")}
+          style={{ cursor: "pointer" }}
+        >
+          Forgot Password?
+        </div>
 
         <button type="submit" className="login-button">
           Log In

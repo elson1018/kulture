@@ -39,7 +39,7 @@ const faqs = [
       },
       {
         q: "Can I contact the artisan directly?",
-        a: "Currently, you can send messages to our team via the 'Ask a Question' button on the product page.",
+        a: "Currently, you can send messages to our team via the 'Contact Us' button.",
       },
     ],
   },

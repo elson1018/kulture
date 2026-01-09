@@ -54,6 +54,16 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (parseFloat(product.price) <= 0) {
+      setPopup({
+        isOpen: true,
+        message: "Price must be a positive number",
+        type: "error",
+        onConfirm: null
+      });
+      return;
+    }
+
     // Extract filename from the file or generate one
     const fileName = product.imageFile
       ? product.imageFile.name
