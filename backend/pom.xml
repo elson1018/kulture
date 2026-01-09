@@ -92,7 +92,7 @@
                             <artifactId>${project.artifactId}</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>MappingServlets-1.0-SNAPSHOT</context>
+                                <context>/</context>
                             </properties>
                         </deployable>
                     </deployables>
