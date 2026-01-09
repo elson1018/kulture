@@ -28,17 +28,17 @@ const Login = ({ onFormSwitch, setUser }) => {
   };
 
   const closePopup = () => {
-        setPopup({ ...popup, show: false });
+    setPopup({ ...popup, show: false });
 
-        // If it was a success, navigate after the user clicks "Close"
-        if (popup.type === "success") {
-            const user = JSON.parse(localStorage.getItem("user"));
-            if (user?.role === "ADMIN") {
-                navigate("/admin");
-            } else {
-                navigate("/");
-            }
-        }
+    // If it was a success, navigate after the user clicks "Close"
+    if (popup.type === "success") {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user?.role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    }
   };
 
   const handleLoginForm = async (event) => {
@@ -77,24 +77,24 @@ const Login = ({ onFormSwitch, setUser }) => {
         localStorage.setItem("role", result.role);
 
         setPopup({
-              show: true,
-              msg: " Login successful!",
-              type: "success"
+          show: true,
+          msg: " Login successful!",
+          type: "success"
         });
 
       } else {
-          setPopup({
-              show: true,
-              msg: "Login failed: " + (result.message || "Invalid credentials"),
-              type: "error"
-          });
+        setPopup({
+          show: true,
+          msg: "Login failed: " + (result.message || "Invalid credentials"),
+          type: "error"
+        });
       }
     } catch (error) {
-        setPopup({
-            show: true,
-            msg: "An error occurred. Please check your connection.",
-            type: "error"
-        });
+      setPopup({
+        show: true,
+        msg: "An error occurred. Please check your connection.",
+        type: "error"
+      });
     }
   };
 
@@ -107,12 +107,12 @@ const Login = ({ onFormSwitch, setUser }) => {
 
   return (
     <div className="login-container">
-        <Popup
-            isOpen={popup.show}
-            message={popup.msg}
-            type={popup.type}
-            onClose={closePopup}
-        />
+      <Popup
+        isOpen={popup.show}
+        message={popup.msg}
+        type={popup.type}
+        onClose={closePopup}
+      />
       <h2 className="form-title">Log In Now</h2>
 
       <form onSubmit={handleLoginForm} className="login-form">
