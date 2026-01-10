@@ -248,6 +248,27 @@ const ProductDetail = () => {
         </div>
       </div>
 
+      <div className="review-section">
+        <ReviewList reviews={product.reviews || []} />
+
+        {canReview && (
+          <div className="review-action-container">
+            {!showReviewForm ? (
+              <button className="write-review-btn" onClick={() => setShowReviewForm(true)}>
+                Write a Review
+              </button>
+            ) : (
+              <div className="review-form-wrapper">
+                <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
+                <ReviewForm productId={product.id} onReviewSubmitted={() => fetchProduct(true)} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+
+
       {relatedProducts.length > 0 && (
         <section className="related-products">
           <h2>Related Products</h2>
@@ -277,25 +298,6 @@ const ProductDetail = () => {
           </div>
         </section>
       )}
-
-      <div className="review-section">
-        <ReviewList reviews={product.reviews || []} />
-
-        {canReview && (
-          <div className="review-action-container">
-            {!showReviewForm ? (
-              <button className="write-review-btn" onClick={() => setShowReviewForm(true)}>
-                Write a Review
-              </button>
-            ) : (
-              <div className="review-form-wrapper">
-                <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
-                <ReviewForm productId={product.id} onReviewSubmitted={() => fetchProduct(true)} />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
 
       <ScrollTopButton />
 

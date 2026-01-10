@@ -15,6 +15,8 @@ import Loading from "./components/Loading/Loading"; // Using the Loading compone
 // Auth pages
 const Login = lazy(() => import("./Pages/auth/Login"));
 const Signup = lazy(() => import("./Pages/auth/Signup"));
+const ForgotPassword = lazy(() => import("./Pages/auth/ForgotPassword"));
+
 
 // Static pages
 const Home = lazy(() => import("./Pages/static/Home"));
@@ -120,6 +122,10 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/signup"
               element={<Signup onFormSwitch={handleAuthFormSwitch} />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPassword />}
             />
 
             <Route

@@ -43,7 +43,12 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  font-family: inherit;
   box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: none;
 }
 
 .form-group input:focus,

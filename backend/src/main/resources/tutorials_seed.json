@@ -10,7 +10,23 @@
     "images": [
       "/products/Tutorials/TankoBushiBonOdoriDance.webp"
     ],
-    "videoUrl": "https://youtu.be/FcmwzdqfB9E"
+    "videoUrl": "https://youtu.be/FcmwzdqfB9E",
+    "reviews": [
+      {
+        "userEmail": "alice@example.com",
+        "userName": "Alice Wonderland",
+        "rating": 5,
+        "comment": "Absolutely loved learning this dance! The steps were broken down clearly.",
+        "timestamp": 1704854400000
+      },
+      {
+        "userEmail": "bob@example.com",
+        "userName": "Bob Builder",
+        "rating": 4,
+        "comment": "Good tutorial, but I wish there were more slow-motion segments.",
+        "timestamp": 1704940800000
+      }
+    ]
   },
   {
     "id": "T-0002",
@@ -23,7 +39,16 @@
     "images": [
       "/products/Tutorials/traditionaldance.jpeg"
     ],
-    "videoUrl": "https://youtu.be/OIKOHzePJCA"
+    "videoUrl": "https://youtu.be/OIKOHzePJCA",
+    "reviews": [
+      {
+        "userEmail": "sarah.j@example.com",
+        "userName": "Sarah Jenkins",
+        "rating": 5,
+        "comment": "Priya explains the mudras so beautifully. A must-have for beginners!",
+        "timestamp": 1705500000000
+      }
+    ]
   },
   {
     "id": "T-0003",
@@ -36,7 +61,16 @@
     "images": [
       "/products/Tutorials/Buchaechum.jpg"
     ],
-    "videoUrl": "https://youtu.be/uaMl1w38wcc"
+    "videoUrl": "https://youtu.be/uaMl1w38wcc",
+    "reviews": [
+      {
+        "userEmail": "mina.kim@example.com",
+        "userName": "Mina Kim",
+        "rating": 5,
+        "comment": "The fan techniques are tricky but the instructor makes it easy to follow.",
+        "timestamp": 1705600000000
+      }
+    ]
   },
   {
     "id": "T-0004",

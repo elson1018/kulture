@@ -42,7 +42,6 @@ public class CloudinaryService {
             throw new IllegalStateException("Cloudinary is not configured. Check CLOUDINARY_URL environment variable.");
         }
 
-        // Upload params: use base64 data directly
         Map<String, Object> params = ObjectUtils.emptyMap();
         Map uploadResult = cloudinary.uploader().upload(base64Image, params);
 

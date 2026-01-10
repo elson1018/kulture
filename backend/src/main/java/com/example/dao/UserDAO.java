@@ -5,10 +5,8 @@ import com.example.util.MongoDBUtil;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.example.util.MongoDBUtil;
-import com.example.model.User;
-import org.bson.Document;
 
+import org.bson.Document;
 
 public class UserDAO {
     private final MongoCollection<Document> usersCollection;
@@ -28,8 +26,7 @@ public class UserDAO {
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("address", user.getAddress())
-                .append("role", user.getRole())
-                .append("companyName", user.getCompanyName());
+                .append("role", user.getRole());
 
         usersCollection.insertOne(doc);
     }
@@ -66,10 +63,28 @@ public class UserDAO {
                 doc.getString("password"),
                 doc.getString("email"),
                 doc.getString("address"),
-                doc.getString("role"),
-                doc.getString("companyName"));
+                doc.getString("role"));
         user.setId(doc.getObjectId("_id"));
         return user;
+    }
+
+    // Update user details
+    public void updateUser(User user) {
+        Document update = new Document()
+                .append("username", user.getUsername())
+                .append("email", user.getEmail())
+                .append("address", user.getAddress());
+
+        // Only update password if it's set
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            update.append("password", user.getPassword());
+        }
+
+        if (user.getId() != null) {
+            usersCollection.updateOne(Filters.eq("_id", user.getId()), new Document("$set", update));
+        } else {
+            usersCollection.updateOne(Filters.eq("email", user.getEmail()), new Document("$set", update));
+        }
     }
 
 }

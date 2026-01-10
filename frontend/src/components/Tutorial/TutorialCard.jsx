@@ -34,7 +34,7 @@ const TutorialCard = ({ tutorial }) => {
 
                 <div className="product-details">
                     <span className="product-tag">
-                        {tutorial.isLiveClass ? "🔴 Live Class" : "📹 Recorded"}
+                        {tutorial.isLiveClass ? "Live Class" : "Recorded"}
                     </span>
                     <p className="product-desc instructor-text">
                         Instructor: {tutorial.instructor}
