@@ -11,13 +11,12 @@ public class User {
     private String email;
     private String address;
     private String role;
-    private String companyName;
 
     public User() {
     }
 
     public User(String user_fname, String user_lname, String username, String password, String email, String address,
-            String role, String companyName) {
+            String role) {
         this.user_fname = user_fname;
         this.user_lname = user_lname;
         this.username = username;
@@ -25,7 +24,6 @@ public class User {
         this.email = email;
         this.address = address;
         this.role = role;
-        this.companyName = companyName;
     }
 
     // Setter and Getter Functions
@@ -92,13 +90,4 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
 }
