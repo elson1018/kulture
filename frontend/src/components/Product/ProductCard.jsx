@@ -60,7 +60,6 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="product-info">
-        {/* The class here must match the CSS (.product-name) */}
         <h3 className="product-name clickable" onClick={handleViewDetails}>
           {product.name}
         </h3>

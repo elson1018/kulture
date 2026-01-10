@@ -7,6 +7,9 @@ import Popup from "../../components/Popup/Popup";
 import { ShopContext } from "../../Context/ShopContext";
 import ScrollTopButton from "../../components/ScrollTopButton";
 
+import ReviewList from "../shop/ReviewList";
+import ReviewForm from "../shop/ReviewForm";
+
 const TutorialDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -18,6 +21,10 @@ const TutorialDetail = () => {
     const [error, setError] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
+
+    // Review states
+    const [canReview, setCanReview] = useState(false);
+    const [showReviewForm, setShowReviewForm] = useState(false);
 
     // Popup state
     const [popup, setPopup] = useState({ isOpen: false, message: '', type: '' });
@@ -45,6 +52,8 @@ const TutorialDetail = () => {
 
                 if (found) {
                     setTutorial(found);
+                    checkReviewEligibility(found.id);
+
                     if (found.isLiveClass) {
                         const tomorrow = new Date();
                         tomorrow.setDate(tomorrow.getDate() + 1);
@@ -68,6 +77,29 @@ const TutorialDetail = () => {
 
         fetchTutorial();
     }, [id]);
+
+    const checkReviewEligibility = async (tutorialId) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.email) return;
+
+        try {
+            const response = await fetch(ENDPOINTS.REVIEWS, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'check',
+                    email: user.email,
+                    productId: tutorialId
+                })
+            });
+            const result = await response.json();
+            if (response.ok && result.canReview) {
+                setCanReview(true);
+            }
+        } catch (error) {
+            console.error("Error checking eligibility:", error);
+        }
+    };
 
     const handlePreview = () => {
         setShowPreview(true);
@@ -110,8 +142,6 @@ const TutorialDetail = () => {
         }
 
         setIsAddingToCart(true);
-        // The user check is handled in addToCartBackend, but for the modal flow we might want to keep the earlier check "initiationAddToCart".
-        // However, safe to rely on backend or context check.
 
         const finalQty = tutorial.isLiveClass ? quantity : 1;
 
@@ -306,6 +336,29 @@ const TutorialDetail = () => {
                 </div>
             )}
 
+            {/* Reviews Section */}
+            <div className="review-section">
+                <ReviewList reviews={tutorial.reviews || []} />
+
+                {canReview && (
+                    <div className="review-action-container">
+                        {!showReviewForm ? (
+                            <button className="write-review-btn" onClick={() => setShowReviewForm(true)}>
+                                Write a Review
+                            </button>
+                        ) : (
+                            <div className="review-form-wrapper">
+                                <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
+                                <ReviewForm productId={tutorial.id} onReviewSubmitted={() => {
+                                    // Trigger re-fetch logic or simple reload
+                                    window.location.reload();
+                                }} />
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+
             {instructorTutorials.length > 0 && (
                 <section className="related-products">
                     <h2>More by {tutorial.instructor}</h2>
@@ -326,7 +379,7 @@ const TutorialDetail = () => {
                                         onError={(e) => { e.target.src = '/products/Tutorials/default.jpeg' }}
                                     />
                                     <span className="related-badge">
-                                        {item.isLiveClass ? '🔴 Live' : '📹 Recorded'}
+                                        {item.isLiveClass ? 'Live' : 'Recorded'}
                                     </span>
                                 </div>
                                 <div className="related-info">

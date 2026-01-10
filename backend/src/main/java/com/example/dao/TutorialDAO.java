@@ -44,13 +44,44 @@ public class TutorialDAO {
         }
 
         String lastId = lastTutorial.getId();
-        
+
         try {
             int idNum = Integer.parseInt(lastId.substring(2));
             return String.format("T-%04d", idNum + 1);
         } catch (NumberFormatException e) {
             // Fallback if existing/malformed IDs exist
             return "T-" + System.currentTimeMillis();
+        }
+    }
+
+    public Tutorial findById(String id) {
+        return tutorialCollection.find(Filters.eq("_id", id)).first();
+    }
+
+    public void addReviewToTutorial(String tutorialId, com.example.model.Review review) {
+        Tutorial tutorial = findById(tutorialId);
+        if (tutorial != null) {
+            List<com.example.model.Review> reviews = tutorial.getReviews();
+            if (reviews == null) {
+                reviews = new ArrayList<>();
+            }
+            reviews.add(review);
+
+            // Recalculate rating
+            double totalRating = 0;
+            for (com.example.model.Review r : reviews) {
+                totalRating += r.getRating();
+            }
+            double newRating = reviews.isEmpty() ? 0 : totalRating / reviews.size();
+            // Round to 1 decimal place
+            newRating = Math.round(newRating * 10.0) / 10.0;
+
+            // Update tutorial
+            tutorialCollection.updateOne(
+                    Filters.eq("_id", tutorialId),
+                    com.mongodb.client.model.Updates.combine(
+                            com.mongodb.client.model.Updates.set("reviews", reviews),
+                            com.mongodb.client.model.Updates.set("rating", newRating)));
         }
     }
 }

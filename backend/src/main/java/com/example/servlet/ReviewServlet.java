@@ -2,9 +2,11 @@ package com.example.servlet;
 
 import com.example.dao.ProductDAO;
 import com.example.dao.SalesDAO;
+import com.example.dao.TutorialDAO;
 import com.example.model.Product;
 import com.example.model.Review;
 import com.example.model.Sale;
+import com.example.model.Tutorial;
 import com.example.util.JsonUtil;
 import com.example.util.CorsConfig;
 import com.google.gson.Gson;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class ReviewServlet extends HttpServlet {
 
     private ProductDAO productDAO;
+    private TutorialDAO tutorialDAO;
     private SalesDAO salesDAO;
     private Gson gson;
 
@@ -30,6 +33,7 @@ public class ReviewServlet extends HttpServlet {
     public void init() throws ServletException {
         // initialize DAOs and Gson for JSON handling
         this.productDAO = new ProductDAO();
+        this.tutorialDAO = new TutorialDAO();
         this.salesDAO = new SalesDAO();
         this.gson = new Gson();
     }
@@ -79,9 +83,14 @@ public class ReviewServlet extends HttpServlet {
             String comment = body.get("comment").getAsString();
             String userName = body.has("userName") ? body.get("userName").getAsString() : "Anonymous";
 
-            // create and save the review object directly to the product
+            // create and save the review object directly to the product or tutorial
             Review review = new Review(email, userName, rating, comment);
-            productDAO.addReviewToProduct(productId, review);
+
+            if (productId.startsWith("T-")) {
+                tutorialDAO.addReviewToTutorial(productId, review);
+            } else {
+                productDAO.addReviewToProduct(productId, review);
+            }
 
             resp.getWriter().write(gson.toJson(Map.of("success", true, "message", "Review submitted successfully")));
 
@@ -93,13 +102,23 @@ public class ReviewServlet extends HttpServlet {
 
     // core logic to check if a user has purchased a specific product
     private boolean checkPurchase(String email, String productId) {
-        List<Product> products = productDAO.getAllProducts();
-        Product targetProduct = products.stream()
-                .filter(p -> p.getId().equals(productId))
-                .findFirst()
-                .orElse(null);
+        String targetName = "";
 
-        if (targetProduct == null) {
+        if (productId.startsWith("T-")) {
+            Tutorial t = tutorialDAO.findById(productId);
+            if (t != null)
+                targetName = t.getName();
+        } else {
+            List<Product> products = productDAO.getAllProducts();
+            Product targetProduct = products.stream()
+                    .filter(p -> p.getId().equals(productId))
+                    .findFirst()
+                    .orElse(null);
+            if (targetProduct != null)
+                targetName = targetProduct.getName();
+        }
+
+        if (targetName.isEmpty()) {
             return false;
         }
 
@@ -113,7 +132,7 @@ public class ReviewServlet extends HttpServlet {
             }
             if (sale.getProductNames() != null) {
                 for (String boughtName : sale.getProductNames()) {
-                    if (boughtName.trim().equalsIgnoreCase(targetProduct.getName().trim())) {
+                    if (boughtName.trim().equalsIgnoreCase(targetName.trim())) {
                         return true;
                     }
                 }
