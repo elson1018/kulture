@@ -115,12 +115,6 @@
     transition: all 0.3s ease;
 }
 
-.searchbar:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    border-color: #9E5E4E;
-}
-
 .searchbar input {
     border: none;
     outline: none;

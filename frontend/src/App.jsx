@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading/Loading"; // Using the Loading component we created earlier
+import { ENDPOINTS } from "./config/api";
 
 // Auth pages
 const Login = lazy(() => import("./Pages/auth/Login"));
@@ -204,23 +205,38 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if this is a new browser session 
-    const isNewSession = !sessionStorage.getItem("app_session_active");
+    // Check session with backend on load
+    const checkSession = async () => {
+      try {
+        const response = await fetch(ENDPOINTS.AUTH_STATUS, {
+          method: 'GET',
+          credentials: 'include' // Send cookies for session validation
+        });
 
-    if (isNewSession) {
-
-      localStorage.removeItem("user");
-      localStorage.removeItem("role");
-      setUser(null);
-
-      sessionStorage.setItem("app_session_active", "true");
-    } else {
-      //Restore user state
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        if (response.ok) {
+          const data = await response.json();
+          if (data.status === 'success' && data.user) {
+            setUser({ ...data.user, role: data.role });
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("role", data.role);
+          }
+        } else {
+          // Session invalid or expired - clear local storage
+          localStorage.removeItem("user");
+          localStorage.removeItem("role");
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Session check failed:", error);
+        // On error, fallback to localStorage
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
       }
-    }
+    };
+
+    checkSession();
   }, []);
 
   return (
