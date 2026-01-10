@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:8082/api';
+export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8082/api';
 
 export const ENDPOINTS = {
     CART: `${API_BASE}/cart`,
