@@ -53,6 +53,7 @@
   transition: color 0.2s ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex-shrink: 0;
@@ -88,7 +89,7 @@
   margin-top: auto;
   width: 100%;
   padding: 12px;
-  background-color: #000;
+  background-color: #D9944E;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -99,7 +100,11 @@
   overflow: hidden;
 }
 
-
+.add-to-cart-btn:hover {
+  background-color: #C7813C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(217, 148, 78, 0.3);
+}
 
 .clickable {
   cursor: pointer;

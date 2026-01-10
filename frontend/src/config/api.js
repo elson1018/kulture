@@ -1,7 +1,7 @@
 // Centralized API configuration
 // Change this when deploying to production
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api';
 
 // Individual endpoint helpers (optional, for convenience)
 export const ENDPOINTS = {
