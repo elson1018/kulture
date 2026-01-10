@@ -17,19 +17,7 @@ const faqs = [
       },
     ],
   },
-  {
-    category: "Returns & Refunds",
-    questions: [
-      {
-        q: "What is your return policy?",
-        a: "We accept returns within 30 days of delivery for items in original condition. Custom or personalized items are non-refundable.",
-      },
-      {
-        q: "How do I request a refund?",
-        a: "Go to 'My Orders', select the item, and click 'Request Refund'. Our team will review your request within 24 hours.",
-      },
-    ],
-  },
+
   {
     category: "Products & Artisans",
     questions: [

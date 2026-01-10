@@ -86,20 +86,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>7. Returns and Refunds</h2>
-                    <p>
-                        We want you to be completely satisfied with your purchase. If you are not satisfied, you may return eligible
-                        products within 14 days of delivery for a refund or exchange, subject to our return policy.
-                    </p>
-                    <p>
-                        Items must be unused, in original packaging, and in the same condition as received. Custom-made or personalized
-                        items cannot be returned unless defective. Refunds will be processed to the original payment method within
-                        7-10 business days after we receive the returned item.
-                    </p>
-                </section>
-
-                <section>
-                    <h2>8. Intellectual Property</h2>
+                    <h2>7. Intellectual Property</h2>
                     <p>
                         All content on this website, including but not limited to text, graphics, logos, images, and software,
                         is the property of Kulture or its content suppliers and is protected by international copyright laws.
@@ -111,7 +98,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>9. User Conduct</h2>
+                    <h2>8. User Conduct</h2>
                     <p>
                         You agree not to use our services for any unlawful purpose or in any way that could damage, disable,
                         overburden, or impair our website. You may not attempt to gain unauthorized access to any portion of
@@ -124,7 +111,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>10. Reviews and Comments</h2>
+                    <h2>9. Reviews and Comments</h2>
                     <p>
                         Users may post reviews and comments about products and services. All reviews must be honest and based on
                         your personal experience. You grant Kulture a non-exclusive, royalty-free license to use, reproduce, and
@@ -136,7 +123,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>11. Limitation of Liability</h2>
+                    <h2>10. Limitation of Liability</h2>
                     <p>
                         Kulture shall not be liable for any direct, indirect, incidental, special, or consequential damages
                         resulting from the use or inability to use our services, unauthorized access to your data, or any other
@@ -149,7 +136,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>12. Indemnification</h2>
+                    <h2>11. Indemnification</h2>
                     <p>
                         You agree to indemnify and hold harmless Kulture, its officers, directors, employees, and agents from
                         any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of
@@ -158,7 +145,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>13. Privacy</h2>
+                    <h2>12. Privacy</h2>
                     <p>
                         Your use of our services is also governed by our Privacy Policy. Please review our Privacy Policy to
                         understand our practices regarding the collection and use of your personal information.
@@ -166,7 +153,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>14. Changes to Terms</h2>
+                    <h2>13. Changes to Terms</h2>
                     <p>
                         Kulture reserves the right to modify these Terms of Service at any time. We will notify users of any
                         material changes by posting the new terms on this page with an updated "Last Updated" date. Your continued
@@ -175,7 +162,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>15. Governing Law</h2>
+                    <h2>14. Governing Law</h2>
                     <p>
                         These Terms of Service shall be governed by and construed in accordance with the laws of Malaysia,
                         without regard to its conflict of law provisions. Any disputes arising from these terms shall be resolved
@@ -184,7 +171,7 @@ const Terms = () => {
                 </section>
 
                 <section>
-                    <h2>16. Contact Information</h2>
+                    <h2>15. Contact Information</h2>
                     <p>
                         If you have any questions about these Terms of Service, please contact us at:
                     </p>
