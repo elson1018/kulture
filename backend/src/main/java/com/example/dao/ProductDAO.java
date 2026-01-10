@@ -24,6 +24,10 @@ public class ProductDAO {
         return products;
     }
 
+    public Product getProductById(String productId) {
+        return productCollection.find(Filters.eq("_id", productId)).first();
+    }
+
     public void saveProduct(Product product) {
         productCollection.insertOne(product);
     }

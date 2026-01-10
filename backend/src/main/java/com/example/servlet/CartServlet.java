@@ -3,12 +3,14 @@ package com.example.servlet;
 
 import com.google.gson.Gson;
 import com.example.dao.CartDAO;
+import com.example.dao.ProductDAO;
 import com.example.dao.SalesDAO;
 import com.example.dao.UserDAO;
 import com.example.dao.BookingDAO;
 import com.example.model.Booking;
 import com.example.model.Cart;
 import com.example.model.CartItem;
+import com.example.model.Product;
 import com.example.model.Sale;
 import com.example.model.User;
 import com.example.util.CorsConfig;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 public class CartServlet extends HttpServlet {
 
     private CartDAO cartDAO;
+    private ProductDAO productDAO;
     private UserDAO userDAO;
     private SalesDAO salesDAO;
     private BookingDAO bookingDAO;
@@ -39,6 +42,7 @@ public class CartServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         this.cartDAO = new CartDAO();
+        this.productDAO = new ProductDAO();
         this.userDAO = new UserDAO();
         this.salesDAO = new SalesDAO();
         this.bookingDAO = new BookingDAO();
@@ -132,7 +136,15 @@ public class CartServlet extends HttpServlet {
                     }
 
                     for (CartItem item : companyItems) {
-                        totalAmount += item.getPrice() * item.getQuantity();
+                        Product product = productDAO.getProductById(item.getProductId());
+                        double itemPrice = item.getPrice();
+
+                        // Check for discount (Instruments category gets 10% off)
+                        if (product != null && "Instruments".equals(product.getCategory())) {
+                            itemPrice = itemPrice * 0.90;
+                        }
+
+                        totalAmount += itemPrice * item.getQuantity();
                         productNames.add(item.getProductName());
 
                         // Create Booking for tutorials
@@ -149,6 +161,9 @@ public class CartServlet extends HttpServlet {
                             bookingDAO.createBooking(booking);
                         }
                     }
+
+                    // Apply shipping fee (RM 8.00)
+                    totalAmount += 8.00;
 
                     Sale newSale = new Sale();
                     newSale.setCustomerEmail(email);
@@ -174,7 +189,7 @@ public class CartServlet extends HttpServlet {
             }
 
             CartItem newItem = gson.fromJson(req.getReader(), CartItem.class);
-            if (newItem.getProductId() == null || newItem.getQuantity() <= 0) {
+            if (newItem.getProductId() == null || newItem.getQuantity() == 0) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().write(gson.toJson(Map.of("status", "error", "message", "Invalid product data")));
                 return;

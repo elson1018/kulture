@@ -70,7 +70,6 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  if (id) fetchProduct();
 
   const handleAddToCart = async () => {
     const cartItem = {

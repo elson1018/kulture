@@ -45,11 +45,11 @@ public class CartDAO {
         for (CartItem item : cart.getItems()) {
             boolean sameProduct = item.getProductId().equals(newItem.getProductId());
             boolean sameDate = (item.getSelectedDate() == null && newItem.getSelectedDate() == null) ||
-                               (item.getSelectedDate() != null && item.getSelectedDate().equals(newItem.getSelectedDate()));
+                    (item.getSelectedDate() != null && item.getSelectedDate().equals(newItem.getSelectedDate()));
 
             if (sameProduct && sameDate) {
-                // Just update quantity
-                item.setQuantity(item.getQuantity() + newItem.getQuantity());
+                int newQuantity = item.getQuantity() + newItem.getQuantity();
+                item.setQuantity(Math.max(1, newQuantity));
                 itemExists = true;
                 break;
             }
@@ -113,18 +113,17 @@ public class CartDAO {
         if (itemDocs != null) {
             for (Document itemDoc : itemDocs) {
 
-              
                 Object priceObj = itemDoc.get("price");
                 double price = 0.0;
                 if (priceObj instanceof Number) {
                     price = ((Number) priceObj).doubleValue();
                 } else if (priceObj instanceof String) {
-                     // Fallback for string representation just in case
-                     try {
-                         price = Double.parseDouble((String) priceObj);
-                     } catch (NumberFormatException e) {
-                         price = 0.0;
-                     }
+                    // Fallback for string representation just in case
+                    try {
+                        price = Double.parseDouble((String) priceObj);
+                    } catch (NumberFormatException e) {
+                        price = 0.0;
+                    }
                 }
 
                 Integer qtyWrapper = itemDoc.getInteger("quantity");
