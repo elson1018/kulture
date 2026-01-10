@@ -1,28 +1,28 @@
-.contact-page{
+.contact-page {
   padding: 60px 40px;
   background-color: #F5F5E9;
   color: #4A3C34;
   min-height: 100vh;
 }
 
-.contact-header{
+.contact-header {
   text-align: center;
   max-width: 700px;
   margin: 0 auto 50px auto;
 }
 
-.contact-header h1{
+.contact-header h1 {
   font-size: 42px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.contact-header p{
+.contact-header p {
   font-size: 18px;
-  color:#9E5E4E;
+  color: #9E5E4E;
 }
 
-.contact-content-wrapper{
+.contact-content-wrapper {
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
@@ -30,14 +30,14 @@
   background-color: white;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0,0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-.contact-form-section{
+.contact-form-section {
   flex: 2;
 }
 
-.contact-form{
+.contact-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -45,28 +45,28 @@
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
-.contact-form textarea{
+.contact-form textarea {
   padding: 12px;
   border: 1px solid #9E5E4E;
-  border-radius:8px;
+  border-radius: 8px;
   font-size: 16px;
   color: #4A3C3A;
   transition: border-color 0.3s;
 }
 
 .contact-form input:focus,
-.contact-form textarea:focus{
+.contact-form textarea:focus {
   outline: none;
   border-color: #D9944E;
   box-shadow: 0 0 0 3px rgba(217, 148, 78, 0.1);
 }
 
-.contact-form textarea{
+.contact-form textarea {
   font-family: inherit;
   resize: none;
 }
 
-.submit-btn{
+.submit-btn {
   padding: 15px;
   border: none;
   border-radius: 30px;
@@ -79,26 +79,58 @@
   margin-top: 10px;
 }
 
-.submit-btn:hover{
+.submit-btn:hover {
   background-color: #C7813C;
 }
 
-.contact-info-section{
-  flex:1;
+.contact-info-section {
+  flex: 1;
 }
 
-.contact-info-section h2{
+.contact-info-section h2 {
   font-size: 28px;
   color: #4A3C3A;
   margin-bottom: 25px;
 }
 
-.info-details p{
+.info-details p {
   margin-bottom: 15px;
   font-size: 16px;
   line-height: 1.5;
 }
 
-.info-details strong{
-  color:#9E5E4E;
+.info-details strong {
+  color: #9E5E4E;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 40px 20px;
+  }
+
+  .contact-content-wrapper {
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  .contact-header h1 {
+    font-size: 32px;
+  }
+
+  .contact-info-section h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .info-details {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-header h1 {
+    font-size: 28px;
+  }
 }

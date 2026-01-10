@@ -49,7 +49,11 @@
 /* Story Section */
 .about-story {
     padding: 80px 20px;
+    background-image: url('../../assets/about_stats_bg.png');
     background-color: #F5F5E9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .story-content {
@@ -89,6 +93,14 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 20px rgba(74, 60, 52, 0.15);
+    overflow: hidden;
+}
+
+.story-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .story-image-placeholder p {
@@ -157,7 +169,11 @@
 /* Offerings Section */
 .about-offerings {
     padding: 80px 20px;
+    background-image: url('../../assets/about_stats_bg.png');
     background-color: #F5F5E9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .about-offerings h2 {
@@ -359,8 +375,12 @@
 /* Final CTA Section */
 .about-final-cta {
     padding: 100px 20px;
-    background-color: #F5F5E9;
+    background-image: url('../../assets/about_stats_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     text-align: center;
+    color: #4A3C34;
 }
 
 .about-final-cta h2 {

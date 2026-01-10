@@ -348,6 +348,9 @@
         width: 95%;
         margin: -40px auto 40px auto;
         padding: 30px 20px;
+        background: #4A3C34;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     .promotion h1 {
@@ -406,6 +409,10 @@
         width: 90%;
         margin: -30px auto 30px auto;
         padding: 25px 15px;
+        background: #4A3C34;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .promotion h1 {

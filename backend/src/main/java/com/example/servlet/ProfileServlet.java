@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -42,7 +42,8 @@ public class ProfileServlet extends HttpServlet {
         String path = req.getPathInfo();
 
         // Ensure user is logged in
-        HttpSession session = req.getSession(false);
+        // Ensure user is logged in
+        // HttpSession session = req.getSession(false); // Unused variable removed
 
         if ("/update".equals(path)) {
             handleUpdateProfile(req, resp);

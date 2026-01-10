@@ -1,10 +1,9 @@
 import React from 'react'
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import photo_img from '../../assets/people.png' // this will be replaced with the actual photo
-// import tanChinQian from '../../assets/team/tan_chin_qian.jpg'
-// import chongHanZheng from '../../assets/team/chong_han_zheng.jpg'
-// import elsonOoi from '../../assets/team/elson_ooi.jpg'
-// import lauJunHao from '../../assets/team/lau_jun_hao.jpg'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
+import tanChinQian from '../../assets/team/chinqian.png'
+import chongHanZheng from '../../assets/team/hanzheng.png'
+import elsonOoi from '../../assets/team/elson.jpg'
+import lauJunHao from '../../assets/team/junhao.jpg'
 import './Team.css'
 
 const teamMembers = [
@@ -12,28 +11,28 @@ const teamMembers = [
         id: 1,
         name: "Tan Chin Qian",
         title: "Founder & CEO",
-        photo: photo_img,  // tanChinQian
+        photo: tanChinQian,
         linkedin: "https://www.linkedin.com/in/tan-chin-qian-5146641b5"
     },
     {
         id: 2,
         name: "Chong Han Zheng",
         title: "Co-Founder & CTO",
-        photo: photo_img,  // chongHanZheng
+        photo: chongHanZheng,
         linkedin: "https://www.linkedin.com/in/chong-han-zheng-8bb613339"
     },
     {
         id: 3,
         name: "Elson Ooi",
         title: "Lead Developer",
-        photo: photo_img,  // elsonOoi
+        photo: elsonOoi,
         linkedin: "https://www.linkedin.com/in/elson-ooi-yin-feng-666005314"
     },
     {
         id: 4,
         name: "Lau Jun Hao",
         title: "Marketing Director",
-        photo: photo_img,  // lauJunHao
+        photo: lauJunHao,
         linkedin: "https://www.linkedin.com/in/jun-hao-lau-8874a6276"
     }
 ]

@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.util.List;
 import java.util.ArrayList;
-import com.example.model.Review;
+
 import org.bson.codecs.pojo.annotations.BsonId;
 
 public class Product {
