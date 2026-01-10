@@ -70,6 +70,12 @@
     cursor: pointer;
 }
 
+/* Hide native browser password toggle (Edge/IE) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
 .agreement-wrapper {
     display: flex;
     align-items: flex-start;

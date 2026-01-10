@@ -24,7 +24,7 @@
 *   **MongoDB** (Database)
 *   **Tomcat (Embed)** (Web server via Cargo plugin)
 
-## 📦 Getting Started
+## Getting Started
 
 ### Prerequisites
 *   Node.js & npm
@@ -53,7 +53,7 @@ npm run dev
 ### 3. Access the App
 Open your browser to `http://localhost:5173`.
 
-## 📂 Project Structure
+## Project Structure
 
 *   **/frontend**: Contains the React SPA source code.
     *   `src/components`: Reusable UI components (ProductCard, Navbar, etc.).
