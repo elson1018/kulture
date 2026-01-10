@@ -103,3 +103,32 @@
     width: 18px;
     height: 18px;
 }
+
+@media (max-width: 768px) {
+    .team-page {
+        padding: 40px 20px;
+    }
+
+    .team-header h1 {
+        font-size: 36px;
+    }
+
+    .team-grid {
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-header h1 {
+        font-size: 28px;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        width: 100%;
+    }
+}

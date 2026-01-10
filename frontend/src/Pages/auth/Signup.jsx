@@ -6,6 +6,7 @@ import padlock_icon from "../../assets/padlock.png";
 import eye_closed_icon from "../../assets/eye_closed.png";
 import eye_opened_icon from "../../assets/eye_opened.png";
 import "./Signup.css";
+import Popup from "../../components/Popup/Popup"; // Import Popup
 
 const Signup = ({ onFormSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +18,23 @@ const Signup = ({ onFormSwitch }) => {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
+  const [popup, setPopup] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+    onConfirm: null,
+  });
+
+  const closePopup = () => {
+    setPopup({ ...popup, isOpen: false });
+    // If it was a success message, it will switch to login
+    if (popup.type === "success" && onFormSwitch) {
+      onFormSwitch("login");
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,6 +53,16 @@ const Signup = ({ onFormSwitch }) => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setPopup({
+        isOpen: true,
+        message: "Passwords do not match!",
+        type: "error",
+      });
+      return;
+    }
 
     const dataToSend = {
       username: formData.username,
@@ -59,14 +86,25 @@ const Signup = ({ onFormSwitch }) => {
       const result = await response.json();
 
       if (result.status === "success") {
-        alert("Registration successful! Please log in.");
-        onFormSwitch("login");
+        setPopup({
+          isOpen: true,
+          message: "Registration successful! Please log in.",
+          type: "success",
+        });
       } else {
-        alert("Registration failed: " + result.message);
+        setPopup({
+          isOpen: true,
+          message: "Registration failed: " + result.message,
+          type: "error",
+        });
       }
     } catch (error) {
       console.error("Signup Error:", error);
-      alert("Failed to connect to server.");
+      setPopup({
+        isOpen: true,
+        message: "Failed to connect to server.",
+        type: "error",
+      });
     }
   };
 
@@ -142,6 +180,18 @@ const Signup = ({ onFormSwitch }) => {
           />
         </div>
 
+        <div className="input-wrapper">
+          <img src={padlock_icon} alt="Confirm Password" className="padlock-icon" />
+          <input
+            name="confirmPassword"
+            type={showPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            className="input-field"
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div className="agreement-wrapper">
           <input
             type="checkbox"
@@ -167,6 +217,13 @@ const Signup = ({ onFormSwitch }) => {
           Log In here
         </a>
       </p>
+
+      <Popup
+        isOpen={popup.isOpen}
+        message={popup.message}
+        type={popup.type}
+        onClose={closePopup}
+      />
     </div>
   );
 };

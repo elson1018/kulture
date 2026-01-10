@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import missionIcon from '../../assets/mission.png';
 import visionIcon from '../../assets/vision.png';
+import aboutImage from '/malaysia-festival.jpg';
 import './About.css';
 
 const About = () => {
@@ -94,7 +95,7 @@ const About = () => {
           </div>
           <div className="story-image">
             <div className="story-image-placeholder">
-              {/* i plan to add an image here */}
+              <img src={aboutImage} alt="Our Story" />
             </div>
           </div>
         </div>
