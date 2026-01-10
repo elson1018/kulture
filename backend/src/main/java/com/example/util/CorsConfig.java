@@ -13,6 +13,7 @@ public class CorsConfig {
 
         // Allow Localhost and Vercel domains
         if (origin != null && (origin.startsWith("http://localhost") ||
+                origin.startsWith("http://127.0.0.1") ||
                 origin.endsWith(".vercel.app") ||
                 origin.equals(System.getenv("FRONTEND_URL")))) {
             resp.setHeader("Access-Control-Allow-Origin", origin);

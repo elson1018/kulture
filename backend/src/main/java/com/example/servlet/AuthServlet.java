@@ -45,6 +45,22 @@ public class AuthServlet extends HttpServlet {
 
     // Handle different authentication requests
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setupCORS(resp, req);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        String path = req.getPathInfo();
+
+        if ("/status".equals(path)) {
+            handleStatus(req, resp);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write(gson.toJson(Map.of("error", "Invalid Endpoint")));
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setupCORS(resp, req);
         resp.setContentType("application/json");
@@ -67,6 +83,11 @@ public class AuthServlet extends HttpServlet {
     private void handleRegister(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         User newUser = gson.fromJson(req.getReader(), User.class);
+
+        // Enforce lowercase email to prevent case-sensitive duplicates
+        if (newUser.getEmail() != null) {
+            newUser.setEmail(newUser.getEmail().toLowerCase());
+        }
 
         if (userDAO.findByEmail(newUser.getEmail()) != null) {
             sendError(resp, "Email address is already registered.");
@@ -91,6 +112,11 @@ public class AuthServlet extends HttpServlet {
     private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         User loginRequest = gson.fromJson(req.getReader(), User.class);
+
+        // Enforce lowercase email for consistent lookups
+        if (loginRequest.getEmail() != null) {
+            loginRequest.setEmail(loginRequest.getEmail().toLowerCase());
+        }
 
         User user = userDAO.findByEmail(loginRequest.getEmail());
 
@@ -131,6 +157,28 @@ public class AuthServlet extends HttpServlet {
             session.invalidate();
         }
         resp.getWriter().write(gson.toJson(Map.of("message", "Logged out")));
+    }
+
+    private void handleStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("user_id") != null) {
+            String userId = (String) session.getAttribute("user_id");
+            User user = userDAO.findById(userId);
+            if (user != null) {
+                user.setPassword(null); // Hide password
+                Map<String, Object> responseData = new HashMap<>();
+                responseData.put("status", "success");
+                responseData.put("authenticated", true);
+                responseData.put("role", user.getRole());
+                responseData.put("user", user);
+                resp.getWriter().write(gson.toJson(responseData));
+                return;
+            }
+        }
+
+        // Not authenticated
+        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        resp.getWriter().write(gson.toJson(Map.of("status", "error", "message", "Not logged in")));
     }
 
     private void sendError(HttpServletResponse resp, String msg) throws IOException {
