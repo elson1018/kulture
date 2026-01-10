@@ -26,19 +26,17 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 5px;
     margin-bottom: 15px;
-    margin-left: 0px;
-
+    float: right;
 }
 
 .back-button:hover {
     background: #4A3C34;
     color: white;
-    transform: translateX(-2px);
 }
 
 .shop-content {

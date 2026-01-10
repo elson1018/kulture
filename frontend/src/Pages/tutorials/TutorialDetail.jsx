@@ -8,7 +8,6 @@ import { ShopContext } from "../../Context/ShopContext";
 import ScrollTopButton from "../../components/ScrollTopButton";
 
 import ReviewList from "../shop/ReviewList";
-import ReviewForm from "../shop/ReviewForm";
 
 const TutorialDetail = () => {
     const { id } = useParams();
@@ -23,8 +22,7 @@ const TutorialDetail = () => {
     const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
 
     // Review states
-    const [canReview, setCanReview] = useState(false);
-    const [showReviewForm, setShowReviewForm] = useState(false);
+
 
     // Popup state
     const [popup, setPopup] = useState({ isOpen: false, message: '', type: '' });
@@ -52,7 +50,7 @@ const TutorialDetail = () => {
 
                 if (found) {
                     setTutorial(found);
-                    checkReviewEligibility(found.id);
+                    setTutorial(found);
 
                     if (found.isLiveClass) {
                         const tomorrow = new Date();
@@ -78,28 +76,7 @@ const TutorialDetail = () => {
         fetchTutorial();
     }, [id]);
 
-    const checkReviewEligibility = async (tutorialId) => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user || !user.email) return;
 
-        try {
-            const response = await fetch(ENDPOINTS.REVIEWS, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'check',
-                    email: user.email,
-                    productId: tutorialId
-                })
-            });
-            const result = await response.json();
-            if (response.ok && result.canReview) {
-                setCanReview(true);
-            }
-        } catch (error) {
-            console.error("Error checking eligibility:", error);
-        }
-    };
 
     const handlePreview = () => {
         setShowPreview(true);
@@ -339,24 +316,6 @@ const TutorialDetail = () => {
             {/* Reviews Section */}
             <div className="review-section">
                 <ReviewList reviews={tutorial.reviews || []} />
-
-                {canReview && (
-                    <div className="review-action-container">
-                        {!showReviewForm ? (
-                            <button className="write-review-btn" onClick={() => setShowReviewForm(true)}>
-                                Write a Review
-                            </button>
-                        ) : (
-                            <div className="review-form-wrapper">
-                                <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
-                                <ReviewForm productId={tutorial.id} onReviewSubmitted={() => {
-                                    // Trigger re-fetch logic or simple reload
-                                    window.location.reload();
-                                }} />
-                            </div>
-                        )}
-                    </div>
-                )}
             </div>
 
             {instructorTutorials.length > 0 && (

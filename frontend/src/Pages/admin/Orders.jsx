@@ -185,7 +185,6 @@ const Orders = () => {
 
             {orders.length === 0 ? (
                 <div className="empty-orders">
-                    <div className="empty-orders-icon">📦</div>
                     <h2>No Orders Yet</h2>
                     <p>You haven't placed any orders yet. Start shopping to see your order history here!</p>
                     <button className="btn-primary" onClick={() => navigate("/shop")}>

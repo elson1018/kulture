@@ -6,7 +6,6 @@ import ScrollTopButton from "../../components/ScrollTopButton";
 import "./ProductDetail.css";
 import Popup from "../../components/Popup/Popup";
 import ReviewList from "./ReviewList";
-import ReviewForm from "./ReviewForm";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -22,8 +21,7 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [popup, setPopup] = useState({ isOpen: false, message: "", type: "" });
 
-  const [canReview, setCanReview] = useState(false);
-  const [showReviewForm, setShowReviewForm] = useState(false);
+
 
   const handleBack = () => {
     navigate(-1);
@@ -72,33 +70,7 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  useEffect(() => {
-    const checkEligibility = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user || !user.email) return;
-
-        const payload = { action: 'check', email: user.email, productId: id };
-
-        const response = await fetch(ENDPOINTS.REVIEWS, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setCanReview(data.canReview);
-        } else {
-          console.error("Eligibility check failed:", response.status);
-        }
-      } catch (e) {
-        console.error("Failed to check review eligibility", e);
-      }
-    };
-
-    if (id) checkEligibility();
-  }, [id]);
+  if (id) fetchProduct();
 
   const handleAddToCart = async () => {
     const cartItem = {
@@ -250,21 +222,6 @@ const ProductDetail = () => {
 
       <div className="review-section">
         <ReviewList reviews={product.reviews || []} />
-
-        {canReview && (
-          <div className="review-action-container">
-            {!showReviewForm ? (
-              <button className="write-review-btn" onClick={() => setShowReviewForm(true)}>
-                Write a Review
-              </button>
-            ) : (
-              <div className="review-form-wrapper">
-                <button className="cancel-review-btn" onClick={() => setShowReviewForm(false)}>Cancel</button>
-                <ReviewForm productId={product.id} onReviewSubmitted={() => fetchProduct(true)} />
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
 
