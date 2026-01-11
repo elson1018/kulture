@@ -21,9 +21,6 @@ const TutorialDetail = () => {
     const [showPreview, setShowPreview] = useState(false);
     const [bookingMessage, setBookingMessage] = useState({ type: '', text: '' });
 
-    // Review states
-
-
     // Popup state
     const [popup, setPopup] = useState({ isOpen: false, message: '', type: '' });
 
