@@ -7,7 +7,11 @@ import com.example.model.Product;
 import com.example.util.MongoDBUtil;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
+import com.mongodb.client.model.Aggregates;
 
 public class ProductDAO {
     private final MongoCollection<Product> productCollection;
@@ -21,6 +25,19 @@ public class ProductDAO {
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
         productCollection.find().into(products); // Find all relevant documents and insert it in the List of POJOS
+        return products;
+    }
+
+    public List<Product> getProductsByCategory(String category) {
+        List<Product> products = new ArrayList<>();
+        productCollection.find(Filters.eq("category", category)).into(products);
+        return products;
+    }
+
+    public List<Product> getTrendingProducts(int limit) {
+        List<Product> products = new ArrayList<>();
+        // Use MongoDB aggregation to get random sample
+        productCollection.aggregate(Arrays.asList(Aggregates.sample(limit))).into(products);
         return products;
     }
 

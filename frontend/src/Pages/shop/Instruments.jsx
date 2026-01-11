@@ -17,7 +17,7 @@ const Instruments = () => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(ENDPOINTS.PRODUCTS);
+        const response = await fetch(`${ENDPOINTS.PRODUCTS}?category=Instruments`);
 
         if (!response.ok) {
           throw new Error(`HTTP ERROR Status: ${response.status}`);
@@ -25,9 +25,7 @@ const Instruments = () => {
 
         const productData = await response.json();
 
-        const instrumentData = productData.filter(items => items.category === "Instruments");
-
-        setProduct(instrumentData);
+        setProduct(productData);
 
       } catch (error) {
         console.log("Error fetching " + error.message);

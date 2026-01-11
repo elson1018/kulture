@@ -15,15 +15,10 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch(ENDPOINTS.PRODUCTS) // fetch products from backend
+    fetch(`${ENDPOINTS.PRODUCTS}?action=trending`) // fetch only 4 random products from backend
       .then(res => res.json())
       .then(data => {
-
-        // this takes 4 random products from backend
-        const shuffled = data.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 4);
-
-        setTrendingProducts(selected);
+        setTrendingProducts(data);
       })
       .catch(err => console.error("Error fetching trending:", err));
   }, []);
@@ -77,7 +72,7 @@ const Home = () => {
           {categories.map((cat, index) => (
             <div key={index} className="category-card" onClick={() => navigate(cat.path)}>
               <div className="cat-image-container">
-                <img src={cat.image} alt={cat.title} />
+                <img src={cat.image} alt={cat.title} loading="lazy" />
               </div>
               <div className="cat-info">
                 <h3>{cat.title}</h3>
@@ -101,6 +96,7 @@ const Home = () => {
                   <img
                     src={item.images && item.images.length > 0 ? item.images[0] : item.image || '/products/placeholder.jpg'}
                     alt={item.name}
+                    loading="lazy"
                   />
                   <span className="badge">Hot</span>
                 </div>

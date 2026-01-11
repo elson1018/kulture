@@ -62,6 +62,19 @@ public class ProductServlet extends HttpServlet { // Product Servlet
                 return;
             }
 
+            if ("trending".equals(action)) {
+                List<Product> products = productDAO.getTrendingProducts(4);
+                resp.getWriter().write(gson.toJson(products));
+                return;
+            }
+
+            String category = req.getParameter("category");
+            if (category != null && !category.isEmpty()) {
+                List<Product> products = productDAO.getProductsByCategory(category);
+                resp.getWriter().write(gson.toJson(products));
+                return;
+            }
+
             List<Product> products = productDAO.getAllProducts();// Gets all the products and store in products
 
             String json = new Gson().toJson(products);// Serialise the products into json format
