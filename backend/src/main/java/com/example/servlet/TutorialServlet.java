@@ -67,16 +67,10 @@ public class TutorialServlet extends HttpServlet {
             }
 
             String jsonString = jsonBuilder.toString();
-            // Parse as Map to handle potential manual processing if needed, though direct
-            // POJO works
-            // But strict GSON might fail if we have extra fields, mapping helps cleaning
             Map<String, Object> jsonMap = gson.fromJson(jsonString, Map.class);
 
-            // Convert modified map back to JSON then to Tutorial object
             String modifiedJson = gson.toJson(jsonMap);
             Tutorial newTutorial = gson.fromJson(modifiedJson, Tutorial.class);
-
-            // Log for debugging
 
             tutorialDAO.saveTutorial(newTutorial);
 
