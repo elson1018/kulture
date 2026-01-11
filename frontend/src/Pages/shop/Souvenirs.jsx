@@ -13,17 +13,15 @@ const Souvenirs = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(ENDPOINTS.PRODUCTS);
+        const response = await fetch(`${ENDPOINTS.PRODUCTS}?category=Souvenirs`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
 
         const data = await response.json();
-        // show only souvenirs product
-        const souvenirItems = data.filter(item => item.category === 'Souvenirs');
-
-        setDisplayProducts(souvenirItems);
+        
+        setDisplayProducts(data);
         setLoading(false);
       } catch (error) {
         console.error("Error loading products:", error);

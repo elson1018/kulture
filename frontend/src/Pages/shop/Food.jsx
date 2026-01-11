@@ -17,18 +17,15 @@ const Food = () => {
                 setLoading(true);
                 setError(null);
 
-                const response = await fetch(ENDPOINTS.PRODUCTS);
-
+                const response = await fetch(`${ENDPOINTS.PRODUCTS}?category=Food`);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP ERROR Status: ${response.status}`);
                 }
 
                 const data = await response.json();
 
-                // Filter only Food category
-                const foodItems = data.filter(item => item.category === 'Food');
-
-                setProducts(foodItems);
+                setProducts(data);
             } catch (error) {
                 console.error("Error loading products:", error);
                 setError(error.message);
