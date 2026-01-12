@@ -51,7 +51,11 @@ const Orders = lazy(() => import("./Pages/admin/Orders"));
 // User pages
 const Settings = lazy(() => import("./Pages/user/Settings"));
 
-const ProtectedRoute = ({ user, allowedRoles, children }) => {
+const ProtectedRoute = ({ user, isLoading, allowedRoles, children }) => {
+  if (isLoading) {
+    return <Loading />;
+  }
+
   // If user is not logged in, the user will redirect to login page
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -66,7 +70,7 @@ const ProtectedRoute = ({ user, allowedRoles, children }) => {
   return children;
 };
 
-const AppContent = ({ user, setUser }) => {
+const AppContent = ({ user, isLoading, setUser }) => {
   const navigate = useNavigate();
 
   const isLoggedIn = !!user;
@@ -132,7 +136,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/settings"
               element={
-                <ProtectedRoute user={user}>
+                <ProtectedRoute user={user} isLoading={isLoading}>
                   <Settings />
                 </ProtectedRoute>
               }
@@ -156,7 +160,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
+                <ProtectedRoute user={user} isLoading={isLoading} allowedRoles={["ADMIN"]}>
                   <AdminDashboard user={user}></AdminDashboard>
                 </ProtectedRoute>
               }
@@ -164,7 +168,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/add-product"
               element={
-                <ProtectedRoute user={user} allowedRoles={["ADMIN"]}>
+                <ProtectedRoute user={user} isLoading={isLoading} allowedRoles={["ADMIN"]}>
                   <AddProduct />
                 </ProtectedRoute>
               }
@@ -172,7 +176,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/cart"
               element={
-                <ProtectedRoute user={user}>
+                <ProtectedRoute user={user} isLoading={isLoading}>
                   <Cart />
                 </ProtectedRoute>
               }
@@ -180,7 +184,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/checkout"
               element={
-                <ProtectedRoute user={user}>
+                <ProtectedRoute user={user} isLoading={isLoading}>
                   <Checkout />
                 </ProtectedRoute>
               }
@@ -188,7 +192,7 @@ const AppContent = ({ user, setUser }) => {
             <Route
               path="/orders"
               element={
-                <ProtectedRoute user={user}>
+                <ProtectedRoute user={user} isLoading={isLoading}>
                   <Orders />
                 </ProtectedRoute>
               }
@@ -203,6 +207,7 @@ const AppContent = ({ user, setUser }) => {
 
 function App() {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check session with backend on load
@@ -233,6 +238,8 @@ function App() {
         if (storedUser) {
           setUser(JSON.parse(storedUser));
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -243,7 +250,7 @@ function App() {
     <>
       <BrowserRouter>
         <ScrollToTop />
-        <AppContent user={user} setUser={setUser} />
+        <AppContent user={user} isLoading={isLoading} setUser={setUser} />
       </BrowserRouter>
     </>
   );

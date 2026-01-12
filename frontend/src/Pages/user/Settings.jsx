@@ -43,6 +43,7 @@ const Settings = () => {
             const response = await fetch(ENDPOINTS.PROFILE_UPDATE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     email: formData.email, // identify user
                     username: formData.username,
@@ -92,6 +93,7 @@ const Settings = () => {
             const response = await fetch(passwordEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     email: formData.email,
                     currentPassword: formData.currentPassword,
