@@ -206,7 +206,7 @@ const Signup = ({ onFormSwitch }) => {
           </label>
         </div>
 
-        <button className="signup-button" disabled={!agreedToTerms}>
+        <button className="signup-button">
           Sign Up
         </button>
       </form>
