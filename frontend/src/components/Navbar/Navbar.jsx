@@ -30,7 +30,7 @@ const Navbar = ({ onNavClick, onAuthClick, isLoggedIn, onLogout }) => {
     const storedRole = localStorage.getItem("role");
 
     if (storedUser) {
-      setUserName(storedUser.username || "User");
+      setUserName(storedUser.user_fname || "User");
       setUserRole(storedRole);
     }
   }, [isLoggedIn]);

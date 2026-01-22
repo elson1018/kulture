@@ -10,12 +10,30 @@ const Checkout = () => {
   const [cartData, setCartData] = useState({ items: [] });
   const [products, setProducts] = useState([]); // this used to check product category
   const [loading, setLoading] = useState(true);
-   const [popup, setPopup] = useState({ show: false, msg: "", type: "success" });
-   
+  const [popup, setPopup] = useState({ show: false, msg: "", type: "success" });
+
   const navigate = useNavigate();
 
+  // Malaysian states list
+  const malaysianStates = [
+    "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+    "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah",
+    "Sarawak", "Selangor", "Terengganu", "Kuala Lumpur",
+    "Labuan", "Putrajaya"
+  ];
+
   const [formData, setFormData] = useState({
-    paymentMethod: "cod", 
+    paymentMethod: "cod",
+  });
+
+  // Delivery address state
+  const [deliveryAddress, setDeliveryAddress] = useState({
+    fullName: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    postalCode: ""
   });
 
   const [showQR, setShowQR] = useState(false);
@@ -35,7 +53,7 @@ const Checkout = () => {
           method: "GET",
           credentials: "include"
         });
-        
+
         const prodRes = await fetch(ENDPOINTS.PRODUCTS);
 
         if (cartRes.ok && prodRes.ok) {
@@ -43,6 +61,35 @@ const Checkout = () => {
           const pData = await prodRes.json();
           setCartData(cData);
           setProducts(pData);
+
+          // Pre-fill delivery address from user's saved address
+          if (user.address) {
+            // Try to parse structured address if it exists
+            try {
+              const savedAddr = JSON.parse(user.address);
+              setDeliveryAddress({
+                fullName: savedAddr.fullName || `${user.user_fname || ''} ${user.user_lname || ''}`.trim(),
+                phone: savedAddr.phone || "",
+                address: savedAddr.address || "",
+                city: savedAddr.city || "",
+                state: savedAddr.state || "",
+                postalCode: savedAddr.postalCode || ""
+              });
+            } catch {
+              // If not JSON, use as simple address string
+              setDeliveryAddress(prev => ({
+                ...prev,
+                fullName: `${user.user_fname || ''} ${user.user_lname || ''}`.trim(),
+                address: user.address
+              }));
+            }
+          } else {
+            // Set default name from user profile
+            setDeliveryAddress(prev => ({
+              ...prev,
+              fullName: `${user.user_fname || ''} ${user.user_lname || ''}`.trim()
+            }));
+          }
         } else {
           console.error("Failed to fetch data");
         }
@@ -62,12 +109,38 @@ const Checkout = () => {
     }
   };
 
+  const handleAddressChange = (e) => {
+    setDeliveryAddress({ ...deliveryAddress, [e.target.name]: e.target.value });
+  };
+
+  const validateDeliveryAddress = () => {
+    const { fullName, phone, address, city, state, postalCode } = deliveryAddress;
+    if (!fullName || !phone || !address || !city || !state || !postalCode) {
+      return false;
+    }
+    // Basic phone validation (Malaysian format)
+    if (!/^01\d{8,9}$/.test(phone.replace(/[\s-]/g, ''))) {
+      return false;
+    }
+    // Postal code validation (Malaysian 5 digits)
+    if (!/^\d{5}$/.test(postalCode)) {
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate delivery address
+    if (!validateDeliveryAddress()) {
+      setPopup({ show: true, msg: "Please fill in all delivery details correctly. Phone should start with 01 and postal code should be 5 digits.", type: "error" });
+      return;
+    }
+
     if (formData.paymentMethod === 'card' && !showQR) {
       setShowQR(true);
-      return; 
+      return;
     }
 
     try {
@@ -76,6 +149,7 @@ const Checkout = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
+          body: JSON.stringify({ deliveryAddress })
         }
       );
 
@@ -109,13 +183,13 @@ const Checkout = () => {
     if (cartData.items) {
       cartData.items.forEach((item) => {
         const productDetails = products.find(p => p.id === item.productId);
-        
+
         const itemOriginalTotal = item.price * item.quantity;
         original += itemOriginalTotal;
 
         // if instrument then apply 10% discount
         if (productDetails && productDetails.category === "Instruments") {
-          final += itemOriginalTotal * 0.90; 
+          final += itemOriginalTotal * 0.90;
         } else {
           final += itemOriginalTotal;
         }
@@ -159,6 +233,89 @@ const Checkout = () => {
         {/* Payment method */}
         <div className="checkout-left">
           <form id="checkout-form" onSubmit={handleSubmit}>
+            {/* Delivery Details Section */}
+            <section className="form-section delivery-section">
+              <h3>Delivery Details</h3>
+              <div className="delivery-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={deliveryAddress.fullName}
+                      onChange={handleAddressChange}
+                      placeholder="Recipient's full name"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Phone Number *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={deliveryAddress.phone}
+                      onChange={handleAddressChange}
+                      placeholder="e.g. 0123456789"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group full-width">
+                  <label>Address *</label>
+                  <textarea
+                    name="address"
+                    value={deliveryAddress.address}
+                    onChange={handleAddressChange}
+                    placeholder="Street address, unit number, building name..."
+                    rows={3}
+                    required
+                  />
+                </div>
+
+                <div className="form-row three-cols">
+                  <div className="form-group">
+                    <label>City *</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={deliveryAddress.city}
+                      onChange={handleAddressChange}
+                      placeholder="City"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>State *</label>
+                    <select
+                      name="state"
+                      value={deliveryAddress.state}
+                      onChange={handleAddressChange}
+                      required
+                    >
+                      <option value="">Select State</option>
+                      {malaysianStates.map((state) => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Postal Code *</label>
+                    <input
+                      type="text"
+                      name="postalCode"
+                      value={deliveryAddress.postalCode}
+                      onChange={handleAddressChange}
+                      placeholder="e.g. 50000"
+                      maxLength={5}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <section className="form-section">
               <h3>Payment Method</h3>
               <div className="payment-options">
@@ -166,7 +323,7 @@ const Checkout = () => {
                   <input type="radio" name="paymentMethod" value="cod" checked={formData.paymentMethod === "cod"} onChange={handleChange} />
                   <span>Cash on Delivery</span>
                 </label>
-                
+
                 <label className={`payment-card ${formData.paymentMethod === 'card' ? 'selected' : ''}`}>
                   <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod === "card"} onChange={handleChange} />
                   <span>TnG QR</span>
@@ -216,9 +373,9 @@ const Checkout = () => {
                 );
               })}
             </div>
-            
+
             <div className="summary-divider"></div>
-            
+
             <div className="summary-row">
               <span>Subtotal</span>
               <span>RM {originalAmount.toFixed(2)}</span>
@@ -230,7 +387,7 @@ const Checkout = () => {
                 <span>- RM {discountAmount.toFixed(2)}</span>
               </div>
             )}
-            
+
             <div className="summary-row">
               <span>Shipping Fee</span>
               <span>RM {shippingFee.toFixed(2)}</span>
@@ -244,12 +401,12 @@ const Checkout = () => {
             </div>
 
             <div className="checkout-actions">
-               <button type="submit" form="checkout-form" className="btn-primary full-width-btn">
-                  Place Order
-               </button>
-               <button type="button" onClick={() => navigate("/cart")} className="btn-secondary full-width-btn">
-                  Back to Cart
-               </button>
+              <button type="submit" form="checkout-form" className="btn-primary full-width-btn">
+                Place Order
+              </button>
+              <button type="button" onClick={() => navigate("/cart")} className="btn-secondary full-width-btn">
+                Back to Cart
+              </button>
             </div>
           </div>
         </div>

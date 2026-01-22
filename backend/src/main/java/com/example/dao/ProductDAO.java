@@ -81,4 +81,12 @@ public class ProductDAO {
                             com.mongodb.client.model.Updates.set("rating", newRating)));
         }
     }
+
+    // Update product price (Admin only)
+    public boolean updateProductPrice(String productId, double newPrice) {
+        long modifiedCount = productCollection.updateOne(
+                Filters.eq("_id", productId),
+                com.mongodb.client.model.Updates.set("price", newPrice)).getModifiedCount();
+        return modifiedCount > 0;
+    }
 }

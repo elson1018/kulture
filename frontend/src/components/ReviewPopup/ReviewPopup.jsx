@@ -29,7 +29,7 @@ const ReviewPopup = ({ isOpen, onClose, productId, productName, onSuccess }) => 
                 body: JSON.stringify({
                     productId,
                     email: user.email,
-                    userName: user.username || user.email,
+                    userName: user.user_fname || user.email,
                     rating,
                     comment,
                     action: 'submit'

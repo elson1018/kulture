@@ -68,8 +68,6 @@ public class ProfileServlet extends HttpServlet {
         }
 
         // Update fields
-        if (json.has("username"))
-            existingUser.setUsername(json.get("username").getAsString());
         if (json.has("address"))
             existingUser.setAddress(json.get("address").getAsString());
 

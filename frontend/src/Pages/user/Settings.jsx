@@ -10,7 +10,6 @@ const Settings = () => {
     const [popup, setPopup] = useState({ isOpen: false, message: '', type: '' });
 
     const [formData, setFormData] = useState({
-        username: '',
         email: '',
         address: '',
         currentPassword: '',
@@ -22,7 +21,6 @@ const Settings = () => {
         if (user) {
             setFormData(prev => ({
                 ...prev,
-                username: user.username || '',
                 email: user.email || '',
                 address: user.address || ''
             }));
@@ -46,7 +44,6 @@ const Settings = () => {
                 credentials: 'include',
                 body: JSON.stringify({
                     email: formData.email, // identify user
-                    username: formData.username,
                     address: formData.address
                 })
             });
@@ -138,11 +135,6 @@ const Settings = () => {
                 {activeTab === 'profile' && (
                     <form className="profile-form" onSubmit={handleUpdateProfile}>
                         <h2>Edit Profile </h2>
-
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input type="text" name="username" value={formData.username} onChange={handleChange} />
-                        </div>
 
                         <div className="form-group">
                             <label>Email</label>
