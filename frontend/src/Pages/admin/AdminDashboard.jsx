@@ -20,6 +20,18 @@ const AdminDashboard = ({ user }) => {
     newPrice: ""
   });
 
+  // Delivery details modal state
+  const [deliveryModal, setDeliveryModal] = useState({
+    isOpen: false,
+    order: null
+  });
+
+  // Status options
+  const statusOptions = ["Pending", "Processing", "Shipped", "Completed"];
+
+  // Tab navigation state
+  const [activeTab, setActiveTab] = useState("overview");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -260,6 +272,98 @@ const AdminDashboard = ({ user }) => {
     }
   };
 
+  // Order status update handler
+  const handleStatusUpdate = async (saleId, newStatus) => {
+    try {
+      const response = await fetch(ENDPOINTS.SALES, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ id: saleId, status: newStatus })
+      });
+
+      if (response.ok) {
+        setSalesData(prev => ({
+          ...prev,
+          sales: prev.sales.map(sale =>
+            getSaleId(sale) === saleId ? { ...sale, status: newStatus } : sale
+          )
+        }));
+        setPopup({
+          isOpen: true,
+          message: 'Order status updated successfully!',
+          type: 'success',
+          onConfirm: null
+        });
+      } else {
+        const result = await response.json();
+        setPopup({
+          isOpen: true,
+          message: 'Failed to update status: ' + (result.error || 'Unknown error'),
+          type: 'error',
+          onConfirm: null
+        });
+      }
+    } catch (error) {
+      console.error('Status update error:', error);
+      setPopup({
+        isOpen: true,
+        message: 'Failed to update status',
+        type: 'error',
+        onConfirm: null
+      });
+    }
+  };
+
+  const openDeliveryModal = (order) => {
+    setDeliveryModal({ isOpen: true, order });
+  };
+
+  const closeDeliveryModal = () => {
+    setDeliveryModal({ isOpen: false, order: null });
+  };
+
+  const parseDeliveryAddress = (addressJson) => {
+    if (!addressJson) return null;
+    try {
+      return JSON.parse(addressJson);
+    } catch {
+      return null;
+    }
+  };
+
+  // Helper to get sale ID as string (uses idString from backend)
+  const getSaleId = (sale) => {
+    // Debug: log the sale object structure
+    console.log('Sale object:', JSON.stringify(sale, null, 2));
+
+    // Use idString which is the hex string representation
+    if (sale.idString) {
+      return sale.idString;
+    }
+    // Fallback for id as object with $oid property
+    if (sale.id && typeof sale.id === 'object' && sale.id.$oid) {
+      return sale.id.$oid;
+    }
+    // If id is already a string
+    if (sale.id && typeof sale.id === 'string') {
+      return sale.id;
+    }
+    console.log('Could not get sale ID');
+    return null;
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString('en-MY', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <div className="admin-dashboard">
       <div className="dashboard-header">
@@ -298,144 +402,241 @@ const AdminDashboard = ({ user }) => {
         </div>
       </div>
 
-      <div className="products-table-section">
-        <h2>Recent Sales</h2>
-        {loading ? (
-          <p>Loading sales...</p>
-        ) : salesData.sales.length > 0 ? (
-          <table className="inventory-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Customer</th>
-                <th>Products</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {salesData.sales.map((sale, index) => (
-                <tr key={sale.id || index}>
-                  <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
-                  <td>{sale.customerEmail}</td>
-                  <td>{sale.productNames.join(", ")}</td>
-                  <td>RM {sale.totalAmount.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No sales recorded yet.</p>
-        )}
+      {/* Tab Navigation */}
+      <div className="dashboard-tabs">
+        <button
+          className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
+          onClick={() => setActiveTab('overview')}
+        >
+          Overview
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'products' ? 'active' : ''}`}
+          onClick={() => setActiveTab('products')}
+        >
+          Products
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'tutorials' ? 'active' : ''}`}
+          onClick={() => setActiveTab('tutorials')}
+        >
+          Tutorials
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'orders' ? 'active' : ''}`}
+          onClick={() => setActiveTab('orders')}
+        >
+          Orders
+        </button>
       </div>
 
+      {/* Tab Content */}
+      <div className="tab-content">
 
-
-      <div className="products-table-section">
-        <h2>Listed Products</h2>
-        {loading ? (
-          <p>Loading inventory...</p>
-        ) : myProducts.length > 0 ? (
-          <table className="inventory-table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myProducts.map((product) => {
-                const img =
-                  product.images && product.images.length > 0
-                    ? product.images[0]
-                    : "";
-                return (
-                  <tr key={product.id}>
-                    <td>
-                      <img src={img} alt="thumb" className="table-thumb" />
-                    </td>
-                    <td>{product.name}</td>
-                    <td>RM {Number(product.price).toFixed(2)}</td>
-                    <td>{product.category}</td>
-                    <td>
-                      <button
-                        className="action-button edit"
-                        onClick={() => handleEditPrice(product)}
-                      >
-                        Edit Price
-                      </button>
-                      <button
-                        className="action-button delete"
-                        onClick={() => handleDeleteProduct(product.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+        {/* Overview Tab - Recent Sales */}
+        {activeTab === 'overview' && (
+          <div className="products-table-section">
+            <h2>Recent Sales</h2>
+            {loading ? (
+              <p>Loading sales...</p>
+            ) : salesData.sales.length > 0 ? (
+              <table className="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Products</th>
+                    <th>Amount</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ) : (
-          <div className="empty-state">
-            <p>You haven't listed any products yet.</p>
-            <button onClick={() => navigate("/add-product")}>
-              Create Your First Listing
-            </button>
+                </thead>
+                <tbody>
+                  {salesData.sales.slice(0, 10).map((sale, index) => (
+                    <tr key={sale.id || index}>
+                      <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
+                      <td>{sale.customerEmail}</td>
+                      <td>{sale.productNames.join(", ")}</td>
+                      <td>RM {sale.totalAmount.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No sales recorded yet.</p>
+            )}
           </div>
         )}
+
+        {/* Products Tab */}
+        {activeTab === 'products' && (
+          <div className="products-table-section">
+            <h2>Listed Products</h2>
+            {loading ? (
+              <p>Loading inventory...</p>
+            ) : myProducts.length > 0 ? (
+              <table className="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {myProducts.map((product) => {
+                    const img =
+                      product.images && product.images.length > 0
+                        ? product.images[0]
+                        : "";
+                    return (
+                      <tr key={product.id}>
+                        <td>
+                          <img src={img} alt="thumb" className="table-thumb" />
+                        </td>
+                        <td>{product.name}</td>
+                        <td>RM {Number(product.price).toFixed(2)}</td>
+                        <td>{product.category}</td>
+                        <td>
+                          <button
+                            className="action-button edit"
+                            onClick={() => handleEditPrice(product)}
+                          >
+                            Edit Price
+                          </button>
+                          <button
+                            className="action-button delete"
+                            onClick={() => handleDeleteProduct(product.id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <div className="empty-state">
+                <p>You haven't listed any products yet.</p>
+                <button onClick={() => navigate("/add-product")}>
+                  Create Your First Listing
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tutorials Tab */}
+        {activeTab === 'tutorials' && (
+          <div className="products-table-section">
+            <h2>Listed Tutorials</h2>
+            {loading ? (
+              <p>Loading tutorials...</p>
+            ) : myTutorials.length > 0 ? (
+              <table className="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Tutorial Name</th>
+                    <th>Instructor</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {myTutorials.map((tutorial) => {
+                    const img =
+                      tutorial.images && tutorial.images.length > 0
+                        ? tutorial.images[0]
+                        : "";
+                    return (
+                      <tr key={tutorial.id}>
+                        <td>
+                          <img src={img} alt="thumb" className="table-thumb" />
+                        </td>
+                        <td>{tutorial.name}</td>
+                        <td>{tutorial.instructor}</td>
+                        <td>RM {Number(tutorial.price).toFixed(2)}</td>
+                        <td>{tutorial.isLiveClass ? "Live Class" : "Recorded"}</td>
+                        <td>
+                          <button
+                            className="action-button delete"
+                            onClick={() => handleDeleteTutorial(tutorial.id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p>No tutorials available.</p>
+            )}
+          </div>
+        )}
+
+        {/* Orders Tab */}
+        {activeTab === 'orders' && (
+          <div className="products-table-section">
+            <h2>Order Management</h2>
+            {loading ? (
+              <p>Loading orders...</p>
+            ) : salesData.sales && salesData.sales.length > 0 ? (
+              <table className="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salesData.sales.map((sale, index) => (
+                    <tr key={sale.id || index}>
+                      <td>#{index + 1}</td>
+                      <td>{formatDate(sale.saleDate)}</td>
+                      <td>{sale.customerEmail}</td>
+                      <td>{sale.productNames?.join(", ") || "N/A"}</td>
+                      <td>RM {Number(sale.totalAmount).toFixed(2)}</td>
+                      <td>
+                        <select
+                          className={`status-select ${(sale.status || 'Pending').toLowerCase()}`}
+                          value={sale.status || 'Pending'}
+                          onChange={(e) => handleStatusUpdate(getSaleId(sale), e.target.value)}
+                        >
+                          {statusOptions.map(status => (
+                            <option key={status} value={status}>{status}</option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <button
+                          className="action-button view"
+                          onClick={() => openDeliveryModal(sale)}
+                        >
+                          View Delivery
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No orders yet.</p>
+            )}
+          </div>
+        )}
+
       </div>
 
-      <div className="products-table-section">
-        <h2>Listed Tutorials</h2>
-        {loading ? (
-          <p>Loading tutorials...</p>
-        ) : myTutorials.length > 0 ? (
-          <table className="inventory-table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Tutorial Name</th>
-                <th>Instructor</th>
-                <th>Price</th>
-                <th>Type</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myTutorials.map((tutorial) => {
-                const img =
-                  tutorial.images && tutorial.images.length > 0
-                    ? tutorial.images[0]
-                    : "";
-                return (
-                  <tr key={tutorial.id}>
-                    <td>
-                      <img src={img} alt="thumb" className="table-thumb" />
-                    </td>
-                    <td>{tutorial.name}</td>
-                    <td>{tutorial.instructor}</td>
-                    <td>RM {Number(tutorial.price).toFixed(2)}</td>
-                    <td>{tutorial.isLiveClass ? "Live Class" : "Recorded"}</td>
-                    <td>
-                      <button
-                        className="action-button delete"
-                        onClick={() => handleDeleteTutorial(tutorial.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ) : (
-          <p>No tutorials available.</p>
-        )}
-      </div>
       <Popup
         isOpen={popup.isOpen}
         message={popup.message}
@@ -469,6 +670,57 @@ const AdminDashboard = ({ user }) => {
             <div className="modal-actions">
               <button className="cancel-btn" onClick={closeEditPriceModal}>Cancel</button>
               <button className="save-btn" onClick={handlePriceUpdate}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delivery Details Modal */}
+      {deliveryModal.isOpen && deliveryModal.order && (
+        <div className="edit-price-overlay" onClick={closeDeliveryModal}>
+          <div className="edit-price-modal delivery-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal-btn" onClick={closeDeliveryModal}>×</button>
+            <h3>Delivery Details</h3>
+            <p className="modal-product-name">Order #{salesData.sales.indexOf(deliveryModal.order) + 1}</p>
+
+            {(() => {
+              const address = parseDeliveryAddress(deliveryModal.order.deliveryAddress);
+              if (address) {
+                return (
+                  <div className="delivery-details">
+                    <div className="detail-row">
+                      <span className="detail-label">Full Name:</span>
+                      <span className="detail-value">{address.fullName || 'N/A'}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">Phone:</span>
+                      <span className="detail-value">{address.phone || 'N/A'}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">Address:</span>
+                      <span className="detail-value">{address.address || 'N/A'}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">City:</span>
+                      <span className="detail-value">{address.city || 'N/A'}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">State:</span>
+                      <span className="detail-value">{address.state || 'N/A'}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-label">Postal Code:</span>
+                      <span className="detail-value">{address.postalCode || 'N/A'}</span>
+                    </div>
+                  </div>
+                );
+              } else {
+                return <p className="no-address">No delivery address available for this order.</p>;
+              }
+            })()}
+
+            <div className="modal-actions">
+              <button className="save-btn" onClick={closeDeliveryModal}>Close</button>
             </div>
           </div>
         </div>

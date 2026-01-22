@@ -202,6 +202,11 @@ public class CartServlet extends HttpServlet {
                     newSale.setTotalAmount(totalAmount);
                     newSale.setCompany(company);
 
+                    // Set delivery address if provided
+                    if (deliveryAddressJson != null) {
+                        newSale.setDeliveryAddress(deliveryAddressJson);
+                    }
+
                     salesDAO.recordSale(newSale); // Record the sale after user has checkedout
                 }
 

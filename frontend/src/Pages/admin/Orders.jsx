@@ -213,7 +213,9 @@ const Orders = () => {
                                         <p className="order-date">{formatDate(order.saleDate)}</p>
                                     </div>
                                     <div className="order-status">
-                                        <span className="status-badge completed">Completed</span>
+                                        <span className={`status-badge ${(order.status || 'Pending').toLowerCase()}`}>
+                                            {order.status || 'Pending'}
+                                        </span>
                                     </div>
                                 </div>
 
