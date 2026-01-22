@@ -14,9 +14,12 @@ public class Sale {
     private double totalAmount;
     private Date saleDate;
     private String company;
+    private String status; // "Pending", "Processing", "Shipped", "Completed"
+    private String deliveryAddress; // JSON string with delivery details
 
     public Sale() {
         this.saleDate = new Date();
+        this.status = "Pending"; // Default status
     }
 
     // Getters and Setters
@@ -26,6 +29,11 @@ public class Sale {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    // Returns ID as string for JSON serialization
+    public String getIdString() {
+        return id != null ? id.toHexString() : null;
     }
 
     public String getCustomerEmail() {
@@ -74,5 +82,21 @@ public class Sale {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

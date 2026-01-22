@@ -48,4 +48,17 @@ public class SalesDAO {
         salesCollection.find(com.mongodb.client.model.Filters.eq("customerEmail", email)).into(customerSales);
         return customerSales;
     }
+
+    // Update order status (Admin only)
+    public boolean updateSaleStatus(String saleId, String newStatus) {
+        try {
+            long modifiedCount = salesCollection.updateOne(
+                    com.mongodb.client.model.Filters.eq("_id", new org.bson.types.ObjectId(saleId)),
+                    com.mongodb.client.model.Updates.set("status", newStatus)).getModifiedCount();
+            return modifiedCount > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

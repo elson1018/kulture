@@ -39,7 +39,7 @@
     background: white;
     padding: 25px 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -73,10 +73,10 @@
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.admin-dashboard .inventory-table th, 
+.admin-dashboard .inventory-table th,
 .admin-dashboard .inventory-table td {
     padding: 15px 20px;
     text-align: left;
@@ -87,7 +87,8 @@
     background-color: #F5F5E9;
     font-weight: 700;
     color: #4A3C34;
-    font-size: 15px; /* Boosted slightly */
+    font-size: 15px;
+    /* Boosted slightly */
 }
 
 .admin-dashboard .table-thumb {
@@ -244,4 +245,143 @@
 
 .edit-price-modal .save-btn:hover {
     background: #c88340;
+}
+
+/* Status Select Dropdown */
+.status-select {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.status-select.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+.status-select.processing {
+    background-color: #cce5ff;
+    color: #004085;
+    border-color: #b8daff;
+}
+
+.status-select.shipped {
+    background-color: #e2d5f1;
+    color: #5a328b;
+    border-color: #d4c4e8;
+}
+
+.status-select.completed {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+/* View Button */
+.admin-dashboard .action-button.view {
+    color: #0066cc;
+    border-color: #b8daff;
+}
+
+.admin-dashboard .action-button.view:hover {
+    background-color: #e6f0ff;
+}
+
+/* Delivery Modal */
+.delivery-modal {
+    min-width: 400px;
+}
+
+.delivery-details {
+    margin: 20px 0;
+}
+
+.delivery-details .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.delivery-details .detail-row:last-child {
+    border-bottom: none;
+}
+
+.delivery-details .detail-label {
+    font-weight: 600;
+    color: #666;
+}
+
+.delivery-details .detail-value {
+    color: #333;
+    text-align: right;
+    max-width: 60%;
+}
+
+.no-address {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+/* Dashboard Tabs */
+.dashboard-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: #f9f9f9;
+    color: #D9944E;
+    border-color: #f0dcc8;
+}
+
+.tab-btn.active {
+    background: #D9944E;
+    color: white;
+    border-color: #D9944E;
+    box-shadow: 0 4px 10px rgba(217, 148, 78, 0.3);
+}
+
+.tab-content {
+    min-height: 400px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
