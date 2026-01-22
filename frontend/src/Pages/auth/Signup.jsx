@@ -15,7 +15,6 @@ const Signup = ({ onFormSwitch }) => {
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
-    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -65,7 +64,6 @@ const Signup = ({ onFormSwitch }) => {
     }
 
     const dataToSend = {
-      username: formData.username,
       password: formData.password,
       email: formData.email,
       address: "Malaysia", // Placeholder
@@ -132,18 +130,6 @@ const Signup = ({ onFormSwitch }) => {
             name="lname"
             type="text"
             placeholder="Last Name"
-            className="input-field"
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="input-wrapper">
-          <img src={user_icon} alt="User" className="email-icon" />
-          <input
-            name="username"
-            type="text"
-            placeholder="Username"
             className="input-field"
             onChange={handleChange}
             required

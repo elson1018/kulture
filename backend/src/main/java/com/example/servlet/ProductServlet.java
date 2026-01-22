@@ -330,4 +330,83 @@ public class ProductServlet extends HttpServlet { // Product Servlet
             resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setupCORS(resp, req);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("role") == null) {
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            resp.getWriter().write(gson.toJson(Map.of("error", "You must be logged in")));
+            return;
+        }
+
+        String role = (String) session.getAttribute("role");
+        if (!"ADMIN".equalsIgnoreCase(role)) {
+            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            resp.getWriter().write(gson.toJson(Map.of("error", "Access Denied: Admin only")));
+            return;
+        }
+
+        try {
+            // Read JSON request
+            StringBuilder jsonBuilder = new StringBuilder();
+            try (BufferedReader reader = req.getReader()) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+            }
+
+            String jsonString = jsonBuilder.toString();
+            Map<String, Object> jsonMap = gson.fromJson(jsonString, Map.class);
+
+            String productId = (String) jsonMap.get("id");
+            Object priceObj = jsonMap.get("price");
+
+            if (productId == null || productId.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Product ID is required")));
+                return;
+            }
+
+            if (priceObj == null) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Price is required")));
+                return;
+            }
+
+            double newPrice;
+            if (priceObj instanceof Number) {
+                newPrice = ((Number) priceObj).doubleValue();
+            } else if (priceObj instanceof String) {
+                newPrice = Double.parseDouble((String) priceObj);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Invalid price format")));
+                return;
+            }
+
+            if (newPrice <= 0) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Price must be greater than 0")));
+                return;
+            }
+
+            boolean updated = productDAO.updateProductPrice(productId, newPrice);
+            if (updated) {
+                resp.getWriter()
+                        .write(gson.toJson(Map.of("status", "success", "message", "Price updated successfully")));
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.getWriter().write(gson.toJson(Map.of("error", "Product not found")));
+            }
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().write(gson.toJson(Map.of("error", e.getMessage())));
+        }
+    }
 }

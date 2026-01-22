@@ -97,6 +97,31 @@ public class CartServlet extends HttpServlet {
 
             // --- CHECKOUT ACTION ---
             if ("checkout".equals(action)) {
+                // Parse delivery address from request body
+                StringBuilder jsonBuilder = new StringBuilder();
+                String line;
+                while ((line = req.getReader().readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+                String jsonBody = jsonBuilder.toString();
+
+                // Extract delivery address if provided
+                String deliveryAddressJson = null;
+                if (jsonBody != null && !jsonBody.isEmpty()) {
+                    try {
+                        com.google.gson.JsonObject requestJson = gson.fromJson(jsonBody,
+                                com.google.gson.JsonObject.class);
+                        if (requestJson.has("deliveryAddress")) {
+                            deliveryAddressJson = requestJson.get("deliveryAddress").toString();
+                            // Save the delivery address to user's profile
+                            userDAO.updateUserAddress(userId, deliveryAddressJson);
+                        }
+                    } catch (Exception e) {
+                        // Ignore parsing errors, proceed with checkout
+                        e.printStackTrace();
+                    }
+                }
+
                 List<CartItem> items = cartDAO.getCartItems(userId); // stores all the items in the cart of the current
                                                                      // user in session
 

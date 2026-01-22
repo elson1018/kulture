@@ -11,6 +11,15 @@ const AdminDashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Edit price modal state
+  const [editPriceModal, setEditPriceModal] = useState({
+    isOpen: false,
+    productId: null,
+    productName: "",
+    currentPrice: 0,
+    newPrice: ""
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -176,11 +185,86 @@ const AdminDashboard = ({ user }) => {
     });
   };
 
+  // Edit price handlers
+  const handleEditPrice = (product) => {
+    setEditPriceModal({
+      isOpen: true,
+      productId: product.id,
+      productName: product.name,
+      currentPrice: product.price,
+      newPrice: product.price.toString()
+    });
+  };
+
+  const closeEditPriceModal = () => {
+    setEditPriceModal({
+      isOpen: false,
+      productId: null,
+      productName: "",
+      currentPrice: 0,
+      newPrice: ""
+    });
+  };
+
+  const handlePriceUpdate = async () => {
+    const newPrice = parseFloat(editPriceModal.newPrice);
+    if (isNaN(newPrice) || newPrice <= 0) {
+      setPopup({
+        isOpen: true,
+        message: 'Please enter a valid price greater than 0',
+        type: 'error',
+        onConfirm: null
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(ENDPOINTS.PRODUCTS, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          id: editPriceModal.productId,
+          price: newPrice
+        })
+      });
+
+      if (response.ok) {
+        setMyProducts(prev => prev.map(p =>
+          p.id === editPriceModal.productId ? { ...p, price: newPrice } : p
+        ));
+        closeEditPriceModal();
+        setPopup({
+          isOpen: true,
+          message: 'Price updated successfully!',
+          type: 'success',
+          onConfirm: null
+        });
+      } else {
+        const result = await response.json();
+        setPopup({
+          isOpen: true,
+          message: 'Failed to update price: ' + (result.error || 'Unknown error'),
+          type: 'error',
+          onConfirm: null
+        });
+      }
+    } catch (error) {
+      console.error('Update price error:', error);
+      setPopup({
+        isOpen: true,
+        message: 'Failed to update price',
+        type: 'error',
+        onConfirm: null
+      });
+    }
+  };
+
   return (
     <div className="admin-dashboard">
       <div className="dashboard-header">
         <div>
-          <h1>Welcome, {user?.username || "Admin"}!</h1>
+          <h1>Welcome, {user?.user_fname || "Admin"}!</h1>
           <p>Manage your products, tutorials, and view your sales.</p>
         </div>
         <button
@@ -277,6 +361,12 @@ const AdminDashboard = ({ user }) => {
                     <td>{product.category}</td>
                     <td>
                       <button
+                        className="action-button edit"
+                        onClick={() => handleEditPrice(product)}
+                      >
+                        Edit Price
+                      </button>
+                      <button
                         className="action-button delete"
                         onClick={() => handleDeleteProduct(product.id)}
                       >
@@ -354,6 +444,35 @@ const AdminDashboard = ({ user }) => {
         onConfirm={popup.onConfirm}
         confirmText="Yes, Delete"
       />
+
+      {/* Edit Price Modal */}
+      {editPriceModal.isOpen && (
+        <div className="edit-price-overlay" onClick={closeEditPriceModal}>
+          <div className="edit-price-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal-btn" onClick={closeEditPriceModal}>×</button>
+            <h3>Edit Price</h3>
+            <p className="modal-product-name">{editPriceModal.productName}</p>
+            <div className="modal-form-group">
+              <label>Current Price: RM {Number(editPriceModal.currentPrice).toFixed(2)}</label>
+            </div>
+            <div className="modal-form-group">
+              <label>New Price (RM)</label>
+              <input
+                type="number"
+                step="0.01"
+                min="0.01"
+                value={editPriceModal.newPrice}
+                onChange={(e) => setEditPriceModal(prev => ({ ...prev, newPrice: e.target.value }))}
+                placeholder="Enter new price"
+              />
+            </div>
+            <div className="modal-actions">
+              <button className="cancel-btn" onClick={closeEditPriceModal}>Cancel</button>
+              <button className="save-btn" onClick={handlePriceUpdate}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

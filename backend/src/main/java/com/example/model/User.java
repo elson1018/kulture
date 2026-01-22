@@ -6,7 +6,6 @@ public class User {
     private ObjectId id;
     private String user_fname; // User First Name
     private String user_lname; // User Last Name
-    private String username; // User Name
     private String password; // Password of each user
     private String email;
     private String address;
@@ -15,11 +14,10 @@ public class User {
     public User() {
     }
 
-    public User(String user_fname, String user_lname, String username, String password, String email, String address,
+    public User(String user_fname, String user_lname, String password, String email, String address,
             String role) {
         this.user_fname = user_fname;
         this.user_lname = user_lname;
-        this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
@@ -49,14 +47,6 @@ public class User {
 
     public void setUser_lname(String user_lname) {
         this.user_lname = user_lname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

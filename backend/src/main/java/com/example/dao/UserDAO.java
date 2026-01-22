@@ -22,7 +22,6 @@ public class UserDAO {
     public void createUser(User user) {
         Document doc = new Document("user_fname", user.getUser_fname())
                 .append("user_lname", user.getUser_lname())
-                .append("username", user.getUsername())
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("address", user.getAddress())
@@ -34,11 +33,6 @@ public class UserDAO {
     // Find a user by Email
     public User findByEmail(String email) {
         Document doc = usersCollection.find(Filters.eq("email", email)).first();
-        return userFromDocument(doc);
-    }
-
-    public User findByUsername(String username) {
-        Document doc = usersCollection.find(Filters.eq("username", username)).first();
         return userFromDocument(doc);
     }
 
@@ -59,7 +53,6 @@ public class UserDAO {
         User user = new User(
                 doc.getString("user_fname"),
                 doc.getString("user_lname"),
-                doc.getString("username"),
                 doc.getString("password"),
                 doc.getString("email"),
                 doc.getString("address"),
@@ -71,7 +64,6 @@ public class UserDAO {
     // Update user details
     public void updateUser(User user) {
         Document update = new Document()
-                .append("username", user.getUsername())
                 .append("email", user.getEmail())
                 .append("address", user.getAddress());
 
@@ -84,6 +76,17 @@ public class UserDAO {
             usersCollection.updateOne(Filters.eq("_id", user.getId()), new Document("$set", update));
         } else {
             usersCollection.updateOne(Filters.eq("email", user.getEmail()), new Document("$set", update));
+        }
+    }
+
+    // Update user address by ID
+    public void updateUserAddress(String userId, String address) {
+        try {
+            usersCollection.updateOne(
+                    Filters.eq("_id", new org.bson.types.ObjectId(userId)),
+                    new Document("$set", new Document("address", address)));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
